@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title> CVE Services Client Interface</title>
+    <link rel="stylesheet"
+	  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	  crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+	    integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2"
+	    crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	    crossorigin="anonymous"></script>
+    
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" integrity="sha384-odhHAoX521Z5MY3e/47Qjk9w2jsZDZ5ZxvD3Yj/z+HAlXwAxMCal1I1IaL21uilY" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css" integrity="sha384-ppHVqi8cSvs9rS2kDYZoGLiwz7RqQSf8Cw/u7yvuBCHnP8LftQKtbJKS6pXF9OXg" crossorigin="anonymous">
+    <script src="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js" integrity="sha384-c6BpBD7+QRK09NF7WgSPQpBF4z1UdPVJEFAvOnQoNyqtMMuJW/hF+iw3pHlKvmxF" crossorigin="anonymous"></script>
+    <script src="cveClientlib.js"></script>
+    <style>
+      .hnew {
+	  background-color: lightgreen;
+      }
+      div.bootstrap-table button.btn {
+	  background-color: transparent;
+	  color: black;
+      }
+      /*&#x21bb */
+      .fa-sync::before {
+	  content: "\021BB";
+      }
+      .fa-sync {
+	  color: black;
+      }	  
+      .blackbody .fa-sync,
+      .blackbody div.bootstrap-table button.btn {
+	  color: white;
+      }
+      .blackbody {
+	  background-color: #333;
+	  color: white;
+      }
+      .logout {
+	  border: 1px solid black;
+	  border-right: transparent;
+	  padding: 2px 4px 2px 6px;
+      }
+      #topalert {
+	  display: none;
+      }
+      #deepDive .table td {
+	  text-align: left;
+      }
+    </style>
+    
+  </head>
+  <body class="text-center whitebody">
+    <div class="alert position-fixed w-100" id="topalert" role="alert">
+      Alert
+    </div>
+    <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <h5 class="col-12 modal-title text-center">Add User
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	      </button>
+	    </h5>
+	  </div>
+	  <div class="modal-body">
+	    <form>
+	      <div class="form-group">
+		<label class="d-none" for="amount">Username
+		</label>
+		<input type="email" name="username"
+		       required="required"
+		       class="form-control username"
+		       placeholder="Username (user@example.com)"/>
+	      </div>
+	      <div class="form-group">
+		<label class="d-none" for="amount">First Name
+		</label>
+		<input type="email" name="name_first"
+		       required="required"
+		       class="form-control name_first"
+		       placeholder="First Name (John)"/>
+	      </div>
+	      <div class="form-group">
+		<label class="d-none" for="amount">Last Name
+		</label>
+		<input type="email" name="name_last"
+		       required="required"
+		       class="form-control name_last"
+		       placeholder="Last Name (Smith)"/>
+	      </div>
+	      <div class="form-group">
+		<label class="d-none" for="amount">Role
+		</label>
+		<select name="user_roles" class="form-control user_roles">
+		  <option value="">Role: User</option>
+		  <option value="ADMIN">Role: Administrator</option>
+		</select>
+	      </div>
+	      <div class="form-group">
+		<label class="d-none" for="amount">Active
+		</label>
+		<input type="checkbox" class="active" checked value="1"> Active
+	      </div>
+	    </form>
+	  </div>
+	  <div class="modal-footer">
+	    <button type="button" class="btn btn-danger"
+		    data-dismiss="modal">Close</button>
+	    <button type="button" class="btn btn-primary" onclick="adduser()">
+	      Add User</button>
+	  </div>
+	</div>
+      </div>
+    </div>    
+    <div class="modal fade" id="deepDive" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+	<div class="modal-content w-auto">
+	  <div class="modal-header">
+	    <h5 class="col-12 modal-title text-center">Details
+	      <span id="detailtag"></span>
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	      </button>
+	    </h5>
+	  </div>
+	  <div class="modal-body">
+	    <form>
+	      <div class="form-group">
+	      </div>
+	    </form>
+	  </div>
+	</div>
+      </div>
+    </div>
+    <div class="modal fade" id="reserveCVEModal" tabindex="-1" role="dialog" aria-labelledby="CVEModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <h5 class="col-12 modal-title text-center">Reserve CVE
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	      </button>
+	    </h5>
+	  </div>
+	  <div class="modal-body">
+	    <form>
+	      <div class="form-group">
+		<label class="d-none" for="amount">Count of CVEs to reserve
+		</label>
+		<input type="number" name="amount"
+		       required="required"
+		       class="form-control amount"
+		       placeholder="How many CVE's? (default 1)"/>
+	      </div>
+	      <div class="form-group">
+		<label class="d-none" for="cve_year">Year
+		</label>
+		<input type="number" name="cve_year" 
+		       maxlength="4" required="required"
+		       class="form-control cve_year"
+		       placeholder="Year (default Current Year)"/>
+	      </div>
+	      <div class="form-group">
+		<label class="d-none" for="batchtype">Type for Batch
+		</label>
+		<select name="batch_type" class="form-control batch_type">
+		  <option value="sequential">Sequential</option>
+		  <option value="nonsequential">Not Sequential</option>
+		</select>
+	      </div>	      
+	    </form>
+	  </div>
+	  <div class="modal-footer">
+	    <button type="button" class="btn btn-danger"
+		    data-dismiss="modal">Close</button>
+	    <button type="button" class="btn btn-primary" onclick="reserve()">
+	      Reserve</button>
+	  </div>	  
+	</div>
+      </div>
+    </div>
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <h5 class="col-12 modal-title text-center">CNA Login
+	      <button type="button" class="close d-none" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	      </button>
+	    </h5>
+	    
+	  </div>
+	  <div class="modal-body">
+	    <form>
+	      <div class="form-group">
+		<label class="d-none" for="org">Organization Short Name</label>
+		<input type="text" name="org" id="org"
+		       maxlength="255" required="required"
+		       class="form-control" placeholder="CNA Short Name"/>
+	      </div>
+	      <div class="form-group">
+		<label class="d-none" for="username">Username</label>	      
+		<input type="email" name="user" id="user"
+		       maxlength="255" required="required"
+		       class="form-control" placeholder="Username"/>
+	      </div>
+	      <div class="form-group">
+		<label class="d-none" for="key">API Key</label>	      
+		<input type="password" name="key" id="key"
+		       maxlength="64" minlength="31"
+		       class="form-control" placeholder="API Key"/>
+	      </div>
+	      <div class="form-group">
+		<label class="d-none" for="url">Service Location (URL)</label>	      
+		<select name="url" id="url" onchange="urlprompt(this)"
+			class="form-control">
+		  <option value="https://cveawg.mitre.org/api">
+		    Production</option>
+		  <option value="https://cveawg-test.mitre.org/api">
+		    Testing</option>
+		  <option value="http://127.0.0.1:3000/api">Local</option>
+		  <option value="custom">Custom</option>
+		</select>
+	      </div>
+	      <div class="form-group">
+		<label class="d-none" for="storeLocal">Remember Credentials</label>
+		<input type="checkbox" value="1" id="storeLocal"
+		       name="storeLocal" unchecked/>
+		Keep me logged in.
+	      </div>
+	    </form>
+	  </div>
+	  <div class="modal-footer">
+	    <button type="button" class="btn btn-secondary d-none"
+		    data-dismiss="modal">Close</button>
+	    <button type="button" class="btn btn-primary" onclick="login()">
+	      Login</button>
+	  </div>
+	</div>
+      </div>
+    </div>
+    <main role="main" class="inner cover">
+      <div class="container my-4">
+	<section>
+	  <ul class="nav nav-tabs" id="svTab" role="tablist">
+	    <li class="nav-item waves-effect waves-light">
+	      <a class="nav-link active" id="cve-tab" data-toggle="tab" href="#cve" role="tab" aria-controls="cve" aria-selected="false" data-tableid="cvetable" onclick="show_cve_table(1)">
+		CVE
+	      </a>
+	      <a class="refresh d-none" onclick="show_cve_table()">Refresh</a>
+	    </li>
+	    <li class="nav-item waves-effect waves-light">
+	      <a class="nav-link" id="users-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="false" onclick="show_users_table(1)" data-tableid="usertable">Users
+	      </a>
+		<a class="refresh d-none" onclick="show_users_table()">Refresh</a>
+	    </li>
+	    <li class="nav-item waves-effect waves-light d-none">
+	      <a class="nav-link " id="admin-tab" data-toggle="tab" href="#admin" role="tab" aria-controls="admin" aria-selected="true">Admin</a>
+	    </li>
+	    <li class="ml-auto">
+	      <div class="dropdown">
+		<button class="btn border border-dark rounded" type="button" data-toggle="dropdown" aria-expanded="false">
+		  <svg viewBox="0 0 100 80" width="20" height="20">
+		    <rect width="100" height="20"></rect>
+		    <rect y="30" width="100" height="20"></rect>
+		    <rect y="60" width="100" height="20"></rect>
+		  </svg>
+		</button>
+		<ul class="dropdown-menu dropdown-menu-right">
+		  <li><button class="dropdown-item"
+			      onclick="$('#reserveCVEModal').modal()">
+		      Reserve CVE</button></li>
+		  <li><button class="dropdown-item"
+			      onclick="$('#addUserModal').modal()">
+		      Add User</button></li>
+		  <li><button class="dropdown-item"
+			      onclick="logout()">
+		      <span class="btn logout d-none">
+			&#10140;
+			</span>
+		      Logout
+		    </button>
+
+		</ul>
+	      </div>
+	      <!-- Additional logout button -->
+	      &nbsp;
+	    </li>
+	  </ul>
+	  <div class="tab-content" id="svTabContent">
+	    <div class="tab-pane fade active show" id="cve" role="tabpanel"
+		 aria-labelledby="cve-tab">
+	      <div class="float-left">
+	      </div>
+	      
+	      <table id="cvetable"></table>
+	    </div>
+	    
+	    <div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users-tab">
+	      <table id="usertable"></table>	      
+	    </div>
+	    <div class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab">
+	    </div>
+	  </div>
+
+	</section>
+      </div>    
+    </main>
+    <script src="cveInterface.js"></script>    
+  </body>
+</html>
+
