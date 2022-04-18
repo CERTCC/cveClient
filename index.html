@@ -24,52 +24,18 @@
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css" integrity="sha384-ppHVqi8cSvs9rS2kDYZoGLiwz7RqQSf8Cw/u7yvuBCHnP8LftQKtbJKS6pXF9OXg" crossorigin="anonymous">
     <script src="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js" integrity="sha384-c6BpBD7+QRK09NF7WgSPQpBF4z1UdPVJEFAvOnQoNyqtMMuJW/hF+iw3pHlKvmxF" crossorigin="anonymous"></script>
     <script src="cveClientlib.js"></script>
-    <style>
-      .hnew {
-	  background-color: lightgreen;
-      }
-      div.bootstrap-table button.btn {
-	  background-color: transparent;
-	  color: black;
-      }
-      /*&#x21bb */
-      .fa-sync::before {
-	  content: "\021BB";
-      }
-      .fa-sync {
-	  color: black;
-      }	  
-      .blackbody .fa-sync,
-      .blackbody div.bootstrap-table button.btn {
-	  color: white;
-      }
-      .blackbody {
-	  background-color: #333;
-	  color: white;
-      }
-      .logout {
-	  border: 1px solid black;
-	  border-right: transparent;
-	  padding: 2px 4px 2px 6px;
-      }
-      #topalert {
-	  display: none;
-      }
-      #deepDive .table td {
-	  text-align: left;
-      }
-    </style>
-    
+    <link rel="stylesheet" href="cveInterface.css">
   </head>
   <body class="text-center whitebody">
     <div class="alert position-fixed w-100" id="topalert" role="alert">
       Alert
     </div>
-    <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade addUser" id="addUserModal" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
 	<div class="modal-content">
 	  <div class="modal-header">
-	    <h5 class="col-12 modal-title text-center">Add User
+	    <h5 class="col-12 modal-title text-center">
+	      <span class="mtitle">Add User</span>
 	      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		<span aria-hidden="true">&times;</span>
 	      </button>
@@ -77,10 +43,11 @@
 	  </div>
 	  <div class="modal-body">
 	    <form>
+	      <div id="cpassword" class="d-none cpassword">SYHpbZuvOGS80P5oNX</div>
 	      <div class="form-group">
 		<label class="d-none" for="amount">Username
 		</label>
-		<input type="email" name="username"
+		<input type="email" name="username" data-update="new_username"
 		       required="required"
 		       class="form-control username"
 		       placeholder="Username (user@example.com)"/>
@@ -88,7 +55,7 @@
 	      <div class="form-group">
 		<label class="d-none" for="amount">First Name
 		</label>
-		<input type="email" name="name_first"
+		<input type="email" name="name_first" data-update="name.first" 
 		       required="required"
 		       class="form-control name_first"
 		       placeholder="First Name (John)"/>
@@ -96,7 +63,7 @@
 	      <div class="form-group">
 		<label class="d-none" for="amount">Last Name
 		</label>
-		<input type="email" name="name_last"
+		<input type="email" name="name_last" data-update="name.last"
 		       required="required"
 		       class="form-control name_last"
 		       placeholder="Last Name (Smith)"/>
@@ -104,23 +71,33 @@
 	      <div class="form-group">
 		<label class="d-none" for="amount">Role
 		</label>
-		<select name="user_roles" class="form-control user_roles">
+		<select name="user_roles" class="form-control user_roles"
+			data-update="active_roles">
 		  <option value="">Role: User</option>
 		  <option value="ADMIN">Role: Administrator</option>
 		</select>
 	      </div>
-	      <div class="form-group">
-		<label class="d-none" for="amount">Active
+	      <div class="form-group updateuser float-left">
+		<div class="ustatus"> User Status :  &nbsp;
+		  <span class="uspan"></span> &nbsp; 
+		</div>
+		<label class="tswitch">
+		  <input type="checkbox" class="tnotify enabled active"
+			 title="Active"  onchange="update_user_status(this)" value="1">
+		  <span class="tslider round"></span>
 		</label>
-		<input type="checkbox" class="active" checked value="1"> Active
 	      </div>
 	    </form>
 	  </div>
 	  <div class="modal-footer">
-	    <button type="button" class="btn btn-danger"
-		    data-dismiss="modal">Close</button>
-	    <button type="button" class="btn btn-primary" onclick="adduser()">
+	    <button type="button" class="btn btn-danger updateuser"
+		    onclick="reset_user(this)">Reset API Key</button>
+	    <button type="button" class="btn btn-primary adduser"
+		    onclick="adduser()">
 	      Add User</button>
+	    <button type="button" class="btn btn-info updateuser d-none"
+		    onclick="updateuser()">
+	      Update User</button>	    
 	  </div>
 	</div>
       </div>
@@ -141,6 +118,12 @@
 	      <div class="form-group">
 	      </div>
 	    </form>
+	  </div>
+	  <div class="modal-footer">
+	    <button type="button" class="btn btn-danger"
+		    data-dismiss="modal">Close</button>
+	    <button type="button" class="btn btn-info" onclick="mupdate()">
+	      Update Record</button>
 	  </div>
 	</div>
       </div>
@@ -284,7 +267,7 @@
 			      onclick="$('#reserveCVEModal').modal()">
 		      Reserve CVE</button></li>
 		  <li><button class="dropdown-item"
-			      onclick="$('#addUserModal').modal()">
+			      onclick="add_user_modal()">
 		      Add User</button></li>
 		  <li><button class="dropdown-item"
 			      onclick="logout()">
@@ -306,11 +289,15 @@
 	      <div class="float-left">
 	      </div>
 	      
-	      <table id="cvetable"></table>
+	      <table id="cvetable">
+		<tr><td>Loading </td><td><div class="loading"></div></td></tr>
+	      </table>
 	    </div>
 	    
 	    <div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users-tab">
-	      <table id="usertable"></table>	      
+	      <table id="usertable">
+		<tr><td>Loading </td><td><div class="loading"></div></td></tr>		
+	      </table>
 	    </div>
 	    <div class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab">
 	    </div>

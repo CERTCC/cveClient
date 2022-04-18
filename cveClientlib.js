@@ -5,7 +5,11 @@ class cveClient {
 	this.key = key;
 	this.url = url;
 	this.user_path = "/org/"+this.org+"/user/"+this.user;
-	this._version = "1.0.6";
+	this._version = "1.0.7";
+    }
+    create(cve,cnajson) {
+	let path = "/cve/"+cve+"/cna";
+	return this.putjson(path,null,null,{cnaContainer:cnajson});
     }
     reservecve(amount,cve_year,batch_type) {
 	let path = "/cve-id/";
@@ -97,7 +101,7 @@ class cveClient {
     }
     putjson(path,opts,qvars,pvars) {
 	if(!opts) 
-	    opts = {method: 'POST'}
+	    opts = {method: 'POST'};
 	if(!('headers' in opts))
 	    opts.headers = {};
 	opts.headers["Content-Type"] = 'application/json';

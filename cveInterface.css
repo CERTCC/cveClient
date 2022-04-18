@@ -1,0 +1,133 @@
+.ousername {
+    display: none;
+}
+.ustatus {
+    display:inline-block;
+    padding-top: 4px;
+}
+.tswitch {
+    position: absolute;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.tswitch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.tslider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.tslider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+
+input:focus + .tslider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input.enabled + .tslider {    
+    background-color: #2196F3;
+}
+
+input.enabled + .tslider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded tsliders */
+.tslider.round {
+    border-radius: 34px;
+}
+
+.tslider.round:before {
+    border-radius: 50%;
+}
+.hwarn,
+tr.hwarn {
+    background-color: #fff3cd !important;
+}
+tr.hnew {
+    background-color: lightgreen !important;
+}
+tr.hdanger {
+    background-color: #f8d7da !important;
+}
+div.bootstrap-table button.btn {
+    background-color: transparent;
+    color: black;
+}
+/*&#x21bb  "&#8634;" &#x21ba */
+.fa-sync::before {
+    content: "\021BB";
+}
+.fa-sync {
+    color: black;
+}	  
+.blackbody .fa-sync,
+.blackbody div.bootstrap-table button.btn {
+    color: white;
+}
+.blackbody {
+    background-color: #333;
+    color: white;
+}
+.logout {
+    border: 1px solid black;
+    border-right: transparent;
+    padding: 2px 4px 2px 6px;
+}
+#topalert {
+    display: none;
+    /* Just 1 above bootstrap modal */
+    z-index: 1051;
+}
+#deepDive .table td {
+    text-align: left;
+}
+.addUser .updateuser {
+    display:none;
+}
+.updateUser .adduser {
+    display:none;
+}
+.loading {
+    border: 4px solid #ddd;
+    border-radius: 50%;
+    border-top: 4px solid #222;
+    width: 20px;
+    height: 20px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+}
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

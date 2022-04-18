@@ -1,14 +1,28 @@
-let client;
+const _version = "1.0.3";
+const _tool = "CVE Services Client Interface "+_version;
+const _cna_template =  {"affected": [ { "version": "${version}", "defaultStatus": "affected", "product": "${product}", "vendor": "${vendor|client.orgobj.name}" } ], "descriptions": [ { "lang": "en", "value": "$description" } ], "providerMetadata": { "orgId": "$client.userobj.org_UUID", "shortName": "$client.org" }, "references": [ { "name": "$cve", "url": "$url" }]};
 let store;
 let store_tag = "cveClient/";
-const _version = "1.0.2"
-const _tool = "CVE Services Client Interface "+_version
+/* User var to access client as window.client global var */
+var client;
 
 function add_option(w,f) {
     $(w).append($('<option/>').attr({value:f.toString(),selected:1})
 		.html(f.host));
 }
-function show_alert(lvl,msg,tmr) {
+function simpleCopy(injson) {
+    return JSON.parse(JSON.stringify(injson));
+}
+function selectpass(passid) {
+    var copyText = document.getElementById(passid);
+    if(!copyText) return;
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+    $('#error_div').html("Password copied to clipboard!").
+	removeClass().addClass("warn success").show().fadeOut(2000);
+}
+function top_alert(lvl,msg,tmr) {
     $('#topalert').addClass("alert alert-"+lvl).html(msg).fadeIn();
     if(tmr)
 	setTimeout(function() {
@@ -39,6 +53,19 @@ function urlprompt(w) {
 	});
     }
 }
+function saveUserOrgInfo(userobj) {
+    client.userobj = userobj;
+    try {
+	/* Collect org information async */
+	client.getorg().then(function(y) {
+	    client.orgobj = y
+	});
+    }catch(err) {
+	console.log("Error while fetching User's organization");
+	console.log(err);
+    };
+}
+    
 async function login() {
     let vids = ['org','user','key'];
     for(var i=0; i < vids.length; i++) {
@@ -54,21 +81,21 @@ async function login() {
 	d = await client.getuser();
     }catch(err) {
 	console.log(err);
-	swal_error("Login failed. Perhaps Network error. See console for details!")
+	swal_error("Login failed. Perhaps Network error. See console for details!");
 	return;
     };
     let messages = "Unknown";
     let title = "CVE CNA Login";
     let mtype = "error";
     try {
-	let rtext = await d.json();	
-	if("name" in rtext) {
-	    messages = "Welcome "+rtext.name.first+" "+rtext.name.last;
-	    client.userobj = rtext;
-	} else if("message" in rtext) {
-	    messages = rtext.message;
-	} else if("error" in rtext) {
-	    messages = rtext.error;
+	let robj = await d.json();	
+	if("name" in robj) {
+	    messages = "Welcome "+robj.name.first+" "+robj.name.last;
+	    saveUserOrgInfo(robj);
+	} else if("message" in robj) {
+	    messages = robj.message;
+	} else if("error" in robj) {
+	    messages = robj.error;
 	}
     } catch(err) {
 	console.log("Could not find json text");
@@ -162,8 +189,7 @@ $(function() {
 		} else {
 			show_cve_table();
 		}
-		client.userobj = y
-
+		saveUserOrgInfo(y);		
 	    });
 	}).catch(function(err) {
 	    console.log(err);
@@ -187,6 +213,11 @@ async function get_pages(m,tag,fld,tbn,fun) {
     }
 }
 function rowStyle(r) {
+    if(r.warn) {
+	return {
+	    classes: 'hwarn'
+	};
+    }
     if(r.new) {
 	return {
 	    classes: 'hnew'
@@ -195,11 +226,21 @@ function rowStyle(r) {
     return {classes: 'normal'};
 }
 function doRefresh() {
-    let tableid = $('#svTab a.active').data('tableid')
+    let tableid = $('#svTab a.active').data('tableid');
     client[tableid].bootstrapTable('destroy');
     $('#svTab a.active').parent().find('a.refresh').click();
 }
 function objwalk(h,d,r,s) {
+    /* add a Class to some of the rows */
+    let rowClass = "normal";
+    if(d in {"new":1,"warn":1}) {
+	rowClass = "h"+d;
+	/* Unique case of internal data no need to display it */
+	if(r[d] == 1) 
+	    return h
+    }
+    if(d in {"secret":1,"password": 1, "API-secret": 1,"API-key":1})
+	rowClass = "hdanger";
     if(typeof(r[d]) == "object") {
 	let mr = r[d];
 	let f = Object.keys(mr).reduce(function(hr,dr) {
@@ -214,7 +255,7 @@ function objwalk(h,d,r,s) {
 	if(s)
 	    dp = s + "/" + d;
 	return h + $("<div>")
-	    .append($("<tr>")
+	    .append($("<tr>").addClass(rowClass)
 		    .append($("<td>").html($("<div>")
 					   .text(dp).html()))
 		    .append($("<td>").html($("<div>")
@@ -222,7 +263,6 @@ function objwalk(h,d,r,s) {
     }
 }
 function deepdive(_, _, row, el) {
-    console.log(el);
     try {
 	var tinfo = el.closest('tr').data('uniqueid');
 	if(tinfo)
@@ -237,12 +277,76 @@ function deepdive(_, _, row, el) {
 	return objwalk(h,d,row);
     },"<table class='table table-striped'><tbody>");
     $('#deepDive .modal-body').html(html);
+    $('#deepDive').data('crecord',row);
     $('#deepDive').modal();
+}
+function add_user_modal() {
+    $('#addUserModal').modal();
+    $('#addUserModal form').trigger('reset');    
+    $('#addUserModal').removeClass("updateUser").addClass("addUser");
+    if(!('usertable' in client)) {
+	console.log("Creating users table in the background");
+	show_users_table();
+	$('#users-tab').tab('show');
+    }
+}
+function user_active_view(active) {
+    if(active) { 
+	$('#addUserModal .active').prop({checked:true}).addClass('enabled');
+	$('#addUserModal span.round').prop({title:'Active'});
+	$('#addUserModal span.uspan').removeClass('text-danger')
+	    .addClass('text-primary').html(' [Active] ');
+    } else {
+	$('#addUserModal .active').prop({checked:false}).removeClass('enabled');
+	$('#addUserModal span.round').prop({title:'Inactive'});	
+	$('#addUserModal span.uspan').removeClass('text-primary')
+	    .addClass('text-danger').html(' [Inactive] ');
+    }
+}
+function user_update_modal(mr) {
+    $('#addUserModal').modal();
+    $('#addUserModal').removeClass("addUser").addClass("updateUser");
+    $('#addUserModal .mtitle').html("Update User ("+mr.username+")");
+    $('#addUserModal .username').val(mr.username).data('oldvalue',mr.username);
+    if('name' in mr) {
+	if('first' in mr.name)
+	    $('#addUserModal .name_first').val(mr.name.first).data('oldvalue',mr.name.first);
+	if('last' in mr.name)
+	    $('#addUserModal .name_last').val(mr.name.last).data('oldvalue',mr.name.last);
+    }
+    
+    if('active' in mr)
+	user_active_view(mr.active);
+    if(mr.authority.active_roles.length) {
+	/* Handle user roles currently only ADMIN or Nothing*/
+	let vroles = mr.authority.active_roles.join(",")
+	('#addUserModal .active_roles').val(vroles).data('oldvalue',vroles);
+    }
+    $('#addUserModal .form-control').change(function() {
+	checkchange(this);
+    });
+}
+function checkchange(w) {
+    console.log(w);
+}
+function cve_update_modal() {
+
+}
+function mupdate() {
+    var mr = $('#deepDive').data('crecord');
+    if(!mr)
+	return;
+    $('#deepDive').modal('hide');
+    if('username' in mr) {
+	user_update_modal(mr);
+    } else {
+	cve_update_modal(mr);
+    }
 }
 async function show_table(fun,msg,tag,fld,pmd,clm,tbn,uid,show) {
     if(show) {
 	if(tbn in client) {
-	    show_alert("success","Showing Cached data. If needed click on Refresh Icon.",1000);
+	    top_alert("success","Showing Cached data. If needed click on Refresh Icon.",1000);
 	    return;
 	}
     }
@@ -267,7 +371,7 @@ async function show_table(fun,msg,tag,fld,pmd,clm,tbn,uid,show) {
     /* totalCount itemsPerPage pageCount currentPage prevPage nextPage */
     if(('totalCount' in m) && (m.totalCount > m[fld].length)) {
 	for(var i=m[fld].length; i<m.totalCount; i++) {
-	    var tempm = JSON.parse(JSON.stringify(pmd));
+	    var tempm = simpleCopy(pmd);
 	    tempm[uid] = tag + String(i);
 	    m[fld].push(tempm);
 	}
@@ -297,15 +401,18 @@ async function show_table(fun,msg,tag,fld,pmd,clm,tbn,uid,show) {
 	get_pages(m,tag,fld,tbn,fun);
 }
 function gname(name,row) {
+    var append = "";
+    if(row.secret)
+	append = " &#128273 ";
     if(!name.first) {
 	if(!name.last) 
-	    return row.username;
+	    return row.username + append;
 	else
-	    return name.last;
+	    return name.last + append;
     }
     if(!name.last)
-	return name.first;
-    return name.first + " " + name.last;
+	return name.first + append;
+    return name.first + " " + name.last + append;
 }
 function gsort(name1,name2,row1,row2) {
     let nameA = gname(name1,row1).toUpperCase();
@@ -385,6 +492,110 @@ async function reserve() {
     }
     
 }
+async function reset_user(w,confirmed) {
+    if(!confirmed) { 
+	Swal.fire({
+	    title: "Are you sure?",
+	    text: "The user's current API-Key will be revoked",
+	    showDenyButton: true,
+	    showCancelButton: false,
+	    confirmButtonText: "Reset",
+	    denyButtonText: "Cancel",
+	}).then(function(result)  {
+	    if (result.isConfirmed) {    
+		reset_user(w,true);
+	    }
+	});
+    } else {
+	lock_unlock(1,w);
+	let username = $('#addUserModal .username').data('oldvalue');
+	let d = await client.resetuser(username);
+	if("API-secret" in d) {
+	    let f = client.usertable
+		.bootstrapTable('getRowByUniqueId',username);
+	    f.secret = d['API-secret'];
+	    f.warn = 1;
+	    client.usertable
+		.bootstrapTable('updateByUniqueId',{id: username,
+						    row: f});
+	    set_copy_pass(f.secret);
+	    Swal.fire({
+		title: "Reset API-Key!",
+		text: "API-Key secret has been reset and "+
+		    "copied to your clipboard!",
+		icon: "success",
+		timer: 3800
+	    }).then(function() {
+		$('#addUserModal').modal('hide');
+	    });
+	}
+	else if("error" in d) 
+	    swal_error("Reset failed "+d.error + " : " + d.message);
+	else
+	    swal_error("Unknown error see console log for details");
+	lock_unlock(0,w);
+    }
+}
+function updateuser() {
+    //await client.updateuser('rajo@sendmail.org',{'active_roles.remove':'ADMIN'})
+    //await client.updateuser('rajo@sendmail.org',{'active_roles.add':'ADMIN'})
+    var row = $('#deepDive').data('crecord');
+    let updates = {};
+    $('#addUserModal .form-control').each(function(_,x) {
+	//console.log($(x).data('update'));
+	//console.log(x.name);
+    });
+}
+function lock_unlock(dolock,w) {
+    if(dolock) {
+	$('body').css({opacity:0.6});
+	if(w) 
+	    w.disabled = 1;
+    } else {
+	$('body').css({opacity:1});
+	if(w)
+	    w.disabled = 0;
+    }
+}
+async function update_user_status(w) {
+    lock_unlock(1,w);
+    let username = $('#addUserModal .username').data('oldvalue');
+    let model = {};
+    model.active = w.checked;
+    let d = await client.updateuser(username,model);
+    if("error" in d) {
+	lock_unlock(0,w);
+	swal_error("Error managing user "+username+" "+d.error+" : "+
+		   d.message);
+    }
+    else {
+	let f = client.usertable.bootstrapTable('getRowByUniqueId',username);
+	f.active = w.checked;
+	f.warn = 1;
+	user_active_view(f.active);
+	client.usertable.bootstrapTable('updateByUniqueId',username,f);
+	top_alert("success", "User ("+username+") Active status has been "+
+		  "updated to <b>[" + String(f.active)+"]</b>",4000);
+	setTimeout(function() {
+	    /* Just clear out warning */
+	    lock_unlock(0,w);
+	    $('#addUserModal').modal('hide');
+	},2000);
+	setTimeout(function() {
+	    f.warn = 0;
+	    client.usertable.bootstrapTable('updateByUniqueId',username,f);
+	},4000);
+    }
+    
+}
+function set_copy_pass(secret){
+    $("#cpassword").remove();
+    var ppass = $('<input>').val(secret).attr("id","cpassword").
+	addClass("passform").on("click",selectpass).
+	attr("readonly","readonly");
+    $('#addUserModal').append(ppass);
+    selectpass("cpassword");
+}
 async function adduser() {
     let usermodel = {username: "", name: {first:"",last: ""},
 		     active: true,authority: {active_roles: []} };
@@ -396,10 +607,6 @@ async function adduser() {
 	$('#addUserModal .username').addClass('is-invalid');
 	return;
     };
-    if($('#addUserModal .username').is(':checked')) 
-	usermodel['active'] = true;
-    else
-	usermodel['active'] = false;
     $('#addUserModal .username').removeClass('is-invalid');
     usermodel['username'] = username.toLowerCase();
     usermodel['name'] = { first: fname, last: lname};
@@ -411,26 +618,28 @@ async function adduser() {
 	return;
     }
     if('created' in f) {
+	let fn = simpleCopy(f.created);
+	fn.new = 1;
+	client.usertable.bootstrapTable('insertRow',
+				       {index: 0,
+					row: fn});
+	set_copy_pass(fn.secret);
 	Swal.fire({
-	    title: "User Created",
-	    text: f.message,
+	    title: "User Created!",
+	    text: f.message + " API-Key secret is copied to your clipboard!",
 	    icon: "success",
-	    timer: 1800
+	    timer: 3800
 	}).then(function() {
-	    show_users_table();
 	    $('#users-tab').click();
 	    setTimeout(function() {
-		var mf = client.usertable
-		    .bootstrapTable('getRowByUniqueId',username);
-		mf.new = 1;
+		fn.new = 0;
 		client.usertable
 		    .bootstrapTable('updateByUniqueId',{id: username,
-							row: mf,
+							row: fn,
 							replace:true});
 		
 	    },1000);
 	});
     }
     $('#addUserModal').modal('hide');
-    console.log(f);
 }
