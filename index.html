@@ -3,6 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta name="version" content="1.0.14"/>
     <title> CVE Services Client Interface</title>
     <link rel="stylesheet"
 	  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -15,16 +16,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 	    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
 	    crossorigin="anonymous"></script>
-    
-    
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	    crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" integrity="sha384-odhHAoX521Z5MY3e/47Qjk9w2jsZDZ5ZxvD3Yj/z+HAlXwAxMCal1I1IaL21uilY" crossorigin="anonymous"></script>
+    <script src="sweetalert2/sweetalert2.all.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css" integrity="sha384-ppHVqi8cSvs9rS2kDYZoGLiwz7RqQSf8Cw/u7yvuBCHnP8LftQKtbJKS6pXF9OXg" crossorigin="anonymous">
     <script src="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js" integrity="sha384-c6BpBD7+QRK09NF7WgSPQpBF4z1UdPVJEFAvOnQoNyqtMMuJW/hF+iw3pHlKvmxF" crossorigin="anonymous"></script>
+    <script src="ace-builds/src-min-noconflict/ace.js"></script>
+    <!-- Alternate load from jsdelivr
+	 <script src="https://cdn.jsdelivr.net/npm/ace-editor-builds@1.2.4/src-min-noconflict/ace.js"></script>
+	 -->
     <script src="cveClientlib.js"></script>
-    <link rel="stylesheet" href="cveInterface.css">
+    <link rel="stylesheet" href="cveInterface.css?version=2022042503">
   </head>
   <body class="text-center whitebody">
     <div class="alert position-fixed w-100" id="topalert" role="alert">
@@ -36,42 +39,47 @@
 	  <div class="modal-header">
 	    <h5 class="col-12 modal-title text-center">
 	      <span class="mtitle">Add User</span>
-	      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	      <button type="button" class="close" data-dismiss="modal"
+		      aria-label="Close">
 		<span aria-hidden="true">&times;</span>
 	      </button>
 	    </h5>
 	  </div>
 	  <div class="modal-body">
-	    <form>
+	    <form autocomplete="off" onsubmit="return false">
 	      <div id="cpassword" class="d-none cpassword">SYHpbZuvOGS80P5oNX</div>
 	      <div class="form-group">
 		<label class="d-none" for="amount">Username
 		</label>
 		<input type="email" name="username" data-update="new_username"
-		       required="required"
+		       required="required" id="username"
 		       class="form-control username"
+		       onchange="checkchange(this)" 
 		       placeholder="Username (user@example.com)"/>
 	      </div>
 	      <div class="form-group">
-		<label class="d-none" for="amount">First Name
+		<label class="d-none" for="name_first">First Name
 		</label>
-		<input type="email" name="name_first" data-update="name.first" 
-		       required="required"
+		<input type="text" name="name_first" data-update="name.first" 
+		       required="required" id="name_first"
+		       onchange="checkchange(this)" 		       
 		       class="form-control name_first"
 		       placeholder="First Name (John)"/>
 	      </div>
 	      <div class="form-group">
-		<label class="d-none" for="amount">Last Name
+		<label class="d-none" for="name_last">Last Name
 		</label>
-		<input type="email" name="name_last" data-update="name.last"
-		       required="required"
+		<input type="text" name="name_last" data-update="name.last"
+		       required="required" id="name_last"
+		       onchange="checkchange(this)" 		       
 		       class="form-control name_last"
 		       placeholder="Last Name (Smith)"/>
 	      </div>
 	      <div class="form-group">
-		<label class="d-none" for="amount">Role
+		<label class="d-none" for="active_roles">Role
 		</label>
-		<select name="user_roles" class="form-control user_roles"
+		<select name="active_roles" class="form-control active_roles"
+			onchange="checkchange(this)" id="active_roles"			
 			data-update="active_roles">
 		  <option value="">Role: User</option>
 		  <option value="ADMIN">Role: Administrator</option>
@@ -95,13 +103,205 @@
 	    <button type="button" class="btn btn-primary adduser"
 		    onclick="adduser()">
 	      Add User</button>
-	    <button type="button" class="btn btn-info updateuser d-none"
-		    onclick="updateuser()">
+	    <button type="button" class="btn btn-info updateuser"
+		    id="updateButton" 
+		    onclick="update_user()">
 	      Update User</button>	    
 	  </div>
 	</div>
       </div>
-    </div>    
+    </div>
+    <div class="modal fade cveUpdate" id="cveUpdateModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <h5 class="col-12 modal-title text-center">
+	      <span class="ltitle">Update </span>
+	      <span class="mtitle"></span>
+	      <button type="button" class="close" data-dismiss="modal"
+		      aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	      </button>
+	    </h5>
+	  </div>
+	  <div class="modal-body">
+	    <form autocomplete="off" id="cveform" onsubmit="return false">
+	      <ul class="nav nav-tabs" id="morjson" role="tablist">
+		<li class="nav-item waves-effect waves-light">
+		  <a class="nav-link active" id="nice-tab" data-toggle="tab"
+		     href="#nice" role="tab" aria-controls="nice"
+		     aria-selected="true" onclick="from_json(this)">
+		    Minimal
+		  </a>
+		  <a class="refresh d-none"
+		     onclick="show_cve_table()">Refresh</a>
+		</li>
+		<li class="nav-item waves-effect waves-light">
+		  <a class="nav-link" id="msjon-tab" data-toggle="tab"
+		     href="#mjson" role="tab" aria-controls="mjson"
+		     aria-selected="false" onclick="to_json(this)">
+		    JSON
+		  </a>
+		</li>
+	      </ul>
+	      <div class="tab-content" id="nice-or-json">
+		<div class="tab-pane fade active show" id="nice"
+		     role="tabpanel" aria-labelledby="nice-tab">
+		  <ol class="form-group frow" data-rclass="descriptions">
+		    <label>Description(s)
+		    </label>
+		      <button class="duplicator addrow" title="Add Description"
+			      onclick="duplicate(this.parentNode)">&#8853;
+		      </button>		    
+		    <li class="erow position-relative descriptions">
+		      <button class="duplicator deleterow text-danger"
+			      title="Delete row" 			      
+			    onclick="unduplicate(this.parentNode)">
+			&#8854;
+		      </button>
+		      Language:
+		      <select name="lang" class="form-control lang"
+			      data-field="descriptions.0.lang">
+			<option selected value="en">English (en)</option>
+		      </select>
+		      <textarea class="form-control description"
+				onblur="clearoff(this)" 
+				name="description"  rows="4"
+				data-field="descriptions.0.value"
+				placeholder="Description of the vulnerability" 
+				example="[PROBLEMTYPE] in [COMPONENT] in [VENDOR] [PRODUCT] [VERSION] on [PLATFORMS] allows [ATTACKER] to [IMPACT] via [VECTOR]"></textarea>
+		    </li>
+		  </ol>
+		  <ol class="form-group frow" data-rclass="affected">
+		    <label>Impacted Product(s)
+		    </label>
+		    <button class="duplicator addrow"
+			    title="Add Impacted Product"
+			    onclick="duplicate(this.parentNode)">&#8853;
+		      </button>		    
+		    <li class="erow position-relative affected">
+		      <button class="duplicator deleterow text-danger"
+			      title="Delete row" 			      
+			      onclick="unduplicate(this.parentNode)">
+			&#8854;
+		      </button>		      
+		      <input type="text" name="vendor" onblur="clearoff(this)"
+			     class="form-control vendor"
+			     data-field="affected.0.vendor"
+			     placeholder="Vendor or Project (Mitre or Mozilla)"
+			     required="required">
+		      <input type="text" name="product" onblur="clearoff(this)"
+			     class="form-control product"
+			     data-field="affected.0.product"
+			     placeholder="Product (Firefox)"
+			     required="required">
+		      <!-- optional way avoided for now 
+		      <select name="defaultstatus" onblur="clearoff(this)"
+			      data-field="affected.0.defaultStatus"
+			      class="form-control defaultstatus">
+			<option value="">Default Status (Affected)</option>
+			<option value="affected">Affected</option>
+			<option value="unaffected">Not Affected</option>
+			<option value="unknown">Unknown</option>
+		      </select>
+		      -->
+		      <ol class="childarray" data-rclass="versions">
+			<label>Version(s)
+			</label>
+			<button class="duplicator addrow"
+				title="Add Impacted Versions"
+				onclick="duplicate(this.parentNode)"> &#8853;
+			</button>
+			<li class="erow position-relative versions text-left">
+			  <button class="duplicator deleterow text-danger"
+				  title="Delete row" 			      
+				  onclick="unduplicate(this.parentNode)">
+			    &#8854;
+			  </button>
+			  <input type="text" name="version"
+				 onblur="clearoff(this)"
+				 data-field="affected.0.versions.0.version"
+				 required="required"
+				 class="form-control version"
+				 placeholder="Version String (1.1.0)"/>
+			  <select name="status" onblur="clearoff(this)"
+				  data-field="affected.0.versions.0.status"
+				  class="form-control status">
+			    <option value="">Version Status (Affected)</option>
+			    <option value="affected">Affected</option>
+			    <option value="unaffected">Not Affected</option>
+			    <option value="unknown">Unknown</option>
+			  </select>			
+			  <input type="checkbox"
+				 onchange="$('.versionRange').toggleClass('d-none')">
+			  Range
+			  <select name="versionRangeType"
+				  onchange="update_related(this)"
+				  data-related="versionRangeValue"
+				  data-relatedfield="affected.0.versions.0.$"
+				  class="form-control versionRange mauto d-none">
+			    <option value="">Select</option>
+			    <option value="lessThan">&lt;</option>
+			    <option value="lessThanOrEqual">&lt;=</option>
+			  </select>
+			  <input type="text" name="versionRangeValue"
+				 onblur="clearoff(this)"
+				 class="form-control versionRange versionRangeValue mauto d-none"
+				 placeholder="Version Range &lt;/&lt;= (1.2.0)">
+			</li>
+		      </ol>
+		    </li>
+		  </ol>
+		  
+		  <ol class="form-group frow" data-rclass="references">
+		    <label>Reference(s)
+		    </label>
+		      <button class="duplicator addrow" title="Add Reference"
+			      onclick="duplicate(this.parentNode)">&#8853;
+		      </button>		    
+		    <li class="erow position-relative references">
+		      <button class="duplicator deleterow text-danger"
+			      title="Delete row" 
+			      onclick="unduplicate(this.parentNode)">
+			&#8854;
+		      </button>		      		      
+		      <input type="url" name="url" class="form-control url"
+			     onblur="clearoff(this)"			     
+			     data-field="references.0.url" 
+			     placeholder="URL (https://ex.co/psirt/id:11)"
+			     required="required">
+		      <input type="text" class="form-control name"
+			     onblur="clearoff(this)"			     
+			     data-field="references.0.name"
+			     placeholder="URL name (Example's PSIRT advisory #11)"
+			     name="name" maxlength="512">
+		    </li>
+		  </ol>
+		  <div class="form-group frow" data-rclass="extrajson">
+		    <label>
+		      Additional Field(s) JSON
+		    </label>
+		      <button class="duplicator addrow" data-show="rawjson"
+			      title="Show additional properties JSON"
+			      onclick="show_field(this)">&#10148;</button>
+		    <textarea class="form-control rawjson d-none"></textarea> 
+		  </div>
+		</div>
+		<div class="tab-pane fade" id="mjson" role="tabpanel"
+		     aria-labelledby="mjson-tab">
+		  <div class="jsoneditor" id="mjsoneditor"></div>
+		</div>
+	      </div>
+	    </form>
+	  </div>
+	  <div class="modal-footer">
+	    <button type="button" class="btn btn-primary cveupdate"
+		    onclick="publish_cve()">
+	      Publish CVE</button>
+	  </div>
+	</div>
+      </div>
+    </div>
     <div class="modal fade" id="deepDive" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
 	<div class="modal-content w-auto">
@@ -114,15 +314,14 @@
 	    </h5>
 	  </div>
 	  <div class="modal-body">
-	    <form>
+	    <form autocomplete="off" onsubmit="return false">
 	      <div class="form-group">
 	      </div>
 	    </form>
 	  </div>
 	  <div class="modal-footer">
-	    <button type="button" class="btn btn-danger"
-		    data-dismiss="modal">Close</button>
-	    <button type="button" class="btn btn-info" onclick="mupdate()">
+	    <button type="button" class="btn btn-info" id="updaterecord"
+		    onclick="mupdate()">
 	      Update Record</button>
 	  </div>
 	</div>
@@ -139,7 +338,7 @@
 	    </h5>
 	  </div>
 	  <div class="modal-body">
-	    <form>
+	    <form autocomplete="off" onsubmit="return false">
 	      <div class="form-group">
 		<label class="d-none" for="amount">Count of CVEs to reserve
 		</label>
@@ -187,7 +386,7 @@
 	    
 	  </div>
 	  <div class="modal-body">
-	    <form>
+	    <form autocomplete="off" onsubmit="return false">
 	      <div class="form-group">
 		<label class="d-none" for="org">Organization Short Name</label>
 		<input type="text" name="org" id="org"
@@ -238,6 +437,7 @@
     <main role="main" class="inner cover">
       <div class="container my-4">
 	<section>
+	  <h6> Demo of CVE 5.0 service client</h6>
 	  <ul class="nav nav-tabs" id="svTab" role="tablist">
 	    <li class="nav-item waves-effect waves-light">
 	      <a class="nav-link active" id="cve-tab" data-toggle="tab" href="#cve" role="tab" aria-controls="cve" aria-selected="false" data-tableid="cvetable" onclick="show_cve_table(1)">
@@ -248,7 +448,7 @@
 	    <li class="nav-item waves-effect waves-light">
 	      <a class="nav-link" id="users-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="false" onclick="show_users_table(1)" data-tableid="usertable">Users
 	      </a>
-		<a class="refresh d-none" onclick="show_users_table()">Refresh</a>
+	      <a class="refresh d-none" onclick="show_users_table()">Refresh</a>
 	    </li>
 	    <li class="nav-item waves-effect waves-light d-none">
 	      <a class="nav-link " id="admin-tab" data-toggle="tab" href="#admin" role="tab" aria-controls="admin" aria-selected="true">Admin</a>
@@ -273,7 +473,7 @@
 			      onclick="logout()">
 		      <span class="btn logout d-none">
 			&#10140;
-			</span>
+		      </span>
 		      Logout
 		    </button>
 
@@ -302,8 +502,15 @@
 	    <div class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab">
 	    </div>
 	  </div>
-
 	</section>
+	<hr>
+	<p>
+	  <small>
+	    This website does NOT store any data or track usage. The code is freely available
+	    at <a href="https://github.com/CERTCC/cveClient/">GitHub</a>
+	  </small>
+	</p>
+	    
       </div>    
     </main>
     <script src="cveInterface.js"></script>    

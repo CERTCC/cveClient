@@ -1,15 +1,100 @@
-const _version = "1.0.3";
+const _version = "1.0.5";
 const _tool = "CVE Services Client Interface "+_version;
-const _cna_template =  {"affected": [ { "version": "${version}", "defaultStatus": "affected", "product": "${product}", "vendor": "${vendor|client.orgobj.name}" } ], "descriptions": [ { "lang": "en", "value": "$description" } ], "providerMetadata": { "orgId": "$client.userobj.org_UUID", "shortName": "$client.org" }, "references": [ { "name": "$cve", "url": "$url" }]};
+const _cna_template = { "descriptions": [ { "lang": "${descriptions.0.lang}", "value": "${descriptions.0.value}"} ] ,  "affected": [ { "versions": [{"version": "${affected.0.versions.0.version}"}], "product": "${affected.0.product}", "vendor": "${affected.0.vendor|client.orgobj.name}" } ],"references": [ { "name": "${references.0.name}", "url": "${references.0.url}" }], "providerMetadata": { "orgId": "${client.userobj.org_UUID}", "shortName": "${client.org}" } }
+const valid_states = {PUBLISHED: 1,RESERVED: 1, REJECTED: 1};
 let store;
 let store_tag = "cveClient/";
 /* User var to access client as window.client global var */
 var client;
 
-function add_option(w,f) {
-    $(w).append($('<option/>').attr({value:f.toString(),selected:1})
-		.html(f.host));
+function add_option(w,v,f,s) {
+    $(w).append($('<option/>').attr({value:v,selected:s})
+		.html(f));
 }
+function show_field(w) {
+    var fclass = $(w).data("show");
+    $('.'+fclass).toggleClass("d-none");
+    $(w).toggleClass("arrowdown");
+}
+function load_languages() {
+    $.getJSON("language-codes.json").done(function(d) {
+	var langs = d;
+	if("langs" in d)
+	    langs = d.langs;
+	for(var i=0; i<langs.length; i++) {
+	    if('alpha2' in langs[i]) {
+		if(langs[i].alpha2 == "en")
+		    continue;
+		if('English' in langs[i]) {
+		    var tf = langs[i].English.split(';');
+		    for(var j=0; j<tf.length; j++) 
+			add_option($('.lang'),langs[i].alpha2,
+				   tf[j] + "(" + langs[i].alpha2 + ")");
+		} else
+		    add_option($('.lang'),langs[i].alpha2,langs[i].alpha2);
+	    }
+	}
+    });
+}
+function json_edit(vjson) {
+    let editor = ace.edit("mjsoneditor");
+    editor.setTheme("ace/theme/xcode");
+    editor.session.setMode("ace/mode/json");
+    editor.session.setUseWrapMode(true);
+    editor.setValue(vjson);
+    from_json();
+    if(!$('#nice').hasClass("active"))
+	$('#nice-tab').click();
+}
+function get_deep(obj,prop) {
+    /* Check if Object obj has all the dot-delimited properties 
+     recursively. example get_deep({a:{b:{c:{"good"}}}},"a.b.c") 
+    will return good */
+    if(typeof(obj) != "object")
+	return undefined;
+    let props = prop.split(".");
+    var x = obj;
+    for(var i=0; i<props.length; i++) {
+	if(props[i] in x)
+	    x = x[props[i]];
+	else
+	    return undefined;
+    }
+    return x;
+}
+function set_deep(obj,prop,val) {
+    /* For the Object obj set the property of a prop to val 
+     recursively. example set_deep({a:{b:{c:{"good"}}}},"a.b.c","bad") 
+    will return {a:{b:{c:{"bad"}}}} */
+    if(typeof(obj) != "object")
+	return undefined;
+    let fobj = simpleCopy(obj);
+    var x = fobj;
+    let props = prop.split(".");
+    let fprop = props.pop();
+    for(var i=0; i<props.length; i++) {
+	if(props[i] in x) {
+	    x = x[props[i]];
+	    continue;
+        } else {
+	    if(i+1 < props.length) {
+		if (props[i+1].match(/^\d+$/)) 
+		    x[props[i]] = [];
+		else
+		    x[props[i]] = {};
+	    } else if (fprop.match(/^\d+$/))  {
+		/* Last element and is an array */
+		x[props[i]] = [];
+	    } else {
+		x[props[i]] = {};
+	    }
+	    x = x[props[i]];
+	}
+    }
+    x[fprop] = val;
+    return fobj;
+}
+
 function simpleCopy(injson) {
     return JSON.parse(JSON.stringify(injson));
 }
@@ -21,6 +106,37 @@ function selectpass(passid) {
     document.execCommand("copy");
     $('#error_div').html("Password copied to clipboard!").
 	removeClass().addClass("warn success").show().fadeOut(2000);
+}
+function duplicate(pe) {
+    /* Label has only one class just copy it*/
+    let pclass = $(pe).data('rclass');
+    let childclass = "." + pclass;
+    let nrow = $(pe).parent().find(childclass).clone().removeClass(pclass);
+    let offset = $(pe).find(".erow").length;
+    nrow.find(".form-control").each(function(_,p) {
+	let rv = $(p).data('field');
+	if(!rv) return;
+	rv = rv.replace(/\.(\d+)\.([^\d]+)+$/,function(s0,s1,s2) {
+	    try { 
+		return '.' + String(offset) + '.' + s2;
+	    } catch(err) {
+		console.log(err);
+		console.log("Error while incrementing data-field id");
+		return s0;
+	    };
+	});
+	$(p).attr("data-field",rv);
+	/* jquery data() method is distinct from data- fields so do both*/
+	$(p).data("field",rv);
+    });
+    $(pe).append(nrow);
+}
+function unduplicate(pe) {
+    $(pe).remove();
+}
+function data_selector(el,dfield,dvalue) {
+    let sel = '[data-' + dfield + '="' + dvalue + '"]';
+    return $(el+sel);
 }
 function top_alert(lvl,msg,tmr) {
     $('#topalert').addClass("alert alert-"+lvl).html(msg).fadeIn();
@@ -47,7 +163,7 @@ function urlprompt(w) {
 		} catch(err) {
 		    return 'URL is invalid';
 		}
-		add_option(w,f);
+		add_option(w,f.toString(),f.host,1);
 		$('#loginModal').attr("tabindex","-1");		
 	    }
 	});
@@ -152,11 +268,13 @@ function logout() {
 	}
     });
 }
-function swal_error(err_msg) {
+function swal_error(err_msg,err_type) {
+    if(!err_type)
+	err_type = "error";
     Swal.fire({
 	title: "Error!",
 	text: err_msg,
-	icon: "error",
+	icon: err_type,
 	confirmButtonText: "OK"
     });
 }
@@ -176,11 +294,11 @@ $(function() {
 	    var val = store.getItem(store_tag+vid);
 	    $(x).val(val);
 	    if($(x).val() != val) {
-		add_option(x,new URL(val));
+		let f = new URL(val);
+		add_option(x,f.toString(),f.host,1);
 	    }
 	});
 	client = new cveClient($('#org').val(),$('#user').val(),$('#key').val(),$('#url').val());
-	console.log("Here");
 	client.getuser().then(function(x) {
 	    x.json().then(function(y) {
 		if('error' in y) {
@@ -198,6 +316,7 @@ $(function() {
 		       ", please logout and refresh"+
 		       " for a new login");	    
 	});
+	load_languages();
     }
 });
 async function get_pages(m,tag,fld,tbn,fun) {
@@ -273,6 +392,24 @@ function deepdive(_, _, row, el) {
 	console.log("Ignore this error");
 	$('#detailtag').html('');	
     }
+    /* for CVE record we only support RESERVED state 
+     to move to PUBLISHED at this time. Update is not 
+     available */
+    if("username" in row)
+	$('#updaterecord').html("Update User");
+    else if(("cve_id" in row) && ("state" in row)) {
+	$('#cveUpdateModal .mtitle').html("("+row.cve_id+")");
+	if (row.state == "RESERVED") {
+	    $('#updaterecord').html("Edit & Publish CVE").show();
+	    $('#cveUpdateModal .cveupdate').html("Publish CVE");
+	} else if (row.state == "PUBLISHED") {
+	    $('#updaterecord').html("Update CVE").show();
+	    $('#cveUpdateModal .cveupdate').html("Update CVE");
+	} else {
+	    $('#updaterecord').hide();
+	}
+    } else 
+	$('#updaterecord').hide();
     var html =  Object.keys(row).reduce(function(h,d) {
 	return objwalk(h,d,row);
     },"<table class='table table-striped'><tbody>");
@@ -282,7 +419,8 @@ function deepdive(_, _, row, el) {
 }
 function add_user_modal() {
     $('#addUserModal').modal();
-    $('#addUserModal form').trigger('reset');    
+    $('#addUserModal form').trigger('reset');
+    $('.addUserModal .form-control').removeClass('is-valid is-invalid');
     $('#addUserModal').removeClass("updateUser").addClass("addUser");
     if(!('usertable' in client)) {
 	console.log("Creating users table in the background");
@@ -297,7 +435,8 @@ function user_active_view(active) {
 	$('#addUserModal span.uspan').removeClass('text-danger')
 	    .addClass('text-primary').html(' [Active] ');
     } else {
-	$('#addUserModal .active').prop({checked:false}).removeClass('enabled');
+	$('#addUserModal .active').prop({checked:false})
+	    .removeClass('enabled');
 	$('#addUserModal span.round').prop({title:'Inactive'});	
 	$('#addUserModal span.uspan').removeClass('text-primary')
 	    .addClass('text-danger').html(' [Inactive] ');
@@ -306,13 +445,18 @@ function user_active_view(active) {
 function user_update_modal(mr) {
     $('#addUserModal').modal();
     $('#addUserModal').removeClass("addUser").addClass("updateUser");
+    /* update button remains hidden until some values change in the form*/
+    $('#updateButton').hide();
     $('#addUserModal .mtitle').html("Update User ("+mr.username+")");
     $('#addUserModal .username').val(mr.username).data('oldvalue',mr.username);
+    $('#addUserModal .form-control').removeClass('is-valid is-invalid');    
     if('name' in mr) {
 	if('first' in mr.name)
-	    $('#addUserModal .name_first').val(mr.name.first).data('oldvalue',mr.name.first);
+	    $('#addUserModal .name_first').val(mr.name.first)
+	    .data('oldvalue',mr.name.first);
 	if('last' in mr.name)
-	    $('#addUserModal .name_last').val(mr.name.last).data('oldvalue',mr.name.last);
+	    $('#addUserModal .name_last').val(mr.name.last)
+	    .data('oldvalue',mr.name.last);
     }
     
     if('active' in mr)
@@ -320,17 +464,55 @@ function user_update_modal(mr) {
     if(mr.authority.active_roles.length) {
 	/* Handle user roles currently only ADMIN or Nothing*/
 	let vroles = mr.authority.active_roles.join(",")
-	('#addUserModal .active_roles').val(vroles).data('oldvalue',vroles);
+	$('#addUserModal .active_roles').val(vroles).data('oldvalue',vroles);
+    } else {
+	$('#addUserModal .active_roles').val('');
     }
-    $('#addUserModal .form-control').change(function() {
-	checkchange(this);
-    });
 }
 function checkchange(w) {
-    console.log(w);
+    if(get_deep(w,'validity.valid') != undefined) {
+	if(w.validity.valid == false) 
+	    $(w).removeClass('is-valid').addClass('is-invalid');
+	if (w.validity.valid == true)
+    	    $(w).removeClass('invalid').addClass('is-valid');
+    }
+    if($('#addUserModal').hasClass("updateUser")) {
+	if(($(w).data('oldvalue') != $(w).val()) && $(w).hasClass('is-valid'))
+	    $('#updateButton').show();
+    }
 }
-function cve_update_modal() {
-
+function vreplace(s,v) {
+    var vr = v.split("|");
+    for(var i=0; i<vr.length; i++) {
+	let ret = get_deep(window,vr[i]);
+	if(ret)
+	    return ret;
+    }
+    return s
+}
+async function cve_update_modal() {
+    $('#cveform .form-control').removeClass('is-valid');
+    /* remove all additional fields */
+    $('#cveform ol > li.erow:nth-of-type(n+2)').remove();
+    $('#cveform').trigger('reset');
+    $('#cveUpdateModal').modal();
+    var mr = $('#deepDive').data('crecord');
+    if(('state' in mr) && (mr.state == 'PUBLISHED')) {
+	let c = await client.getcvedetail(mr.cve_id);
+	console.log(c);
+	if(('containers' in c) && (c.containers.cna))
+	    json_edit(JSON.stringify(c.containers.cna,null,3));
+	else if('error' in c)
+	    swal_error("Error in fetching details of CVE "+c.error+" : "+
+		       c.message);
+	else
+	    swal_error("Unknown error when fetching details of CVE. "+
+		       "See console log for details");
+    } else {
+	let mjson = JSON.stringify(_cna_template,null,2)
+	    .replace(/\$\{([^\}]+)\}/g,vreplace);
+	json_edit(mjson);
+    }
 }
 function mupdate() {
     var mr = $('#deepDive').data('crecord');
@@ -445,9 +627,10 @@ function show_cve_table(show) {
     let uid = "cve_id";
     let tbn = "cvetable";
     let msg = "No CVE data to display";
-    let pmd = {state: "UNKNOWN"};
-    let clm = [{field:'cve_id', title:'CVE',sortable: true},
-	       {field: 'state', title: 'State',sortable: true}];
+    let pmd = {state: "UNKNOWN",reserved: (new Date(0)).toISOString()};
+    let clm = [{field:'cve_id', title: 'CVE', sortable: true},
+	       {field: 'state', title: 'State', sortable: true},
+	       {field: 'reserved', title: 'Date', sortable: true}];
     show_table(fun,msg,tag,fld,pmd,clm,tbn,uid,show);
 }
 async function reserve() {
@@ -536,15 +719,78 @@ async function reset_user(w,confirmed) {
 	lock_unlock(0,w);
     }
 }
-function updateuser() {
-    //await client.updateuser('rajo@sendmail.org',{'active_roles.remove':'ADMIN'})
-    //await client.updateuser('rajo@sendmail.org',{'active_roles.add':'ADMIN'})
+function update_user() {
+    /* await client.updateuser('rajo@sendmail.org', 
+       {'active_roles.remove':'ADMIN'})
+       await client.updateuser('rajo@sendmail.org',
+       {'active_roles.add':'ADMIN'})
+       */
     var row = $('#deepDive').data('crecord');
     let updates = {};
     $('#addUserModal .form-control').each(function(_,x) {
 	//console.log($(x).data('update'));
-	//console.log(x.name);
+	var field = $(x).data('update');
+	if($(x).val() && $(x).data('oldvalue') != $(x).val()) 
+	    updates[field] = $(x).val();
     });
+    if(Object.keys(updates).length) {
+	if('active_roles' in updates && updates.active_roles != "") {
+	    updates['active_roles.add'] = updates.active_roles;
+	    delete updates.active_roles;
+	}
+	if(get_deep(row,'authority.active_roles.length')) {
+	    /* User has a role check if we need to remove it*/
+	    if($('#addUserModal .active_roles').val() == "")  {
+		delete updates.active_roles;
+		updates['active_roles.remove'] = row.authority
+		    .active_roles.join(",");
+	    }
+	}
+	if(('name.first' in updates) || ('name.first' in updates)) {
+	    /* We need both values for the child properties of 'name' */
+	    updates['name.first'] = $('#addUserModal .name_first').val() || " ";
+	    updates['name.last'] = $('#addUserModal .name_last').val() || " ";
+	}
+	if('new_username' in updates) {
+	    Swal.fire({title: "Username Change!",
+		       text: "User needs to be notified to login with the "+
+		       "new username as "+updates.new_username,
+		       icon: "warning",
+		       showDenyButton: true,
+		       showCancelButton: false,
+		       confirmButtonText: "Proceed!",
+		       denyButtonText: "Cancel"
+		      }).then(function(result)  {
+			  if (result.isConfirmed) {    
+			      console.log(updates);
+			      do_update_user(row.username,updates);
+			  }	    
+		      });
+	} else {
+	    do_update_user(row.username,updates);
+	}
+    } else {
+	swal_error("Nothing needs to be updated","warning");
+    }
+}
+async function do_update_user(username,updates) {
+    let d = await client.updateuser(username,updates);
+    if("error" in d) {
+	swal_error("Error in updating user "+d.error+" : "+d.message);
+    } else if('updated' in d) {
+	let nrow = simpleCopy(d.updated);
+	nrow['warn'] = 1;
+	client.usertable.bootstrapTable('updateByUniqueId',{id: username,
+							    row: nrow});
+	Swal.fire({icon: "success",
+		   title: "Update Updated!",
+		   text: d.message || "Update success.",
+		   timer: 2000}).then(function() {
+		       $('#addUserModal').modal('hide');
+		   });
+    } else {
+	swal_error("Unknown error, please see console.log for details");
+    }
 }
 function lock_unlock(dolock,w) {
     if(dolock) {
@@ -602,7 +848,7 @@ async function adduser() {
     let username = $('#addUserModal .username').val();
     let fname = $('#addUserModal .name_first').val() || "";
     let lname = $('#addUserModal .name_last').val() || "";
-    let role = $('#addUserModal .role').val();
+    let role = $('#addUserModal .active_roles').val();
     if(!username) {
 	$('#addUserModal .username').addClass('is-invalid');
 	return;
@@ -642,4 +888,132 @@ async function adduser() {
 	});
     }
     $('#addUserModal').modal('hide');
+}
+function get_json_data() {
+    try { 
+	return JSON.parse($('#mjson .jsoneditor')[0]
+			  .env.editor.getValue());
+    } catch (err) {
+	console.log(err);
+	swal_error("Error in collecting JSON. See console log for details");
+	return {};
+    }
+
+}
+function from_json(w) {
+    let json_data = get_json_data();
+    if(!json_data)
+	return;
+    $('#nice .frow').each(function(_,el) {
+	var field = $(el).data("rclass");
+	if(field in json_data) {
+	    let diff = json_data[field].length - $(el).find("> .erow").length;
+	    if(diff > 0) {
+		/* Add elements */
+		for(var i=1; i <= diff; i++) 
+		    $(el).find(".addrow").click();
+	    } else if (diff < 0) {
+		/* Remove elements */
+		for(var i=1; i <= Math.abs(diff); i++) 
+		    $(el).find(".deleterow").click();		
+	    }
+	}
+    });
+    $('#nice .form-control').each(function(_,v) {
+	let props = $(v).data("field");
+	if(props) { 
+	    let oval = get_deep(json_data,props);
+	    if(oval && oval[0] != '$') {
+		/* Value map exists and does not begin with $ */
+		$(v).val(oval);
+		if(oval != $(v).val()) {
+		    /* In case of select field */
+		    add_option(v,oval,oval,1);
+		}
+		clearoff(v);
+	    }
+	}
+    });
+}
+async function publish_cve() {
+    try { 
+	if($('#nice-or-json').find(".active.show").attr("id") == "nice") { 
+	    if(to_json() == false) {
+		$('#cveform .is-invalid').focus();
+		swal_error("Some required fields are missing or incomplete");
+		return;
+	    }
+	}
+	let editor = $('#mjson .jsoneditor')[0].env.editor;
+	let pubcve = JSON.parse(editor.getValue());
+	let mr = $('#deepDive').data('crecord');
+	let cve = mr.cve_id;
+	let ispublic = mr.state == "PUBLISHED";
+	let d = await client.publishcve(cve,pubcve,ispublic);
+	if("error" in d) {
+	    swal_error("Failed to publish CVE, Error : "+d.error);
+	    console.log(d);
+	    return;
+	}
+	if("created" in d) {
+	    let note = "Published";
+	    if(ispublic)
+		note = "Updated";
+	    Swal.fire({
+		title: "CVE "+note+" Successfully!",
+		text: d.message,
+		icon: "success",
+		timer: 1800
+	    });
+	    let u = client.cvetable.bootstrapTable('getRowByUniqueId',cve);
+	    u.state = get_deep(d,'created.cveMetadata.state');
+	    let modified = get_deep(d,'created.cveMetadata.datePublished');
+	    if(modified) 
+		set_deep(u,'time.modified',modified);
+	    u.new = 1;
+	    client.cvetable.bootstrapTable('updateByUniqueId',{id: cve,
+							       row: u });
+	    $('#cveUpdateModal').modal('hide');
+	} else {
+	    console.log(d);
+	    swal_error("Unknown error CVE could not be updated. See console "+
+		       " log for details!");
+	}
+    }catch(err) {
+	console.log(err);
+	swal_error("Could not publish this CVE. Fix the errors please!");
+    }
+}
+function to_json(w) {
+    let json_data = get_json_data();
+    let value_check = true;
+    $('#nice .form-control').not('.d-none').each(function(_,v) {
+	if($(v).val()) {
+	    let props = $(v).data("field");
+	    if(!props) return;
+	    json_data = set_deep(json_data,props,$(v).val());
+	    $(v).removeClass('is-invalid').addClass('is-valid');
+	} else {
+	    value_check = false;
+	    $(v).removeClass('is-valid').addClass('is-invalid');
+	}
+    });
+    let editor = $('#mjson .jsoneditor')[0].env.editor;
+    editor.setValue(JSON.stringify(json_data,null,2));
+    return value_check;
+}
+function update_related(w) {
+    /* Function to update the data-field of a related item*/
+    /* data-related="versionRangeValue" data-relatedfield="affected.0.versions.0.$" */
+    let related = $(w).data("related");
+    if($(w).val()) {
+	let field = $(w).data("relatedfield").replace("$",$(w).val());
+	$(w).parent().find("."+related).attr("data-field",field);
+    } else {
+	$(w).parent().find("."+related).removeAttr("data-field");
+    }
+}
+function clearoff(w) {
+    if($(w).val() && (get_deep(w,'validity.valid') == true))
+	$(w).removeClass('is-invalid').addClass('is-valid');
 }

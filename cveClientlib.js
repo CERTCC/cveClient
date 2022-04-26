@@ -5,11 +5,15 @@ class cveClient {
 	this.key = key;
 	this.url = url;
 	this.user_path = "/org/"+this.org+"/user/"+this.user;
-	this._version = "1.0.7";
+	this._version = "1.0.9";
     }
-    create(cve,cnajson) {
+    publishcve(cve,cnajson,update) {
+	/* Create or Update a CVE */
+	let opts = null;
+	if(update)
+	    opts = {method: "PUT"};
 	let path = "/cve/"+cve+"/cna";
-	return this.putjson(path,null,null,{cnaContainer:cnajson});
+	return this.putjson(path,opts,null,{cnaContainer:cnajson});
     }
     reservecve(amount,cve_year,batch_type) {
 	let path = "/cve-id/";
@@ -26,6 +30,9 @@ class cveClient {
 	    }
 	};
 	return this.putjson(path,opts,qvars);
+    }
+    getcvedetail(cve) {
+	return this.getjson("/cve/"+cve);
     }
     getcve(cve) {
 	return this.getjson("/cve-id/"+cve);

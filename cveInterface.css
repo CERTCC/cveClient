@@ -1,3 +1,98 @@
+.childarray {
+    margin: 0px 0px 0px 16px;
+    border-left: 2px dotted #999;
+    position:relative;
+    padding-left: 4px;
+}
+button.arrowdown {
+    transform: rotate(90deg);
+    color: #999;
+}
+#mjson.show {
+    display: inline-block;
+}    
+#mjson {
+    width: 100%;
+    min-height: 600px;
+    position: relative;
+}
+.jsoneditor {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+.lang {
+    width: 30ch;
+    display: inline-block;
+}
+.erow {
+    text-align: left;
+    padding: 4px 1px 4px 1px;
+    border-bottom: 1px dotted #aaa;
+}
+/* consider some other color for values  other than placeholder 
+.erow input.form-control,
+.erow textarea.form-control
+{
+    color: blue;
+}
+*/
+.frow {
+    border-bottom: 1px solid #999;
+    position:relative;
+    padding: 0px 0px 0px 4px;
+}
+ol.frow,
+ol.childarray {
+    counter-reset: listCounter;
+}
+li.erow {
+    counter-increment: listCounter;
+}
+ol.frow li.erow::marker {
+    font-size: 0.6em;
+    content: "(" counter(listCounter) ")";
+}
+ol.frow li.erow:nth-of-type(1)::marker {
+    list-style-type: none;
+    content: "";
+}
+.erow:nth-of-type(1) > .lang {
+    pointer-events: none;
+    background: #eee;
+}
+.erow .deleterow {
+    display:none;
+}
+.erow:last-of-type .deleterow {
+    display: block;
+}
+.erow:nth-of-type(1) .deleterow {
+    display: none;
+}
+.erow:nth-of-type(n+2) > input:nth-of-type(1) {
+    width: 90%;
+}
+.duplicator {
+    color: #333;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    top: 2px;
+    right:2px;
+    position: absolute;    
+}
+.mauto { 
+    width: auto;
+    display:inline-block;
+}
+#cveUpdateModal label{
+    display:block;
+    font-weight: bold;
+    text-align: left;
+}
 .ousername {
     display: none;
 }

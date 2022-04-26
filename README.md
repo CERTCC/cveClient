@@ -1,8 +1,27 @@
 # cveClient
-A client and library to cve-services 2.x to provide CVE management for CNA and CERTs.
+A demo client interface and a client library to cve-services 2.x to provide CVE(5.x) vulnerability management for CNA and CERTs.
 
 
 # Introduction
-A JavaScript library and simple HTML interface for CVE services that is like RedHat's [cvelib](https://github.com/RedHatProductSecurity/cvelib) and [Vulnogram](https://github.com/Vulnogram/Vulnogram).  Provides capabilities to interface with [cve-services](https://github.com/CVEProject/cve-services) with a simple HTML UI.
+A JavaScript library and simple HTML interface for CVE services that is like RedHat's [cvelib](https://github.com/RedHatProductSecurity/cvelib) and [Vulnogram](https://github.com/Vulnogram/Vulnogram).  Provides capabilities to interface with [cve-services](https://github.com/CVEProject/cve-services) with a JavascScript client and simple HTML UI.
+
+Demo version of the UI and client library can be accessed at [https://democert.org/cveClient/](https://democert.org/cveClient/).  Currently the allowed servers (cve-services servers) are limited with Content Security Policy headers to cve-services 2.x  production site, testing site and a localhost instance.
+
+Dependency libraries for HTML UI only.
+* [jQuery - 3.5.1](https://jquery.com/)
+* [Bootstrap - 4.3.1](https://getbootstrap.com/)
+* [Popper - 1.14.7](https://popper.js.org/)
+* [SweetAlert2 - 2.11](https://sweetalert2.github.io/)
+* [Bootstrap-Table - 1.19.1](https://bootstrap-table.com/)
+* [Ace Editor - 1.2.4](https://ace.c9.io/)
+
+Except for Ace Editor and SweetAlert2 library all the dependencies are served from CDN sources with sha-284 [Subsource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) checks. There is some issue with the nightly builds, so these two libraries are served from local.  Please ensure you understand their license agreements as well.
+
+# cveClientlib
+If you plan to rollour your own UI, this JavaScript library is helpful.  Also note that there is another client library with similar capabilities built with ECMAScrip6 requirement at [https://github.com/xdrr/cve.js](https://github.com/xdrr/cve.js).
+
+You can use the `cveClientlib.js` to do all the tasks being performed by the current UI. The file is called cveClientlib.js as Safari browsers have trouble with filename and a Class name being the same. 
+
+
 
 
