@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta name="version" content="1.0.14"/>
+    <meta name="version" content="1.0.15"/>
     <title> CVE Services Client Interface</title>
     <link rel="stylesheet"
 	  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -161,10 +161,12 @@
 		      </button>
 		      Language:
 		      <select name="lang" class="form-control lang"
+			      required="required" 
 			      data-field="descriptions.0.lang">
 			<option selected value="en">English (en)</option>
 		      </select>
 		      <textarea class="form-control description"
+				required="required" 
 				onblur="clearoff(this)" 
 				name="description"  rows="4"
 				data-field="descriptions.0.value"
@@ -186,7 +188,7 @@
 			&#8854;
 		      </button>		      
 		      <input type="text" name="vendor" onblur="clearoff(this)"
-			     class="form-control vendor"
+			     class="form-control vendor" required="required"
 			     data-field="affected.0.vendor"
 			     placeholder="Vendor or Project (Mitre or Mozilla)"
 			     required="required">
@@ -225,6 +227,7 @@
 				 class="form-control version"
 				 placeholder="Version String (1.1.0)"/>
 			  <select name="status" onblur="clearoff(this)"
+				  required="required"
 				  data-field="affected.0.versions.0.status"
 				  class="form-control status">
 			    <option value="">Version Status (Affected)</option>
@@ -273,7 +276,7 @@
 		      <input type="text" class="form-control name"
 			     onblur="clearoff(this)"			     
 			     data-field="references.0.name"
-			     placeholder="URL name (Example's PSIRT advisory #11)"
+			     placeholder="Optional URL name (Example's PSIRT advisory #11)"
 			     name="name" maxlength="512">
 		    </li>
 		  </ol>
@@ -320,6 +323,10 @@
 	    </form>
 	  </div>
 	  <div class="modal-footer">
+	    <button type="button" class="btn btn-secondary d-none"
+		    id="cvedetails" onclick="display_cvedetails()">
+	      Show CVE Data
+	    </button>
 	    <button type="button" class="btn btn-info" id="updaterecord"
 		    onclick="mupdate()">
 	      Update Record</button>

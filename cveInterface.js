@@ -1,4 +1,5 @@
-const _version = "1.0.5";
+/* Clientlib, UI html and UI js all are version controlled */
+const _version = "1.0.6";
 const _tool = "CVE Services Client Interface "+_version;
 const _cna_template = { "descriptions": [ { "lang": "${descriptions.0.lang}", "value": "${descriptions.0.value}"} ] ,  "affected": [ { "versions": [{"version": "${affected.0.versions.0.version}"}], "product": "${affected.0.product}", "vendor": "${affected.0.vendor|client.orgobj.name}" } ],"references": [ { "name": "${references.0.name}", "url": "${references.0.url}" }], "providerMetadata": { "orgId": "${client.userobj.org_UUID}", "shortName": "${client.org}" } }
 const valid_states = {PUBLISHED: 1,RESERVED: 1, REJECTED: 1};
@@ -91,7 +92,12 @@ function set_deep(obj,prop,val) {
 	    x = x[props[i]];
 	}
     }
-    x[fprop] = val;
+    /* If the value is being set to be undefined then delete this property
+       of this object */
+    if(val === undefined)
+	delete x[fprop];
+    else
+	x[fprop] = val;
     return fobj;
 }
 
@@ -260,8 +266,16 @@ function logout() {
 	denyButtonText: 'Cancel',
     }).then((result) => {
 	if (result.isConfirmed) {
-	    sessionStorage.clear();
-	    localStorage.clear();
+	    $('#loginModal .form-control').each(function(_,x) {
+		if(store)
+		    store.removeItem(store_tag+$(x).attr('id'),$(x).val());
+		else {
+		    sessionStorage
+			.removeItem(store_tag+$(x).attr('id'),$(x).val());
+		    localStorage
+			.removeItem(store_tag+$(x).attr('id'),$(x).val());
+		}
+	    });	    
 	    location.reload();
 	} else if (result.isDenied) {
 	    console.log("User is still on");
@@ -402,20 +416,35 @@ function deepdive(_, _, row, el) {
 	if (row.state == "RESERVED") {
 	    $('#updaterecord').html("Edit & Publish CVE").show();
 	    $('#cveUpdateModal .cveupdate').html("Publish CVE");
+	    $('#cvedetails').addClass('d-none');	    
 	} else if (row.state == "PUBLISHED") {
 	    $('#updaterecord').html("Update CVE").show();
+	    $('#cvedetails').removeClass('d-none');
 	    $('#cveUpdateModal .cveupdate').html("Update CVE");
 	} else {
 	    $('#updaterecord').hide();
 	}
     } else 
 	$('#updaterecord').hide();
-    var html =  Object.keys(row).reduce(function(h,d) {
-	return objwalk(h,d,row);
+    display_object(row);
+    $('#deepDive').data('crecord',row).modal();
+}
+async function display_cvedetails(cve) {
+    if(!cve)
+	cve = $('#deepDive').data('crecord').cve_id;
+    let f = await client.getcvedetail(cve);
+    if("error" in f) {
+	swal_error("Unable to view CVE due to error: " + f.error +
+		   ": " + f.message);
+	return;
+    }
+    display_object(f);
+}
+function display_object(obj) {
+    var html =  Object.keys(obj).reduce(function(h,d) {
+	return objwalk(h,d,obj);
     },"<table class='table table-striped'><tbody>");
     $('#deepDive .modal-body').html(html);
-    $('#deepDive').data('crecord',row);
-    $('#deepDive').modal();
 }
 function add_user_modal() {
     $('#addUserModal').modal();
@@ -615,10 +644,27 @@ function show_users_table(show) {
     let tbn = "usertable";
     let msg = "No Users to display";
     let pmd = {active: "UNKNOWN"};
-    let clm = [{field:'name', title:'Full name', formatter: gname,sortable:true,sorter:gsort},
+    let clm = [{field:'name', title:'Full name', formatter: gname,
+		sortable:true, sorter:gsort},
 	       {field:'username', title:'Username',sortable: true},
 	       {field: 'active', title: 'Active',sortable: true}];
     show_table(fun,msg,tag,fld,pmd,clm,tbn,uid,show);    
+}
+function wdate(reserved,row) {
+    if(get_deep(row,'time.modified'))
+	return get_deep(row,'time.modified');
+    return reserved;
+}
+function wsort(d1,d2,row1,row2) {
+    let dateA = wdate(d1,row1);
+    let dateB = wdate(d2,row2);
+    if (dateA < dateB) {
+	return -1;
+    }
+    if (dateA > dateB) {
+	return 1;
+    }
+    return 0;
 }
 function show_cve_table(show) {
     let fun = "getcveids";
@@ -630,7 +676,8 @@ function show_cve_table(show) {
     let pmd = {state: "UNKNOWN",reserved: (new Date(0)).toISOString()};
     let clm = [{field:'cve_id', title: 'CVE', sortable: true},
 	       {field: 'state', title: 'State', sortable: true},
-	       {field: 'reserved', title: 'Date', sortable: true}];
+	       {field: 'reserved', title: 'Date', sortable: true,
+		formatter: wdate, sorter: wsort}];
     show_table(fun,msg,tag,fld,pmd,clm,tbn,uid,show);
 }
 async function reserve() {
@@ -947,6 +994,13 @@ async function publish_cve() {
 	let editor = $('#mjson .jsoneditor')[0].env.editor;
 	let pubcve = JSON.parse(editor.getValue());
 	let mr = $('#deepDive').data('crecord');
+	/* Override some fields on submit*/
+	if(get_deep(client,'userobj.org_UUID') &&  client.org) 
+	    pubcve["providerMetadata"] = { orgId: client.userobj.org_UUID,
+					   shortName: client.org };
+	if(get_deep(client,'constructor.name') && client._version)
+	    pubcve["x_generator"] = {engine:  client.constructor.name + "/" +
+				     client._version };
 	let cve = mr.cve_id;
 	let ispublic = mr.state == "PUBLISHED";
 	let d = await client.publishcve(cve,pubcve,ispublic);
@@ -955,10 +1009,13 @@ async function publish_cve() {
 	    console.log(d);
 	    return;
 	}
-	if("created" in d) {
+	if(("created" in d) || ("updated" in d)) {
 	    let note = "Published";
-	    if(ispublic)
+	    let fnote = "created";
+	    if(ispublic) {
 		note = "Updated";
+		fnote = "updated";
+	    }
 	    Swal.fire({
 		title: "CVE "+note+" Successfully!",
 		text: d.message,
@@ -966,8 +1023,8 @@ async function publish_cve() {
 		timer: 1800
 	    });
 	    let u = client.cvetable.bootstrapTable('getRowByUniqueId',cve);
-	    u.state = get_deep(d,'created.cveMetadata.state');
-	    let modified = get_deep(d,'created.cveMetadata.datePublished');
+	    u.state = get_deep(d,fnote+'.cveMetadata.state');
+	    let modified = get_deep(d,fnote+'.cveMetadata.datePublished');
 	    if(modified) 
 		set_deep(u,'time.modified',modified);
 	    u.new = 1;
@@ -994,8 +1051,15 @@ function to_json(w) {
 	    json_data = set_deep(json_data,props,$(v).val());
 	    $(v).removeClass('is-invalid').addClass('is-valid');
 	} else {
-	    value_check = false;
-	    $(v).removeClass('is-valid').addClass('is-invalid');
+	    if(v.required) {
+		value_check = false;
+		$(v).removeClass('is-valid').addClass('is-invalid');
+	    } else {
+		let props = $(v).data("field");
+		if(!props) return;
+		/* Delete the field if exists */
+		json_data = set_deep(json_data,props,undefined);
+	    }
 	}
     });
     let editor = $('#mjson .jsoneditor')[0].env.editor;

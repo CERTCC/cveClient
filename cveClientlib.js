@@ -5,7 +5,7 @@ class cveClient {
 	this.key = key;
 	this.url = url;
 	this.user_path = "/org/"+this.org+"/user/"+this.user;
-	this._version = "1.0.9";
+	this._version = "1.0.11";
     }
     publishcve(cve,cnajson,update) {
 	/* Create or Update a CVE */
