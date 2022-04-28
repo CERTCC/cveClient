@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta name="version" content="1.0.15"/>
+    <meta name="version" content="1.0.16"/>
     <title> CVE Services Client Interface</title>
     <link rel="stylesheet"
 	  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -89,7 +89,7 @@
 		<div class="ustatus"> User Status :  &nbsp;
 		  <span class="uspan"></span> &nbsp; 
 		</div>
-		<label class="tswitch">
+		<label class="tswitch admin">
 		  <input type="checkbox" class="tnotify enabled active"
 			 title="Active"  onchange="update_user_status(this)" value="1">
 		  <span class="tslider round"></span>
@@ -98,12 +98,12 @@
 	    </form>
 	  </div>
 	  <div class="modal-footer">
-	    <button type="button" class="btn btn-danger updateuser"
+	    <button type="button" class="btn btn-danger updateuser admin selfadmin"
 		    onclick="reset_user(this)">Reset API Key</button>
-	    <button type="button" class="btn btn-primary adduser"
+	    <button type="button" class="btn btn-primary adduser admin"
 		    onclick="adduser()">
 	      Add User</button>
-	    <button type="button" class="btn btn-info updateuser"
+	    <button type="button" class="btn btn-info updateuser selfadmin"
 		    id="updateButton" 
 		    onclick="update_user()">
 	      Update User</button>	    
@@ -473,7 +473,7 @@
 		  <li><button class="dropdown-item"
 			      onclick="$('#reserveCVEModal').modal()">
 		      Reserve CVE</button></li>
-		  <li><button class="dropdown-item"
+		  <li><button class="dropdown-item admin"
 			      onclick="add_user_modal()">
 		      Add User</button></li>
 		  <li><button class="dropdown-item"

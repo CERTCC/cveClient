@@ -1,5 +1,5 @@
-/* Clientlib, UI html and UI js all are version controlled */
-const _version = "1.0.6";
+/* Clientlib, UI html, css and UI js all are version controlled */
+const _version = "1.0.7";
 const _tool = "CVE Services Client Interface "+_version;
 const _cna_template = { "descriptions": [ { "lang": "${descriptions.0.lang}", "value": "${descriptions.0.value}"} ] ,  "affected": [ { "versions": [{"version": "${affected.0.versions.0.version}"}], "product": "${affected.0.product}", "vendor": "${affected.0.vendor|client.orgobj.name}" } ],"references": [ { "name": "${references.0.name}", "url": "${references.0.url}" }], "providerMetadata": { "orgId": "${client.userobj.org_UUID}", "shortName": "${client.org}" } }
 const valid_states = {PUBLISHED: 1,RESERVED: 1, REJECTED: 1};
@@ -175,13 +175,34 @@ function urlprompt(w) {
 	});
     }
 }
+function check_admin() {
+    /* Either secretrait or CNA Admin can do reset 
+       API keys and Add Users */
+    if(client.orgobj.authority.active_roles.findIndex(function(n) {
+	return n == "SECRETARIAT";
+    }) > -1) {
+	$('.admin').show();
+	return 1;
+    } else if(client.userobj.authority.active_roles
+	      .findIndex(function(n) {
+		  return n == "ADMIN";
+	      }) > -1) {
+	$('.admin').show();
+	return 1;
+    } else {
+	$('.admin').hide();
+	return 0;
+    }
+}
 function saveUserOrgInfo(userobj) {
     client.userobj = userobj;
     try {
 	/* Collect org information async */
 	client.getorg().then(function(y) {
-	    client.orgobj = y
+	    client.orgobj = y;
+	    check_admin();
 	});
+	
     }catch(err) {
 	console.log("Error while fetching User's organization");
 	console.log(err);
@@ -406,12 +427,19 @@ function deepdive(_, _, row, el) {
 	console.log("Ignore this error");
 	$('#detailtag').html('');	
     }
-    /* for CVE record we only support RESERVED state 
-     to move to PUBLISHED at this time. Update is not 
-     available */
-    if("username" in row)
+    /* Show the updaterecord button by default and hide it later
+       if user is not admin and not self */
+    $('#updaterecord').show();
+    if("username" in row) {
+	if(check_admin() || (row.username == client.user)) {
+	    $('#updaterecord').show();
+	    $('.selfadmin').show();
+	} else {
+	    $('#updaterecord').hide();
+	    $('.selfadmin').hide();
+	}
 	$('#updaterecord').html("Update User");
-    else if(("cve_id" in row) && ("state" in row)) {
+    } else if(("cve_id" in row) && ("state" in row)) {
 	$('#cveUpdateModal .mtitle').html("("+row.cve_id+")");
 	if (row.state == "RESERVED") {
 	    $('#updaterecord').html("Edit & Publish CVE").show();
@@ -487,7 +515,6 @@ function user_update_modal(mr) {
 	    $('#addUserModal .name_last').val(mr.name.last)
 	    .data('oldvalue',mr.name.last);
     }
-    
     if('active' in mr)
 	user_active_view(mr.active);
     if(mr.authority.active_roles.length) {
