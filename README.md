@@ -3,9 +3,11 @@ A demo client interface and a client library to cve-services 2.x to provide CVE(
 
 
 # Introduction
-A JavaScript library and simple HTML interface for CVE services that is like RedHat's [cvelib](https://github.com/RedHatProductSecurity/cvelib) and [Vulnogram](https://github.com/Vulnogram/Vulnogram).  Provides capabilities to interface with [cve-services](https://github.com/CVEProject/cve-services) with a JavascScript client and simple HTML UI.
+A JavaScript library and simple HTML interface for CVE services that is like RedHat's [cvelib](https://github.com/RedHatProductSecurity/cvelib) and [Vulnogram](https://github.com/Vulnogram/Vulnogram).  Provides capabilities to interface with [cve-services](https://github.com/CVEProject/cve-services) with a JavaScript client and simple HTML UI. You can just serve the index.html file from any static content area of your webserver (Apache2, NGINX, thttpd, lighttpd, Caddy).
 
-Demo version of the UI and client library can be accessed at [https://democert.org/cveClient/](https://democert.org/cveClient/).  Currently the allowed servers (cve-services servers) are limited with Content Security Policy headers to cve-services 2.x  production site, testing site and a localhost instance.
+A JavaScript encryption toolkit is also served from [encrypt-storage.js](./encrypt-storage.js) file. This is a simple asymmetric encryption to protect your API Key while in `localStorage` (if <u>*Keep me logged in*</u> checkbox is enabled) or `sessionStorage` with PKI stored in native `indexedDB`. This provides some limited protection of your API keys.  Currently cve-services expects API key every transaction, there is no middleware providing session capability or related CSRF protection.
+
+Demo of the UI and client library can be accessed at [https://democert.org/cveClient/](https://democert.org/cveClient/).  Currently the allowed servers (cve-services servers) are limited with Content Security Policy headers to cve-services 2.x  production site, testing site and a localhost instance.
 
 Dependency libraries for HTML UI only.
 * [jQuery - 3.5.1](https://jquery.com/)
@@ -20,7 +22,7 @@ Except for Ace Editor and SweetAlert2 library all the dependencies are served fr
 # cveClientlib
 If you plan to rollour your own UI, this JavaScript library is helpful.  Also note that there is another client library with similar capabilities built with ECMAScrip6 requirement at [https://github.com/xdrr/cve.js](https://github.com/xdrr/cve.js).
 
-You can use the `cveClientlib.js` to do all the tasks being performed by the current UI. The file is called cveClientlib.js as Safari browsers have trouble with filename and a Class name being the same. 
+You can use the [cveClientlib.js](./cveClientlib.js) to do all the tasks being performed by the current UI. The file is called cveClientlib.js as Safari browsers have trouble with filename and a Class name being the same.
 
 
 

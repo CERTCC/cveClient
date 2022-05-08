@@ -1,5 +1,5 @@
 /* Clientlib, UI html, css and UI js all are version controlled */
-const _version = "1.0.7";
+const _version = "1.0.10";
 const _tool = "CVE Services Client Interface "+_version;
 const _cna_template = { "descriptions": [ { "lang": "${descriptions.0.lang}", "value": "${descriptions.0.value}"} ] ,  "affected": [ { "versions": [{"version": "${affected.0.versions.0.version}"}], "product": "${affected.0.product}", "vendor": "${affected.0.vendor|client.orgobj.name}" } ],"references": [ { "name": "${references.0.name}", "url": "${references.0.url}" }], "providerMetadata": { "orgId": "${client.userobj.org_UUID}", "shortName": "${client.org}" } }
 const valid_states = {PUBLISHED: 1,RESERVED: 1, REJECTED: 1};
@@ -7,7 +7,6 @@ let store;
 let store_tag = "cveClient/";
 /* User var to access client as window.client global var */
 var client;
-
 function add_option(w,v,f,s) {
     $(w).append($('<option/>').attr({value:v,selected:s})
 		.html(f));
@@ -145,11 +144,14 @@ function data_selector(el,dfield,dvalue) {
     return $(el+sel);
 }
 function top_alert(lvl,msg,tmr) {
-    $('#topalert').addClass("alert alert-"+lvl).html(msg).fadeIn();
+    $('#topalert').removeClass("alert-danger alert-warning alert-success")
+	.addClass("alert alert-"+lvl).html(msg).fadeIn();
     if(tmr)
-	setTimeout(function() {
-	    $('#topalert').fadeOut();
-	},tmr);
+	setTimeout(function() { $('#topalert').fadeOut();},tmr);
+    else
+	$('#topalert').append('<button type="button" class="close" '+
+			      'data-dismiss="modal" aria-label="Close">'+
+			      '<span aria-hidden="true">×</span> </button>');
 }
 function urlprompt(w) {
     if($(w).val() == "custom") {
@@ -252,6 +254,8 @@ async function login() {
     else if(d.status == 200) {
 	mtype = "success";
 	title = "Login Success";
+	/* By default enable encryption */
+	enable_encryption();
 	setTimeout(function() {
 	    Swal.close();
 	    $('#loginModal').modal('hide');
@@ -313,6 +317,28 @@ function swal_error(err_msg,err_type) {
 	confirmButtonText: "OK"
     });
 }
+function do_login() {
+    client.getuser().then(function(x) {
+	x.json().then(function(y) {
+	    if('error' in y) {
+		swal_error("Automatic Login failed! Error: " + y.error +
+			   ", If credentials have changed" +
+			   ", please logout and refresh" +
+			   " for a new login. Failure message is "+y.message);
+		return;
+	    } else {
+		show_cve_table();
+	    }
+	    saveUserOrgInfo(y);		
+	});
+    }).catch(function(err) {
+	console.log(err);
+	swal_error("Automatic Login failed! "+
+		   "If credentials have changed"+
+		   ", please logout and refresh"+
+		   " for a new login");	    
+    });
+}
 $(function() {
     store = null;
     if(localStorage.getItem(store_tag+"url")) {
@@ -324,6 +350,7 @@ $(function() {
     if (store == null) {
 	$('#loginModal').modal();
     } else {
+	load_languages();	
 	$('#loginModal .form-control').each(function(_,x) {
 	    var vid = $(x).attr('id');
 	    var val = store.getItem(store_tag+vid);
@@ -334,24 +361,20 @@ $(function() {
 	    }
 	});
 	client = new cveClient($('#org').val(),$('#user').val(),$('#key').val(),$('#url').val());
-	client.getuser().then(function(x) {
-	    x.json().then(function(y) {
-		if('error' in y) {
-		    swal_error("Error while logging in: "+y.error+" "+y.message);
-		    return;
-		} else {
-			show_cve_table();
-		}
-		saveUserOrgInfo(y);		
+	try {
+	    /* If the key value is a URL it is an encrypted data URI */
+	    let _ = new URL($('#key').val());
+	    $.getScript("encrypt-storage.js").done(function() {
+		console.log("Already encrypted key");
+		console.log(client.key);
+		activate_encryption();
+		do_login();
+		console.log(client.key);
 	    });
-	}).catch(function(err) {
-	    console.log(err);
-	    swal_error("Automatic Login failed! "+
-		       "If credentials have changed"+
-		       ", please logout and refresh"+
-		       " for a new login");	    
-	});
-	load_languages();
+	} catch(_) {
+	    do_login();
+	}
+	
     }
 });
 async function get_pages(m,tag,fld,tbn,fun) {
@@ -397,9 +420,12 @@ function objwalk(h,d,r,s) {
 	rowClass = "hdanger";
     if(typeof(r[d]) == "object") {
 	let mr = r[d];
+	let ls = d;
+	if(s)
+	    ls = s + '/' + d;
 	let f = Object.keys(mr).reduce(function(hr,dr) {
-	    return objwalk(hr,dr,mr,d);
-	},"");
+	    return objwalk(hr,dr,mr,ls);
+	}, "");
 	return h+f;
 	
     } else {
@@ -430,6 +456,7 @@ function deepdive(_, _, row, el) {
     /* Show the updaterecord button by default and hide it later
        if user is not admin and not self */
     $('#updaterecord').show();
+    $('#cvedetails').addClass('d-none');    
     if("username" in row) {
 	if(check_admin() || (row.username == client.user)) {
 	    $('#updaterecord').show();
@@ -466,13 +493,30 @@ async function display_cvedetails(cve) {
 		   ": " + f.message);
 	return;
     }
-    display_object(f);
+    if(("containers" in f) && ("cna" in f.containers))
+	display_object(f.containers.cna);
+    else
+	swal_error("Required information in cna.container is not " +
+		   "available or missing ");
+}
+function swapout(w) {
+    $(w).parent().find('table tbody tr').toggleClass('d-none');
+    if($(w).html().indexOf('View') > -1)
+	$(w).html('Hide JSON');
+    else
+	$(w).html('View JSON');	
 }
 function display_object(obj) {
+    let tjson = '<tr class="d-none"> <td colspan="2"> '+
+	'<div style="white-space: pre;">' +
+	JSON.stringify(obj,null,3) + '</div></td></tr>';
+    let alink = '<a href="javascript:void(0)" class="link float-right" '+
+	'onclick="swapout(this)">View JSON</a>';
+    let ttable = '<table class="table table-striped">';
     var html =  Object.keys(obj).reduce(function(h,d) {
 	return objwalk(h,d,obj);
-    },"<table class='table table-striped'><tbody>");
-    $('#deepDive .modal-body').html(html);
+    },alink+ttable+"<tbody>"+tjson);
+    $('#deepDive .modal-body').html(html+'</tbody></table>');
 }
 function add_user_modal() {
     $('#addUserModal').modal();
@@ -642,6 +686,8 @@ function gname(name,row) {
     var append = "";
     if(row.secret)
 	append = " &#128273 ";
+    if((!name) && (row.username))
+	return row.username;
     if(!name.first) {
 	if(!name.last) 
 	    return row.username + append;
@@ -776,6 +822,19 @@ async function reset_user(w,confirmed) {
 		.bootstrapTable('updateByUniqueId',{id: username,
 						    row: f});
 	    set_copy_pass(f.secret);
+	    if(f.username == client.user) {
+		/* Check if encryption was enabled and update the key */
+		try {
+		    let _ = new URL(client.key);
+		    client.key = f.secret;
+		    console.log("Old key was encrypted, Encrypting this new key");
+		    enable_encryption();   
+		} catch(_) {
+		    client.key = f.secret;
+		    if(store)
+			store.setItem(store_tag+"key",f.secret);
+		}
+	    }
 	    Swal.fire({
 		title: "Reset API-Key!",
 		text: "API-Key secret has been reset and "+
@@ -1108,3 +1167,73 @@ function clearoff(w) {
     if($(w).val() && (get_deep(w,'validity.valid') == true))
 	$(w).removeClass('is-invalid').addClass('is-valid');
 }
+function disable_encryption() {
+    if(!('dfetch' in client)) {
+	console.log("Encryption seems to be disabled already");
+	return;
+    }
+    check_create_key(client.user).then(function(ekey) {
+	let encBuffer = URItoarrayBuffer(client.key);
+	decryptMessage(encBuffer,ekey.privateKey)
+	    .then(function(encKey) {
+		client.key = encKey;
+		store.setItem(store_tag+"key",client.key);
+		$('.encryption').toggleClass("d-none");
+		client.rfetch = client.dfetch;
+		delete client.dfetch;
+		top_alert("warning","Encryption is now disabled for your API keys!");
+	    });
+    });
+}
+function activate_encryption() {
+    if('dfetch' in client) {
+	console.log("Encrypt/Decrypt API is already enabled ");
+	return;
+    }
+    client.dfetch = client.rfetch;
+    client.rfetch = function(path,opts,qvars) {
+	return check_create_key(client.user).then(function(ekey) {
+	    let encKey = client.key;
+	    let encBuffer = URItoarrayBuffer(client.key);
+	    return decryptMessage(encBuffer,ekey.privateKey)
+		.then(function(rawKey) {
+		    client.key = rawKey;
+		    return client.dfetch(path,opts,qvars)
+			.then(function(u) {
+			    client.key = encKey;
+			    return u;
+			});
+		});
+	});
+    };
+    $('.encryption').toggleClass("d-none");
+    top_alert("success","Encryption is now enabled for your API Key",4000);
+}
+function enable_encryption() {
+    $.getScript("encrypt-storage.js").done(function() {
+	try {
+	    let m = new URL(client.key);
+	    console.log("Already Encrypted");
+	    return;
+	} catch (_) {
+	    /* Encrypt storage using RSA keys*/
+	    try {
+		check_create_key(client.user).then(function(newkey) {
+		    encryptMessage(client.key,newkey.publicKey)
+			.then(function(encBuffer) {
+			    arrayBuffertoURI(encBuffer)
+				.then(function(encURL) {
+				    client.key = encURL;
+				    store.setItem(store_tag+"key",encURL);
+				    activate_encryption();
+				});
+			});
+		});
+	    } catch(err) {
+		console.log(err);
+		top_alert("warning","Encrypting API key failed, see console log for errors");
+	    };
+	}
+    });
+}
+
