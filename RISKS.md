@@ -1,7 +1,7 @@
 # Risk of using API keys in browser for CVE-Services
 
 
-The cve-services' API interface is protected by an API key to perform CNA functions to manage CVE records.  An API-key assigned to a user with Admin role (administrator) is also able manage users under their organization.  
+The [cve-services](https://github.com/CVEProject/cve-services)' API interface is protected by an API key to perform CNA functions to manage CVE records.  An API-key assigned to a user with Admin role (administrator) is also able manage users under their organization.  
 
 Any browser-based client to cve-services requires unencrypted access to the API key to perform each transaction with the cve-services endpoints.  The browser-based clients such as Vulnogram and cveClient depend on the browser to protect these API keys. API key, unlike passwords, are rarely changed and could be stolen from the browser where the API key was entered.  This is a known risk in using browser-based clients when accessing CVE program capabilities as a CNA.  Although there are several technologies such as [ServiceWorkers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers) and [Storage APIs](https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html#storage-apis), the browser needs to repeatedly retrieve and use the API keys making this data available in its raw form to support CAN activities. 
 
