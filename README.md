@@ -24,6 +24,11 @@ If you plan to rollour your own UI, this JavaScript library is helpful.  Also no
 
 You can use the [cveClientlib.js](./cveClientlib.js) to do all the tasks being performed by the current UI. The file is called cveClientlib.js as Safari browsers have trouble with filename and a Class name being the same.
 
+# Risks of using API keys in browser for CVE-Services
+
+See the [RISKS.md](./RISKS.md) that captures some of the inherent risks of using API keys to access an API service. If you decide to use these web base clients to access `cve-services`, please be aware of these risks.
+
+
 
 
 
