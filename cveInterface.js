@@ -863,7 +863,8 @@ function update_user() {
     $('#addUserModal .form-control').each(function(_,x) {
 	//console.log($(x).data('update'));
 	var field = $(x).data('update');
-	if($(x).val() && $(x).data('oldvalue') != $(x).val()) 
+	if(($(x).val() || $(x).prop('tagName').toUpperCase() == "SELECT")
+	   && ($(x).data('oldvalue') != $(x).val())) 
 	    updates[field] = $(x).val();
     });
     if(Object.keys(updates).length) {
@@ -879,7 +880,7 @@ function update_user() {
 		    .active_roles.join(",");
 	    }
 	}
-	if(('name.first' in updates) || ('name.first' in updates)) {
+	if(('name.first' in updates) || ('name.last' in updates)) {
 	    /* We need both values for the child properties of 'name' */
 	    updates['name.first'] = $('#addUserModal .name_first').val() || " ";
 	    updates['name.last'] = $('#addUserModal .name_last').val() || " ";
