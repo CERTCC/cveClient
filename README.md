@@ -7,7 +7,7 @@ A JavaScript library and simple HTML interface for CVE services that is like Red
 
 A JavaScript encryption toolkit is also served from [encrypt-storage.js](./encrypt-storage.js) file. This is a simple asymmetric encryption to protect your API Key while in `localStorage` (if <u>*Keep me logged in*</u> checkbox is enabled) or `sessionStorage` with PKI stored in native `indexedDB`. This provides some limited protection of your API keys.  Currently cve-services expects API key for every transaction, there is no middleware providing session capability or related CSRF protection.
 
-Demo of the UI and client library can be accessed at [https://certcc.github.io/cveClient/](https://certcc.github.io/cveClient/).  Currently the allowed servers (cve-services servers) are limited with Content Security Policy headers to cve-services 2.x  production site, testing site and a localhost instance.
+Demo of the UI and client library can be accessed at [https://certcc.github.io/cveClient/](https://certcc.github.io/cveClient/) or CERT's [demo site](https://democert.org/cveClient). Currently the allowed servers (cve-services servers) are limited with Content Security Policy headers to cve-services 2.x  production site, testing site and a localhost instance.
 
 Dependency libraries for HTML UI only.
 * [jQuery - 3.5.1](https://jquery.com/)
