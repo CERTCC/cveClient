@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta name="version" content="1.0.17"/>
+    <meta name="version" content="1.0.18"/>
     <title> CVE Services Client Interface</title>
     <link rel="icon" href="./certicon.ico" type="image/x-icon" />
     <link rel="stylesheet"
@@ -34,6 +34,48 @@
     <div class="alert position-fixed w-100" id="topalert" role="alert"
 	 onclick="$(this).fadeOut('slow')">
       Alert
+    </div>
+    <div class="modal fade rejectcve" id="rejectcveModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <h5 class="col-12 modal-title text-center">
+	      <span class="mtitle text-danger">Reject CVE</span>
+	      <button type="button" class="close" data-dismiss="modal"
+		      aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	      </button>
+	    </h5>
+	  </div>
+	  <div class="modal-body">
+	    <form autocomplete="off" onsubmit="return false">
+	      <div class="form-group">
+		<label class="d-none" for="cve">CVE ID
+		</label>
+		<input type="email" name="cve" readonly
+		       required="required" 
+		       class="form-control cve"
+		       placeholder="CVE-yyyy-nnnn"/>
+	      </div>
+	      <div class="form-group">
+		<label class="d-none" for="description">CVE Reject Description
+		</label>
+		<textarea class="form-control description"
+			  required="required" 
+			  onblur="clearoff(this)" 
+			  name="description"  rows="4"
+			  placeholder="CVE ID Rejected reason"></textarea>
+	      </div>
+	    </form>
+	  </div>
+	  <div class="modal-footer">
+	    <button type="button" data-dismiss="modal" aria-label="Close"
+		    class="btn btn-secondary">Cancel</button>
+	    <button type="button" class="btn btn-danger reject" onclick="reject_cve(true)">
+	      Reject CVE</button>
+	  </div>
+	</div>
+      </div>
     </div>
     <div class="modal fade addUser" id="addUserModal" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -236,15 +278,15 @@
 			    <option value="affected">Affected</option>
 			    <option value="unaffected">Not Affected</option>
 			    <option value="unknown">Unknown</option>
-			  </select>			
-			  <input type="checkbox"
-				 onchange="$('.versionRange').toggleClass('d-none')">
+			  </select>
+			  <input type="checkbox" class="versionRangeEnabled"
+				 onchange="showByClassName(this.checked,'.versionRange')">
 			  Range
 			  <select name="versionRangeType"
 				  onchange="update_related(this)"
 				  data-related="versionRangeValue"
 				  data-relatedfield="affected.0.versions.0.$"
-				  class="form-control versionRange mauto d-none">
+				  class="form-control versionRange mauto d-none versionRangeType">
 			    <option value="">Select</option>
 			    <option value="lessThan">&lt;</option>
 			    <option value="lessThanOrEqual">&lt;=</option>
@@ -253,6 +295,11 @@
 				 onblur="clearoff(this)"
 				 class="form-control versionRange versionRangeValue mauto d-none"
 				 placeholder="Version Range &lt;/&lt;= (1.2.0)">
+			  <input type="text" name="versionTypeValue"
+				 onblur="clearoff(this)"
+				 class="form-control versionRange versionTypeValue mauto d-none"
+				 data-field="affected.0.versions.0.versionType"
+				 placeholder="Version Type git,maven,python,npm">
 			</li>
 		      </ol>
 		    </li>
@@ -325,6 +372,10 @@
 	    </form>
 	  </div>
 	  <div class="modal-footer">
+	    <button type="button" class="btn btn-danger d-none"
+		    id="cvereject" onclick="reject_cve(false)">
+	      Reject CVE
+	    </button>
 	    <button type="button" class="btn btn-secondary d-none"
 		    id="cvedetails" onclick="display_cvedetails()">
 	      Show CVE Data
@@ -487,6 +538,9 @@
 			    onclick="disable_encryption()">
 		      Disable encryption</button></li>
 		  <li><button class="dropdown-item"
+			      onclick="showorg()">
+		      Show Org Info</button></li>		  
+		  <li><button class="dropdown-item"
 			      onclick="logout()">
 		      <span class="btn logout d-none">
 			&#10140;
@@ -530,7 +584,7 @@
 	    
       </div>    
     </main>
-    <script src="cveInterface.js?version=2022050702"></script>
+    <script src="cveInterface.js?version=2022063003"></script>
   </body>
 </html>
 

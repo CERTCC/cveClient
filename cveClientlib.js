@@ -5,14 +5,16 @@ class cveClient {
 	this.key = key;
 	this.url = url;
 	this.user_path = "/org/"+this.org+"/user/"+this.user;
-	this._version = "1.0.11";
+	this._version = "1.0.12";
     }
-    publishcve(cve,cnajson,update) {
+    publishcve(cve,cnajson,update,rejected) {
 	/* Create or Update a CVE */
 	let opts = null;
 	if(update)
 	    opts = {method: "PUT"};
 	let path = "/cve/"+cve+"/cna";
+	if(rejected)
+	    path = "/cve/"+cve+"/reject";
 	return this.putjson(path,opts,null,{cnaContainer:cnajson});
     }
     reservecve(amount,cve_year,batch_type) {

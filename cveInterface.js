@@ -1,5 +1,5 @@
 /* Clientlib, UI html, css and UI js all are version controlled */
-const _version = "1.0.10";
+const _version = "1.0.12";
 const _tool = "CVE Services Client Interface "+_version;
 const _cna_template = { "descriptions": [ { "lang": "${descriptions.0.lang}", "value": "${descriptions.0.value}"} ] ,  "affected": [ { "versions": [{"version": "${affected.0.versions.0.version}"}], "product": "${affected.0.product}", "vendor": "${affected.0.vendor|client.orgobj.name}" } ],"references": [ { "name": "${references.0.name}", "url": "${references.0.url}" }], "providerMetadata": { "orgId": "${client.userobj.org_UUID}", "shortName": "${client.org}" } }
 const valid_states = {PUBLISHED: 1,RESERVED: 1, REJECTED: 1};
@@ -10,6 +10,12 @@ var client;
 function add_option(w,v,f,s) {
     $(w).append($('<option/>').attr({value:v,selected:s})
 		.html(f));
+}
+function showByClassName(w,c) {
+    if(w)
+	$(c).removeClass('d-none');
+    else
+	$(c).addClass('d-none');
 }
 function show_field(w) {
     var fclass = $(w).data("show");
@@ -471,11 +477,13 @@ function deepdive(_, _, row, el) {
 	if (row.state == "RESERVED") {
 	    $('#updaterecord').html("Edit & Publish CVE").show();
 	    $('#cveUpdateModal .cveupdate').html("Publish CVE");
-	    $('#cvedetails').addClass('d-none');	    
+	    $('#cvedetails').addClass('d-none');
+	    $('#cvereject').removeClass('d-none');
 	} else if (row.state == "PUBLISHED") {
 	    $('#updaterecord').html("Update CVE").show();
 	    $('#cvedetails').removeClass('d-none');
 	    $('#cveUpdateModal .cveupdate').html("Update CVE");
+	    $('#cvereject').show();	    
 	} else {
 	    $('#updaterecord').hide();
 	}
@@ -636,7 +644,8 @@ async function show_table(fun,msg,tag,fld,pmd,clm,tbn,uid,show) {
     try {
 	m = await client[fun]();
     } catch(err) {
-	swal_error("Error in collecting data, potentially network error!");
+	swal_error("Error in collecting data, potentially network error. "+
+		  "Try again in a few seconds.");
 	console.log(err);
 	return;
     }
@@ -1051,6 +1060,24 @@ function from_json(w) {
 		for(var i=1; i <= Math.abs(diff); i++) 
 		    $(el).find(".deleterow").click();		
 	    }
+	    /* Check if Range is selected for affected version */
+	    var versionRange = undefined;
+	    json_data[field].forEach(function(x) {
+		if('versions' in x) {
+		    x.versions.forEach(function(y) {
+			/* if( ('lessThan' in y) || ('lessThanOrEqual' in y))  */
+			['lessThan','lessThanOrEqual'].forEach(function(q) {
+			    if(q in y) {
+				versionRange = q
+				$(el).find('.versionRangeType').val(q).trigger('change');
+			    }
+			})
+		    })
+		}
+	    });
+	    $(el).find('.versionRangeEnabled').prop('checked',versionRange ? true: false)
+		.trigger('change');
+		
 	}
     });
     $('#nice .form-control').each(function(_,v) {
@@ -1089,8 +1116,9 @@ async function publish_cve() {
 	    pubcve["x_generator"] = {engine:  client.constructor.name + "/" +
 				     client._version };
 	let cve = mr.cve_id;
-	let ispublic = mr.state == "PUBLISHED";
-	let d = await client.publishcve(cve,pubcve,ispublic);
+	let ispublic = mr.state != "RESERVED";
+	let rejected = false;
+	let d = await client.publishcve(cve,pubcve,ispublic,rejected);
 	if("error" in d) {
 	    swal_error("Failed to publish CVE, Error : "+d.error);
 	    console.log(d);
@@ -1237,4 +1265,70 @@ function enable_encryption() {
 	}
     });
 }
+async function showorg() {
+    let m = await client.getorg(client.org);
+    display_object(m);
+    $('#deepDive').modal();
+    $('#updaterecord').hide();
+}
+async function reject_cve(confirm) {
+    $('#deepDive').modal('hide');
+    var mr = $('#deepDive').data('crecord');
+    if(!('cve_id' in mr))
+	swal_error("Error there seems to no CVE number selected");
+    if(confirm) {
+	let reason = $('#rejectcveModal .description').val();
+	if(reason.length < 3) {
+	    swal_error("Please provide a description or reason for rejection of this CVE");
+	    return;
+	}
+	let rejcve = {"rejectedReasons": [{"lang": "en","value": reason }]};
+	if(get_deep(client,'userobj.org_UUID') &&  client.org) 
+	    rejcve["providerMetadata"] = { orgId: client.userobj.org_UUID,
+					   shortName: client.org };
+	if(get_deep(client,'constructor.name') && client._version)
+	    rejcve["x_generator"] = {engine:  client.constructor.name + "/" +
+				     client._version };
+	let cve = mr.cve_id;
+	let ispublic = mr.state != "RESERVED";
+	let rejected = true;
+	let d = await client.publishcve(cve,rejcve,ispublic,rejected);
+	if("error" in d) {
+	    swal_error("Failed to publish CVE, Error : "+d.error);
+	    console.log(d);
+	    return;
+	}
+	if(("created" in d) || ("updated" in d)) {
+	    let note = "Rejected";
+	    let fnote = "created";
+	    if(ispublic) {
+		note = "Updated";
+		fnote = "updated";
+	    }
+	    Swal.fire({
+		title: "CVE "+note+" Successfully!",
+		text: d.message,
+		icon: "success",
+		timer: 1800
+	    });
+	    $('#rejectcveModal').modal("hide");
+	    let u = client.cvetable.bootstrapTable('getRowByUniqueId',cve);
+	    u.state = get_deep(d,fnote+'.cveMetadata.state');
+	    let modified = get_deep(d,fnote+'.cveMetadata.datePublished');
+	    if(modified) 
+		set_deep(u,'time.modified',modified);
+	    u.new = 1;
+	    client.cvetable.bootstrapTable('updateByUniqueId',{id: cve,
+							       row: u });
+	    $('#cveUpdateModal').modal('hide');
+	} else {
+	    console.log(d);
+	    swal_error("Unknown error CVE could not be updated. See console "+
+		       " log for details!");
+	}
+    } else {
+	$('#rejectcveModal').modal()
+	$('#rejectcveModal').find(".cve").val(mr.cve_id);
+    }
 
+}
