@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta name="version" content="1.0.18"/>
+    <meta name="version" content="1.0.19"/>
     <title> CVE Services Client Interface</title>
     <link rel="icon" href="./certicon.ico" type="image/x-icon" />
     <link rel="stylesheet"
@@ -123,7 +123,7 @@
 		<label class="d-none" for="active_roles">Role
 		</label>
 		<select name="active_roles" class="form-control active_roles"
-			onchange="checkchange(this)" id="active_roles"			
+			onchange="checkchange(this)" id="active_roles"
 			data-update="active_roles">
 		  <option value="">Role: User</option>
 		  <option value="ADMIN">Role: Administrator</option>
@@ -558,6 +558,11 @@
 	    <div class="tab-pane fade active show" id="cve" role="tabpanel"
 		 aria-labelledby="cve-tab">
 	      <div class="float-left">
+		Year: <select class="form-control d-inline" id="year"
+			      onchange="doRefresh()"
+			      style="width:auto">
+		  <option value="0">All </option>
+		  </select>
 	      </div>
 	      
 	      <table id="cvetable">
@@ -584,7 +589,7 @@
 	    
       </div>    
     </main>
-    <script src="cveInterface.js?version=2022063003"></script>
+    <script src="cveInterface.js?version=2022081915"></script>
   </body>
 </html>
 

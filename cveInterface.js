@@ -1,5 +1,5 @@
 /* Clientlib, UI html, css and UI js all are version controlled */
-const _version = "1.0.12";
+const _version = "1.0.13";
 const _tool = "CVE Services Client Interface "+_version;
 const _cna_template = { "descriptions": [ { "lang": "${descriptions.0.lang}", "value": "${descriptions.0.value}"} ] ,  "affected": [ { "versions": [{"version": "${affected.0.versions.0.version}"}], "product": "${affected.0.product}", "vendor": "${affected.0.vendor|client.orgobj.name}" } ],"references": [ { "name": "${references.0.name}", "url": "${references.0.url}" }], "providerMetadata": { "orgId": "${client.userobj.org_UUID}", "shortName": "${client.org}" } }
 const valid_states = {PUBLISHED: 1,RESERVED: 1, REJECTED: 1};
@@ -347,6 +347,12 @@ function do_login() {
 }
 $(function() {
     store = null;
+    let year = (new Date()).getFullYear();
+    add_option('#year',String(year),'(Default: '+String(year)+')',true);
+    while (year > 1998) {
+	year = year - 1;
+	add_option('#year',String(year),String(year),false);
+    }
     if(localStorage.getItem(store_tag+"url")) {
 	store = localStorage;
     } else if(sessionStorage.getItem(store_tag+"url")) {
@@ -383,16 +389,25 @@ $(function() {
 	
     }
 });
-async function get_pages(m,tag,fld,tbn,fun) {
+async function get_pages(m,tag,fld,tbn,fun,fvars) {
+    let itime = 0;
     for(var i=m.itemsPerPage; i< m.totalCount; i = i + m.itemsPerPage) {
-	let ipage = Math.floor(i/m.itemsPerPage)+1;
-	let x = await client[fun](null,null,{page:ipage});
-	for(var j=0; j<x[fld].length; j++) {
-	    client[tbn].bootstrapTable('updateByUniqueId',{
-		id: tag + String(i+j),
-		row: x[fld][j]
-	    });
-	}
+	setTimeout(async function(i) {
+	    let ipage = Math.floor(i/m.itemsPerPage)+1;
+	    let popts = {page:ipage};
+	    if(fvars) {
+		/* Append year or other options apart from page */
+		Object.assign(popts,fvars[2]);
+	    }
+	    let x = await client[fun](null,null,popts);
+	    for(var j=0; j<x[fld].length; j++) {
+		client[tbn].bootstrapTable('updateByUniqueId',{
+		    id: tag + String(i+j),
+		    row: x[fld][j]
+		});
+	    }
+	}, itime*1000,i);
+	itime = itime + 1;
     }
 }
 function rowStyle(r) {
@@ -633,7 +648,7 @@ function mupdate() {
 	cve_update_modal(mr);
     }
 }
-async function show_table(fun,msg,tag,fld,pmd,clm,tbn,uid,show) {
+async function show_table(fun,fvars,msg,tag,fld,pmd,clm,tbn,uid,show) {
     if(show) {
 	if(tbn in client) {
 	    top_alert("success","Showing Cached data. If needed click on Refresh Icon.",1000);
@@ -642,9 +657,10 @@ async function show_table(fun,msg,tag,fld,pmd,clm,tbn,uid,show) {
     }
     let m;
     try {
-	m = await client[fun]();
+	m = await client[fun].apply(client,fvars);
     } catch(err) {
-	swal_error("Error in collecting data, potentially network error. "+
+	swal_error("Error in collecting data, potentially network error OR "+
+		   " asynchronous decryption in progress.  "+
 		  "Try again in a few seconds.");
 	console.log(err);
 	return;
@@ -667,29 +683,35 @@ async function show_table(fun,msg,tag,fld,pmd,clm,tbn,uid,show) {
 	    m[fld].push(tempm);
 	}
     }
-    client[tbn] = $('#'+tbn).bootstrapTable({
-	columns: clm,
-	uniqueId: uid,
-	striped: true,
-	pagination: true,
-	paginationVAlign: 'both',
-	searchOnEnterKey: false,
-	pageSize: 20,
-	pageList: [20,50,100],
-	search: true,
-	showHeader: true,
-	showColumns: false,
-	showRefresh: true,
-	onRefresh: function() {
-	    doRefresh(tbn);
-	},
-	onClickCell: deepdive, 
-	sortable:true,
-	rowStyle: rowStyle,
-	data: m[fld]
-    });
+    let tbdiv = '#' + tbn;
+    var dtemp = $(tbdiv).bootstrapTable('getData');
+    if(Array.isArray(dtemp)) {
+	$(tbdiv).bootstrapTable('load',m[fld]);
+    } else {
+	client[tbn] = $(tbdiv).bootstrapTable({
+	    columns: clm,
+	    uniqueId: uid,
+	    striped: true,
+	    pagination: true,
+	    paginationVAlign: 'both',
+	    searchOnEnterKey: false,
+	    pageSize: 20,
+	    pageList: [20,50,100],
+	    search: true,
+	    showHeader: true,
+	    showColumns: false,
+	    showRefresh: true,
+	    onRefresh: function() {
+		doRefresh(tbn);
+	    },
+	    onClickCell: deepdive, 
+	    sortable:true,
+	    rowStyle: rowStyle,
+	    data: m[fld]
+	});
+    }
     if(m.nextPage) 
-	get_pages(m,tag,fld,tbn,fun);
+	get_pages(m,tag,fld,tbn,fun,fvars);
 }
 function gname(name,row) {
     var append = "";
@@ -730,7 +752,7 @@ function show_users_table(show) {
 		sortable:true, sorter:gsort},
 	       {field:'username', title:'Username',sortable: true},
 	       {field: 'active', title: 'Active',sortable: true}];
-    show_table(fun,msg,tag,fld,pmd,clm,tbn,uid,show);    
+    show_table(fun,undefined,msg,tag,fld,pmd,clm,tbn,uid,show);    
 }
 function wdate(reserved,row) {
     if(get_deep(row,'time.modified'))
@@ -750,6 +772,12 @@ function wsort(d1,d2,row1,row2) {
 }
 function show_cve_table(show) {
     let fun = "getcveids";
+    let year = $('#year').val();
+    let fvars = undefined;
+    if(parseInt(year) > 0) {
+	/* Add Year to the getcveids API endpoint */
+	fvars = [undefined,undefined,{cve_id_year: year}];
+    }
     let tag = "CVE-9999-";
     let fld = "cve_ids";
     let uid = "cve_id";
@@ -760,7 +788,7 @@ function show_cve_table(show) {
 	       {field: 'state', title: 'State', sortable: true},
 	       {field: 'reserved', title: 'Date', sortable: true,
 		formatter: wdate, sorter: wsort}];
-    show_table(fun,msg,tag,fld,pmd,clm,tbn,uid,show);
+    show_table(fun,fvars,msg,tag,fld,pmd,clm,tbn,uid,show);
 }
 async function reserve() {
     let vars = {};
