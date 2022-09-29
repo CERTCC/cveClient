@@ -6,7 +6,7 @@ Clone this repository to a web accessible folder in your webserver says into a f
 
 If you use Content-Security-Policy (CSP) headers on your webserver or on your web reverse proxy, make sure the appropriate domain URLs are allowed for the folder that was cloned (`cveClient`). Below is the sample Content-Security-Policy header recommended for this folder:
 
-`default-src 'self' blob: http://127.0.0.1:* http://localhost:*; connect-src 'self' http://127.0.0.1:* http://localhost:* *.mitre.org; script-src 'self' https://stackpath.bootstrapcdn.com https://code.jquery.com https://cdnjs.cloudflare.com https://unpkg.com blob:; style-src 'self' https://stackpath.bootstrapcdn.com 'unsafe-inline' https://unpkg.com; img-src 'self' data: blob:;object-src 'self'`
+`default-src 'self' blob: http://127.0.0.1:* http://localhost:*; connect-src 'self' http://127.0.0.1:* http://localhost:* *.mitre.org; script-src 'self' https://stackpath.bootstrapcdn.com https://code.jquery.com https://cdnjs.cloudflare.com https://unpkg.com https://apis.google.com blob:; style-src 'self' https://stackpath.bootstrapcdn.com 'unsafe-inline' https://unpkg.com; img-src 'self' data: blob:;object-src 'self'`
 
 
 
