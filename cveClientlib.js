@@ -5,7 +5,7 @@ class cveClient {
 	this.key = key;
 	this.url = url;
 	this.user_path = "/org/"+this.org+"/user/"+this.user;
-	this._version = "1.0.12";
+	this._version = "1.0.13";
     }
     publishcve(cve,cnajson,update,rejected) {
 	/* Create or Update a CVE */
@@ -129,7 +129,12 @@ class cveClient {
 	if(qvars) { 
 	    var qstr = new URLSearchParams();
 	    Object.keys(qvars).forEach(function(x) {
-		qstr.append(x,qvars[x]);
+		/* Remove empty values in query_string 
+		   strange issue #11 when changing user's information
+		   see https://github.com/CERTCC/cveClient/issues/11
+		 */
+		if(qvars[x] != "") 
+		    qstr.append(x,qvars[x]);
 	    });
 	    url.search = qstr.toString();
 	}

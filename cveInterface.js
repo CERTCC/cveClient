@@ -1,5 +1,5 @@
 /* Clientlib, UI html, css and UI js all are version controlled */
-const _version = "1.0.13";
+const _version = "1.0.14";
 const _tool = "CVE Services Client Interface "+_version;
 const _cna_template = { "descriptions": [ { "lang": "${descriptions.0.lang}", "value": "${descriptions.0.value}"} ] ,  "affected": [ { "versions": [{"version": "${affected.0.versions.0.version}"}], "product": "${affected.0.product}", "vendor": "${affected.0.vendor|client.orgobj.name}" } ],"references": [ { "name": "${references.0.name}", "url": "${references.0.url}" }], "providerMetadata": { "orgId": "${client.userobj.org_UUID}", "shortName": "${client.org}" } }
 const valid_states = {PUBLISHED: 1,RESERVED: 1, REJECTED: 1};
@@ -477,6 +477,7 @@ function deepdive(_, _, row, el) {
     /* Show the updaterecord button by default and hide it later
        if user is not admin and not self */
     $('#updaterecord').show();
+    $('#cvereject').addClass("d-none");
     $('#cvedetails').addClass('d-none');    
     if("username" in row) {
 	if(check_admin() || (row.username == client.user)) {
@@ -498,8 +499,12 @@ function deepdive(_, _, row, el) {
 	    $('#updaterecord').html("Update CVE").show();
 	    $('#cvedetails').removeClass('d-none');
 	    $('#cveUpdateModal .cveupdate').html("Update CVE");
-	    $('#cvereject').show();	    
+	    $('#cvereject').removeClass("d-none");
 	} else {
+	    if(row.state == "REJECTED") {
+		$('#cvereject').addClass('d-none');
+		$('#cvedetails').removeClass('d-none');
+	    }
 	    $('#updaterecord').hide();
 	}
     } else 
@@ -545,7 +550,10 @@ function add_user_modal() {
     $('#addUserModal').modal();
     $('#addUserModal form').trigger('reset');
     $('.addUserModal .form-control').removeClass('is-valid is-invalid');
+    $('#addUserModal .mtitle').html("Add User");
     $('#addUserModal').removeClass("updateUser").addClass("addUser");
+    $('#addUserModal .updateuser').hide();
+    $('#addUserModal .adduser').show();
     if(!('usertable' in client)) {
 	console.log("Creating users table in the background");
 	show_users_table();
@@ -571,6 +579,7 @@ function user_update_modal(mr) {
     $('#addUserModal').removeClass("addUser").addClass("updateUser");
     /* update button remains hidden until some values change in the form*/
     $('#updateButton').hide();
+    $('#addUserModal .adduser').hide();
     $('#addUserModal .mtitle').html("Update User ("+mr.username+")");
     $('#addUserModal .username').val(mr.username).data('oldvalue',mr.username);
     $('#addUserModal .form-control').removeClass('is-valid is-invalid');    
