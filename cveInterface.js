@@ -1,5 +1,5 @@
 /* Clientlib, UI html, css and UI js all are version controlled */
-const _version = "1.0.14";
+const _version = "1.0.15";
 const _tool = "CVE Services Client Interface "+_version;
 const _cna_template = { "descriptions": [ { "lang": "${descriptions.0.lang}", "value": "${descriptions.0.value}"} ] ,  "affected": [ { "versions": [{"version": "${affected.0.versions.0.version}"}], "product": "${affected.0.product}", "vendor": "${affected.0.vendor|client.orgobj.name}" } ],"references": [ { "name": "${references.0.name}", "url": "${references.0.url}" }], "providerMetadata": { "orgId": "${client.userobj.org_UUID}", "shortName": "${client.org}" } }
 const valid_states = {PUBLISHED: 1,RESERVED: 1, REJECTED: 1};
@@ -536,7 +536,7 @@ function swapout(w) {
 }
 function display_object(obj) {
     let tjson = '<tr class="d-none"> <td colspan="2"> '+
-	'<div style="white-space: pre;">' +
+	'<div style="white-space: break-spaces;">' +
 	JSON.stringify(obj,null,3) + '</div></td></tr>';
     let alink = '<a href="javascript:void(0)" class="link float-right" '+
 	'onclick="swapout(this)">View JSON</a>';
@@ -916,12 +916,10 @@ function update_user() {
     if(Object.keys(updates).length) {
 	if('active_roles' in updates && updates.active_roles != "") {
 	    updates['active_roles.add'] = updates.active_roles;
-	    delete updates.active_roles;
 	}
 	if(get_deep(row,'authority.active_roles.length')) {
 	    /* User has a role check if we need to remove it*/
 	    if($('#addUserModal .active_roles').val() == "")  {
-		delete updates.active_roles;
 		updates['active_roles.remove'] = row.authority
 		    .active_roles.join(",");
 	    }
@@ -931,6 +929,9 @@ function update_user() {
 	    updates['name.first'] = $('#addUserModal .name_first').val() || " ";
 	    updates['name.last'] = $('#addUserModal .name_last').val() || " ";
 	}
+	/* The active_roles field should not be sent on update only 
+	   active_roles.add and active_roles.remove is valid for update user */
+	delete updates.active_roles;
 	if('new_username' in updates) {
 	    Swal.fire({title: "Username Change!",
 		       text: "User needs to be notified to login with the "+
