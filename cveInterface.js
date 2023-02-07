@@ -1,5 +1,5 @@
 /* Clientlib, UI html, css and UI js all are version controlled */
-const _version = "1.0.15";
+const _version = "1.0.16";
 const _tool = "CVE Services Client Interface "+_version;
 const _cna_template = { "descriptions": [ { "lang": "${descriptions.0.lang}", "value": "${descriptions.0.value}"} ] ,  "affected": [ { "versions": [{"version": "${affected.0.versions.0.version}"}], "product": "${affected.0.product}", "vendor": "${affected.0.vendor|client.orgobj.name}" } ],"references": [ { "name": "${references.0.name}", "url": "${references.0.url}" }], "providerMetadata": { "orgId": "${client.userobj.org_UUID}", "shortName": "${client.org}" } }
 const valid_states = {PUBLISHED: 1,RESERVED: 1, REJECTED: 1};
@@ -457,10 +457,8 @@ function objwalk(h,d,r,s) {
 	    dp = s + "/" + d;
 	return h + $("<div>")
 	    .append($("<tr>").addClass(rowClass)
-		    .append($("<td>").html($("<div>")
-					   .text(dp).html()))
-		    .append($("<td>").html($("<div>")
-					   .text(r[d]).html()))).html();
+		    .append($("<td>").html(safeHTML(dp))
+			    .append($("<td>").html(safeHTML(r[d]))))).html();
     }
 }
 function deepdive(_, _, row, el) {
@@ -537,7 +535,7 @@ function swapout(w) {
 function display_object(obj) {
     let tjson = '<tr class="d-none"> <td colspan="2"> '+
 	'<div style="white-space: break-spaces;">' +
-	JSON.stringify(obj,null,3) + '</div></td></tr>';
+	safeHTML(JSON.stringify(obj,null,3)) + '</div></td></tr>';
     let alink = '<a href="javascript:void(0)" class="link float-right" '+
 	'onclick="swapout(this)">View JSON</a>';
     let ttable = '<table class="table table-striped">';
@@ -722,21 +720,24 @@ async function show_table(fun,fvars,msg,tag,fld,pmd,clm,tbn,uid,show) {
     if(m.nextPage) 
 	get_pages(m,tag,fld,tbn,fun,fvars);
 }
+function safeHTML(uinput) {
+    return $('<div>').text(uinput).html()
+}
 function gname(name,row) {
     var append = "";
     if(row.secret)
 	append = " &#128273 ";
     if((!name) && (row.username))
-	return row.username;
+	return safeHTML(row.username);
     if(!name.first) {
 	if(!name.last) 
-	    return row.username + append;
+	    return safeHTML(row.username + append);
 	else
-	    return name.last + append;
+	    return safeHTML(name.last + append);
     }
     if(!name.last)
-	return name.first + append;
-    return name.first + " " + name.last + append;
+	return safeHTML(name.first + append);
+    return safeHTML(name.first + " " + name.last + append);
 }
 function gsort(name1,name2,row1,row2) {
     let nameA = gname(name1,row1).toUpperCase();
@@ -759,14 +760,25 @@ function show_users_table(show) {
     let pmd = {active: "UNKNOWN"};
     let clm = [{field:'name', title:'Full name', formatter: gname,
 		sortable:true, sorter:gsort},
-	       {field:'username', title:'Username',sortable: true},
-	       {field: 'active', title: 'Active',sortable: true}];
+	       {field:'username', title:'Username',sortable: true, formatter: safeHTML},
+	       {field: 'active', title: 'Active',sortable: true, formatter: safeHTML}];
     show_table(fun,undefined,msg,tag,fld,pmd,clm,tbn,uid,show);    
 }
 function wdate(reserved,row) {
-    if(get_deep(row,'time.modified'))
-	return get_deep(row,'time.modified');
-    return reserved;
+    if(get_deep(row,'time.modified')) {
+	try {
+	    let x = Date.parse(get_deep(row,'time.modified'));
+	    return new Date(x).toLocaleString();
+	}catch(err) {
+	    try {
+		let y = Date.parse(reserved);
+		return new Date(y).toLocaleString();
+	    } catch(err) {
+		return safeHTML(reserved);
+	    }
+	}
+    }
+    return safeHTML(reserved);
 }
 function wsort(d1,d2,row1,row2) {
     let dateA = wdate(d1,row1);
@@ -793,8 +805,8 @@ function show_cve_table(show) {
     let tbn = "cvetable";
     let msg = "No CVE data to display";
     let pmd = {state: "UNKNOWN",reserved: (new Date(0)).toISOString()};
-    let clm = [{field:'cve_id', title: 'CVE', sortable: true},
-	       {field: 'state', title: 'State', sortable: true},
+    let clm = [{field:'cve_id', title: 'CVE', sortable: true, formatter: safeHTML},
+	       {field: 'state', title: 'State', sortable: true,formatter: safeHTML},
 	       {field: 'reserved', title: 'Date', sortable: true,
 		formatter: wdate, sorter: wsort}];
     show_table(fun,fvars,msg,tag,fld,pmd,clm,tbn,uid,show);
