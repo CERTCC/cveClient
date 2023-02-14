@@ -219,7 +219,7 @@ function saveUserOrgInfo(userobj) {
 
 async function skip() {
 	/* By default enable encryption */
-	enable_encryption();
+	//enable_encryption();
 	setTimeout(function() {
 	    Swal.close();
 	    $('#loginModal').modal('hide');
@@ -238,7 +238,6 @@ async function skip() {
 	icon: mtype,
 	confirmButtonText: 'OK'
     });
-	console.log("The Skip Method is OVER");
 }
     
 async function login() {
