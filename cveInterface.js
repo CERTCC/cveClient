@@ -216,6 +216,16 @@ function saveUserOrgInfo(userobj) {
 	console.log(err);
     };
 }
+
+async function skip() {
+	/* By default enable encryption */
+	enable_encryption();
+	setTimeout(function() {
+	    Swal.close();
+	    $('#loginModal').modal('hide');
+	    show_cve_table();
+	}, 2300);
+}
     
 async function login() {
     let vids = ['org','user','key'];
