@@ -225,6 +225,14 @@ async function skip() {
 	    $('#loginModal').modal('hide');
 	    show_cve_table();
 	}, 2300);
+	if ($('#storeLocal').is(':checked')) {
+	    store = localStorage;
+	} else {
+	    store = sessionStorage;
+	}
+	$('#loginModal .form-control').each(function(_,x) {
+	    store.setItem(store_tag+$(x).attr('id'),$(x).val());
+	});
 }
     
 async function login() {
