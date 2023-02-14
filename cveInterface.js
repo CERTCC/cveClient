@@ -233,6 +233,16 @@ async function skip() {
 	$('#loginModal .form-control').each(function(_,x) {
 	    store.setItem(store_tag+$(x).attr('id'),$(x).val());
 	});
+	mtype = "success";
+	title = "Login Success";
+	messages = "Welcome, you are using cveClient offline"
+
+	Swal.fire({
+	title: title,
+	text: messages,
+	icon: mtype,
+	confirmButtonText: 'OK'
+    });
 }
     
 async function login() {
