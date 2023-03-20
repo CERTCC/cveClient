@@ -218,7 +218,7 @@ function saveUserOrgInfo(userobj) {
 }
 
 async function skip() {
-	$('#loginModal').modal('hide');
+	$('loginModal').modal('hide');
 	$('#cveUpdateModal').modal();
 }
     
