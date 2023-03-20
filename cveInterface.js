@@ -218,8 +218,31 @@ function saveUserOrgInfo(userobj) {
 }
 
 async function skip() {
-	$('loginModal').modal('hide');
-	$('#cveUpdateModal').modal();
+	/* By default enable encryption */
+	//enable_encryption();
+	setTimeout(function() {
+	    Swal.close();
+	    $('#loginModal').modal('hide');
+	    show_cve_table();
+	}, 2300);
+	$('#cveform .form-control').removeClass('is-valid');
+    /* remove all additional fields */
+    $('#cveform ol > li.erow:nth-of-type(n+2)').remove();
+    $('#cveform').trigger('reset');
+    $('#cveUpdateModal').modal();
+	/*$('#loginModal .form-control').each(function(_,x) {
+	    store.setItem(store_tag+$(x).attr('id'),$(x).val());
+	});
+	mtype = "success";
+	title = "Login Success";
+	messages = "Welcome, you are using cveClient offline"
+
+	Swal.fire({
+	title: title,
+	text: messages,
+	icon: mtype,
+	confirmButtonText: 'OK'
+    });*/
 }
     
 async function login() {
