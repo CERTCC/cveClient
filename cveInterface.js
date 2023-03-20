@@ -223,7 +223,7 @@ async function skip() {
 	console.log("We're in the skip method");
 	$(loginModal).modal('hide');
 	//$('#loginModal').hide();
-	//$('#cveUpdateModal').modal();
+	$('#cveUpdateModal').modal();
 	/*setTimeout(function() {
 	    Swal.close();
 	    $('#loginModal').modal('hide');
