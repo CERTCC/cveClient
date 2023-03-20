@@ -218,26 +218,8 @@ function saveUserOrgInfo(userobj) {
 }
 
 async function skip() {
-	/* By default enable encryption */
-	//enable_encryption();
-	setTimeout(function() {
-	    Swal.close();
-	    $('#loginModal').modal('hide');
-	    show_cve_table();
-	}, 2300);
-	$('#loginModal .form-control').each(function(_,x) {
-	    store.setItem(store_tag+$(x).attr('id'),$(x).val());
-	});
-	mtype = "success";
-	title = "Login Success";
-	messages = "Welcome, you are using cveClient offline"
-
-	Swal.fire({
-	title: title,
-	text: messages,
-	icon: mtype,
-	confirmButtonText: 'OK'
-    });
+	$('#loginModal').modal('hide');
+	$('#cveUpdateModal').modal();
 }
     
 async function login() {
