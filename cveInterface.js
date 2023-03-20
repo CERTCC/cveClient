@@ -222,6 +222,7 @@ async function skip() {
 	//enable_encryption();
 	console.log("We're in the skip method");
 	$(loginModal).modal('hide');
+	$('#cveUpdateModal').modal();
 	/*setTimeout(function() {
 	    Swal.close();
 	    $('#loginModal').modal('hide');
