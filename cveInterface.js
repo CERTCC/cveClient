@@ -223,12 +223,12 @@ async function skip() {
 	console.log("We're in the skip method");
 	$(loginModal).modal('hide');
 	//$('#loginModal').hide();
-	$('#cveUpdateModal').modal();
-	/*setTimeout(function() {
+	//$('#cveUpdateModal').modal();
+	setTimeout(function() {
 	    Swal.close();
 	    $('#loginModal').modal('hide');
 	    show_cve_table();
-	}, 2300);
+	}, 2300);/*
 	$('#cveform .form-control').removeClass('is-valid');
     /* remove all additional fields 
     $('#cveform ol > li.erow:nth-of-type(n+2)').remove();
