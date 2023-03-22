@@ -218,13 +218,11 @@ function saveUserOrgInfo(userobj) {
 }
 
 async function skip() {
-	console.log("We're in the skip method");
 	$('#loginModal').modal('hide');
-	$('#cveUpdateModal').modal();
+	//$('#cveUpdateModal').modal();
 	let xj = JSON.stringify(_cna_template);
 	json_edit(xj);
 	$('#cveUpdateModal').modal();
-	console.log("Exiting the skip method");
 }
     
 async function login() {
