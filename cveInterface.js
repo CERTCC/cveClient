@@ -226,12 +226,12 @@ async function skip() {
 	$('#cveUpdateModal').modal();
 	$('#cveUpdateModal .cveupdate').html("Download JSON");
 	$('#cveUpdateModal .cveupdate').removeAttr('onclick');
-	$('#cveUpdateModal .cveupdate').click({param: xj}, download_json);
+	$('#cveUpdateModal .cveupdate').on("click", download_json);
 }
 
-async function download_json(event) {
+async function download_json(xj) {
 	console.log("Downloading JSON...");
-	console.log(event.data.param);
+	console.log(get_json_data());
 	$('#cveUpdateModal').attr('download','SPDX-.spdx');
     $('#cveUpdateModal').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(xj)));
 }
