@@ -221,10 +221,10 @@ async function skip() {
 	$('#loginModal').modal('hide');
 	const template = _cna_template;
 	delete template["providerMetadata"];
-	console.log(template);
 	let xj = JSON.stringify(template);
 	json_edit(xj);
 	$('#cveUpdateModal').modal();
+	$('#cveUpdateModal .cveupdate').html("Download JSON");
 }
     
 async function login() {
