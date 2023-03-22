@@ -226,13 +226,13 @@ async function skip() {
 	$('#cveUpdateModal').modal();
 	$('#cveUpdateModal .cveupdate').html("Download JSON");
 	$('#cveUpdateModal .cveupdate').removeAttr('onclick');
-	$('#cveUpdateModal .cveupdate').on("click", download_json);
+	$('#cveUpdateModal .cveupdate').on("click", download_json(xj));
 }
 
-async function download_json() {
+async function download_json(xj) {
 	console.log("Downloading JSON...");
-	$('#dlspdx').attr('download','SPDX-.spdx');
-    $('#dlspdx').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(spdxdl));
+	$('#cveUpdateModal').attr('download','SPDX-.spdx');
+    $('#cveUpdateModal').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(xj)));
 }
     
 async function login() {
