@@ -233,7 +233,7 @@ async function download_json(xj) {
 	console.log("Downloading JSON...");
 	console.log(get_json_data());
 	$('#cveUpdateModal').attr('download','SPDX-.spdx');
-    $('#cveUpdateModal').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(xj)));
+    $('#cveUpdateModal').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(get_json_data()));
 }
     
 async function login() {
