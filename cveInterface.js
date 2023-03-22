@@ -219,9 +219,8 @@ function saveUserOrgInfo(userobj) {
 
 async function skip() {
 	$('#loginModal').modal('hide');
-	//$('#cveUpdateModal').modal();
 	const template = _cna_template;
-	template.delete("providerMetadata");
+	delete template["providerMetadata"];
 	console.log(template);
 	let xj = JSON.stringify(template);
 	json_edit(xj);
