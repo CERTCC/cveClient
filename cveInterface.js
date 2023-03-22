@@ -225,6 +225,11 @@ async function skip() {
 	json_edit(xj);
 	$('#cveUpdateModal').modal();
 	$('#cveUpdateModal .cveupdate').html("Download JSON");
+	$('#cveUpdateModal .cveupdate').on("click", download_json);
+}
+
+async function download_json() {
+	console.log("Downloading JSON...");
 }
     
 async function login() {
