@@ -225,11 +225,14 @@ async function skip() {
 	json_edit(xj);
 	$('#cveUpdateModal').modal();
 	$('#cveUpdateModal .cveupdate').html("Download JSON");
+	$('#cveUpdateModal .cveupdate').removeAttr('onclick');
 	$('#cveUpdateModal .cveupdate').on("click", download_json);
 }
 
 async function download_json() {
 	console.log("Downloading JSON...");
+	$('#dlspdx').attr('download','SPDX-.spdx');
+    $('#dlspdx').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(spdxdl));
 }
     
 async function login() {
