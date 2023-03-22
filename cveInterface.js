@@ -220,7 +220,8 @@ function saveUserOrgInfo(userobj) {
 async function skip() {
 	$('#loginModal').modal('hide');
 	//$('#cveUpdateModal').modal();
-	let xj = JSON.stringify(_cna_template);
+	const template = _cna_template.delete("providerMetadata");
+	let xj = JSON.stringify(template);
 	json_edit(xj);
 	$('#cveUpdateModal').modal();
 }
