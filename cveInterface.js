@@ -218,35 +218,12 @@ function saveUserOrgInfo(userobj) {
 }
 
 async function skip() {
-	/* By default enable encryption */
-	//enable_encryption();
 	console.log("We're in the skip method");
-	$(loginModal).modal('hide');
-	//$('#loginModal').hide();
-	//$('#cveUpdateModal').modal();
-	setTimeout(function() {
-	    Swal.close();
-	    $('#loginModal').modal('hide');
-	    show_cve_table();
-	}, 2300);/*
-	$('#cveform .form-control').removeClass('is-valid');
-    /* remove all additional fields 
-    $('#cveform ol > li.erow:nth-of-type(n+2)').remove();
-    $('#cveform').trigger('reset');
-    $('#cveUpdateModal').modal();
-	$('#loginModal .form-control').each(function(_,x) {
-	    store.setItem(store_tag+$(x).attr('id'),$(x).val());
-	});
-	mtype = "success";
-	title = "Login Success";
-	messages = "Welcome, you are using cveClient offline"
-
-	Swal.fire({
-	title: title,
-	text: messages,
-	icon: mtype,
-	confirmButtonText: 'OK'
-    });*/
+	$('#loginModal').modal('hide');
+	$('#cveUpdateModal').modal();
+	let xj = JSON.stringify(_cna_template);
+	json_edit(xj);
+	$('#cveUpdateModal').modal();
 	console.log("Exiting the skip method");
 }
     
