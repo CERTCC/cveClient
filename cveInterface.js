@@ -221,6 +221,7 @@ async function skip() {
 	$('#loginModal').modal('hide');
 	//$('#cveUpdateModal').modal();
 	const template = _cna_template.delete("providerMetadata");
+	console.log(template);
 	let xj = JSON.stringify(template);
 	json_edit(xj);
 	$('#cveUpdateModal').modal();
