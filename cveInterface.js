@@ -229,7 +229,7 @@ async function skip() {
 	$('#cveUpdateModal .cveupdate').on("click", download_json);
 }
 
-async function download_json(xj) {
+async function download_json() {
 	console.log("Downloading JSON...");
 	console.log(get_json_data());
 	$('#cveUpdateModal').attr('download','SPDX-.spdx');
@@ -640,6 +640,7 @@ function vreplace(s,v) {
     return s
 }
 async function cve_update_modal() {
+	console.log("cve_update_modal");
     $('#cveform .form-control').removeClass('is-valid');
     /* remove all additional fields */
     $('#cveform ol > li.erow:nth-of-type(n+2)').remove();
@@ -664,6 +665,7 @@ async function cve_update_modal() {
     }
 }
 function mupdate() {
+	console.log("mupdate");
     var mr = $('#deepDive').data('crecord');
     if(!mr)
 	return;
@@ -675,6 +677,7 @@ function mupdate() {
     }
 }
 async function show_table(fun,fvars,msg,tag,fld,pmd,clm,tbn,uid,show) {
+	console.log("show_tablet");
     if(show) {
 	if(tbn in client) {
 	    top_alert("success","Showing Cached data. If needed click on Refresh Icon.",1000);
@@ -743,6 +746,7 @@ function safeHTML(uinput) {
     return $('<div>').text(uinput).html()
 }
 function gname(name,row) {
+	console.log("gname");
     var append = "";
     if(row.secret)
 	append = " &#128273 ";
@@ -759,6 +763,7 @@ function gname(name,row) {
     return safeHTML(name.first + " " + name.last + append);
 }
 function gsort(name1,name2,row1,row2) {
+	console.log("gsort");
     let nameA = gname(name1,row1).toUpperCase();
     let nameB = gname(name2,row2).toUpperCase();
     if (nameA < nameB) {
@@ -770,6 +775,7 @@ function gsort(name1,name2,row1,row2) {
     return 0;
 }
 function show_users_table(show) {
+	console.log("show_users_table");
     let fun = "listusers";
     let tag = "USER-";
     let fld = "users";
@@ -784,6 +790,7 @@ function show_users_table(show) {
     show_table(fun,undefined,msg,tag,fld,pmd,clm,tbn,uid,show);    
 }
 function wdate(reserved,row) {
+	console.log("wdate");
     if(get_deep(row,'time.modified')) {
 	try {
 	    let x = Date.parse(get_deep(row,'time.modified'));
@@ -800,6 +807,7 @@ function wdate(reserved,row) {
     return safeHTML(reserved);
 }
 function wsort(d1,d2,row1,row2) {
+	console.log("wsort");
     let dateA = wdate(d1,row1);
     let dateB = wdate(d2,row2);
     if (dateA < dateB) {
@@ -811,6 +819,7 @@ function wsort(d1,d2,row1,row2) {
     return 0;
 }
 function show_cve_table(show) {
+	console.log("show_cve_table");
     let fun = "getcveids";
     let year = $('#year').val();
     let fvars = undefined;
@@ -831,6 +840,7 @@ function show_cve_table(show) {
     show_table(fun,fvars,msg,tag,fld,pmd,clm,tbn,uid,show);
 }
 async function reserve() {
+	console.log("reserve");
     let vars = {};
     $('#reserveCVEModal .form-control').each(function(_,x) {
 	vars[x.name] = $(x).val();
@@ -873,6 +883,7 @@ async function reserve() {
     
 }
 async function reset_user(w,confirmed) {
+	console.log("reset_user");
     if(!confirmed) { 
 	Swal.fire({
 	    title: "Are you sure?",
@@ -930,6 +941,7 @@ async function reset_user(w,confirmed) {
     }
 }
 function update_user() {
+	console.log("update_user");
     /* await client.updateuser('rajo@sendmail.org', 
        {'active_roles.remove':'ADMIN'})
        await client.updateuser('rajo@sendmail.org',
@@ -986,6 +998,7 @@ function update_user() {
     }
 }
 async function do_update_user(username,updates) {
+	console.log("do_update_user");
     let d = await client.updateuser(username,updates);
     if("error" in d) {
 	swal_error("Error in updating user "+d.error+" : "+d.message);
@@ -1016,6 +1029,7 @@ function lock_unlock(dolock,w) {
     }
 }
 async function update_user_status(w) {
+	console.log("update_user_status");
     lock_unlock(1,w);
     let username = $('#addUserModal .username').data('oldvalue');
     let model = {};
@@ -1102,6 +1116,7 @@ async function adduser() {
     $('#addUserModal').modal('hide');
 }
 function get_json_data() {
+	console.log("get_json_data");
     try { 
 	return JSON.parse($('#mjson .jsoneditor')[0]
 			  .env.editor.getValue());
@@ -1113,6 +1128,7 @@ function get_json_data() {
 
 }
 function from_json(w) {
+	console.log("from_json");
     let json_data = get_json_data();
     if(!json_data)
 	return;
@@ -1166,6 +1182,7 @@ function from_json(w) {
     });
 }
 async function publish_cve() {
+	console.log("publish_cve");
     try { 
 	if($('#nice-or-json').find(".active.show").attr("id") == "nice") { 
 	    if(to_json() == false) {
@@ -1226,6 +1243,7 @@ async function publish_cve() {
     }
 }
 function to_json(w) {
+	console.log("to_json");
     let json_data = get_json_data();
     let value_check = true;
     $('#nice .form-control').not('.d-none').each(function(_,v) {
