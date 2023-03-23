@@ -231,7 +231,8 @@ async function skip() {
 
 async function download_json() {
 	console.log("Downloading JSON...");
-	var json_data = get_json_data();
+	let json_data = get_json_data();
+	let props = $(v).data("field");
 	json_data = set_deep(json_data,props,$(v).val());
 	console.log(json_data);
 	$('#cveUpdateModal').attr('download','SPDX-.spdx');
