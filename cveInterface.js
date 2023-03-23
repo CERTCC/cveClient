@@ -1245,6 +1245,7 @@ async function publish_cve() {
 function to_json(w) {
 	console.log("to_json");
     let json_data = get_json_data();
+	console.log(json_data);
     let value_check = true;
     $('#nice .form-control').not('.d-none').each(function(_,v) {
 	if($(v).val()) {
@@ -1266,6 +1267,8 @@ function to_json(w) {
     });
     let editor = $('#mjson .jsoneditor')[0].env.editor;
     editor.setValue(JSON.stringify(json_data,null,2));
+	console.log("exiting");
+	console.log(json_data);
     return value_check;
 }
 function update_related(w) {
