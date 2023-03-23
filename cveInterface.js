@@ -232,7 +232,12 @@ async function skip() {
 async function download_json() {
 	console.log("Downloading JSON...");
 	let json_data = get_json_data();
-	let props = $(v).data("field");
+	if($(v).val()) {
+	    let props = $(v).data("field");
+	    if(!props) return;
+	    json_data = set_deep(json_data,props,$(v).val());
+	    $(v).removeClass('is-invalid').addClass('is-valid');
+	}
 	json_data = set_deep(json_data,props,$(v).val());
 	console.log(json_data);
 	$('#cveUpdateModal').attr('download','SPDX-.spdx');
