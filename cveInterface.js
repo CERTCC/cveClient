@@ -231,7 +231,9 @@ async function skip() {
 
 async function download_json() {
 	console.log("Downloading JSON...");
-	console.log(get_json_data());
+	var json_data = get_json_data();
+	json_data = set_deep(json_data,props,$(v).val());
+	console.log(json_data);
 	$('#cveUpdateModal').attr('download','SPDX-.spdx');
     $('#cveUpdateModal').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(get_json_data()));
 }
