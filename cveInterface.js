@@ -232,13 +232,24 @@ async function skip() {
 async function download_json() {
 	console.log("Downloading JSON...");
 	let json_data = get_json_data();
-	if($(v).val()) {
-	    let props = $(v).data("field");
-	    if(!props) return;
-	    json_data = set_deep(json_data,props,$(v).val());
-	    $(v).removeClass('is-invalid').addClass('is-valid');
-	}
-	json_data = set_deep(json_data,props,$(v).val());
+	$('#nice .form-control').not('.d-none').each(function(_,v) {
+		if($(v).val()) {
+			let props = $(v).data("field");
+			if(!props) return;
+			json_data = set_deep(json_data,props,$(v).val());
+			$(v).removeClass('is-invalid').addClass('is-valid');
+		} else {
+			if(v.required) {
+			value_check = false;
+			$(v).removeClass('is-valid').addClass('is-invalid');
+			} else {
+			let props = $(v).data("field");
+			if(!props) return;
+			/* Delete the field if exists */
+			json_data = set_deep(json_data,props,undefined);
+			}
+		}
+	});
 	console.log(json_data);
 	$('#cveUpdateModal').attr('download','SPDX-.spdx');
     $('#cveUpdateModal').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(get_json_data()));
