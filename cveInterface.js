@@ -227,6 +227,7 @@ async function skip() {
 	$('#cveUpdateModal .cveupdate').html("Download JSON");
 	$('#cveUpdateModal .cveupdate').removeAttr('onclick');
 	$('#cveUpdateModal .cveupdate').on("click", download_json);
+
 }
 
 async function download_json() {
@@ -251,9 +252,11 @@ async function download_json() {
 		}
 	});
 	console.log(json_data);
-	$('#cveUpdateModal').attr('download','SPDX-.spdx');
-    $('#cveUpdateModal').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(json_data)));
+	//$('#download-button').attr('download');
+    $('#download-button').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(json_data)));
 }
+
+
     
 async function login() {
     let vids = ['org','user','key'];
