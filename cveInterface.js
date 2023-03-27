@@ -252,7 +252,7 @@ async function download_json() {
 	});
 	console.log(json_data);
 	$('#cveUpdateModal').attr('download','SPDX-.spdx');
-    $('#cveUpdateModal').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(get_json_data()));
+    $('#cveUpdateModal').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(json_data)));
 }
     
 async function login() {
