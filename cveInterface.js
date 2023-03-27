@@ -259,8 +259,8 @@ async function download_json() {
 		}
 	});
 	console.log(json_data);
-	let fileName = "congratulations"
-	//let fileName = json_data["affected"][0]["vendor"]
+	//let fileName = "congratulations"
+	let fileName = json_data["affected"][0]["vendor"]
 	$('#download-button').attr('download',fileName+timefile()+'.json');
     $('#download-button').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(json_data)));
 	console.log('data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(json_data)))
