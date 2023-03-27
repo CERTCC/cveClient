@@ -262,7 +262,7 @@ async function download_json() {
 	let fileName = "congratulations"
 	//let fileName = json_data["affected"][0]["vendor"]
 	$('#download-button').attr('download','SPDX-'+fileName+timefile()+'.json');
-    $('#download-button').attr('href','data:text/plain;charset=utf-8' + encodeURIComponent(JSON.stringify(json_data)));
+    $('#download-button').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(json_data)));
 }
 
 
