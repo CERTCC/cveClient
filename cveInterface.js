@@ -217,6 +217,13 @@ function saveUserOrgInfo(userobj) {
     };
 }
 
+function timefile() {
+    var d = new Date();
+    return d.getDate()  + "-" + (d.getMonth()+1) + "-" + d.getFullYear() + "-" +
+	d.getHours() + "-" + d.getMinutes()
+    
+}
+
 async function skip() {
 	$('#loginModal').modal('hide');
 	const template = _cna_template;
@@ -252,8 +259,10 @@ async function download_json() {
 		}
 	});
 	console.log(json_data);
-	//$('#download-button').attr('download');
-    $('#download-button').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(json_data)));
+	let fileName = "congratulations"
+	//let fileName = json_data["affected"][0]["vendor"]
+	$('#download-button').attr('download','SPDX-'+fileName+timefile()+'.json');
+    $('#download-button').attr('href','data:text/plain;charset=utf-8' + encodeURIComponent(JSON.stringify(json_data)));
 }
 
 
