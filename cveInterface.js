@@ -1197,66 +1197,68 @@ function from_json(w) {
 	}
     });
 }
-// async function publish_cve() {
-//     try { 
-// 	if($('#nice-or-json').find(".active.show").attr("id") == "nice") { 
-// 	    if(to_json() == false) {
-// 		$('#cveform .is-invalid').focus();
-// 		swal_error("Some required fields are missing or incomplete");
-// 		return;
-// 	    }
-// 	}
-// 	let editor = $('#mjson .jsoneditor')[0].env.editor;
-// 	let pubcve = JSON.parse(editor.getValue());
-// 	let mr = $('#deepDive').data('crecord');
-// 	/* Override some fields on submit*/
-// 	if(get_deep(client,'userobj.org_UUID') &&  client.org) 
-// 	    pubcve["providerMetadata"] = { orgId: client.userobj.org_UUID,
-// 					   shortName: client.org };
-// 	if(get_deep(client,'constructor.name') && client._version)
-// 	    pubcve["x_generator"] = {engine:  client.constructor.name + "/" +
-// 				     client._version };
-// 	let cve = mr.cve_id;
-// 	let ispublic = mr.state != "RESERVED";
-// 	let rejected = false;
-// 	let d = await client.publishcve(cve,pubcve,ispublic,rejected);
-// 	if("error" in d) {
-// 	    swal_error("Failed to publish CVE, Error : "+d.error);
-// 	    console.log(d);
-// 	    return;
-// 	}
-// 	if(("created" in d) || ("updated" in d)) {
-// 	    let note = "Published";
-// 	    let fnote = "created";
-// 	    if(ispublic) {
-// 		note = "Updated";
-// 		fnote = "updated";
-// 	    }
-// 	    Swal.fire({
-// 		title: "CVE "+note+" Successfully!",
-// 		text: d.message,
-// 		icon: "success",
-// 		timer: 1800
-// 	    });
-// 	    let u = client.cvetable.bootstrapTable('getRowByUniqueId',cve);
-// 	    u.state = get_deep(d,fnote+'.cveMetadata.state');
-// 	    let modified = get_deep(d,fnote+'.cveMetadata.datePublished');
-// 	    if(modified) 
-// 		set_deep(u,'time.modified',modified);
-// 	    u.new = 1;
-// 	    client.cvetable.bootstrapTable('updateByUniqueId',{id: cve,
-// 							       row: u });
-// 	    $('#cveUpdateModal').modal('hide');
-// 	} else {
-// 	    console.log(d);
-// 	    swal_error("Unknown error CVE could not be updated. See console "+
-// 		       " log for details!");
-// 	}
-//     }catch(err) {
-// 	console.log(err);
-// 	swal_error("Could not publish this CVE. Fix the errors please!");
-//     }
-// }
+
+async function publish_cve() {
+     try { 
+ 	if($('#nice-or-json').find(".active.show").attr("id") == "nice") { 
+ 	    if(to_json() == false) {
+ 		$('#cveform .is-invalid').focus();
+ 		swal_error("Some required fields are missing or incomplete");
+ 		return;
+ 	    }
+ 	}
+ 	let editor = $('#mjson .jsoneditor')[0].env.editor;
+ 	let pubcve = JSON.parse(editor.getValue());
+ 	let mr = $('#deepDive').data('crecord');
+ 	/* Override some fields on submit*/
+ 	if(get_deep(client,'userobj.org_UUID') &&  client.org) 
+ 	    pubcve["providerMetadata"] = { orgId: client.userobj.org_UUID,
+ 					   shortName: client.org };
+ 	if(get_deep(client,'constructor.name') && client._version)
+ 	    pubcve["x_generator"] = {engine:  client.constructor.name + "/" +
+ 				     client._version };
+ 	let cve = mr.cve_id;
+ 	let ispublic = mr.state != "RESERVED";
+ 	let rejected = false;
+ 	let d = await client.publishcve(cve,pubcve,ispublic,rejected);
+ 	if("error" in d) {
+ 	    swal_error("Failed to publish CVE, Error : "+d.error);
+ 	    console.log(d);
+ 	    return;
+ 	}
+ 	if(("created" in d) || ("updated" in d)) {
+ 	    let note = "Published";
+ 	    let fnote = "created";
+ 	    if(ispublic) {
+ 		note = "Updated";
+ 		fnote = "updated";
+ 	    }
+ 	    Swal.fire({
+ 		title: "CVE "+note+" Successfully!",
+ 		text: d.message,
+ 		icon: "success",
+ 		timer: 1800
+ 	    });
+ 	    let u = client.cvetable.bootstrapTable('getRowByUniqueId',cve);
+ 	    u.state = get_deep(d,fnote+'.cveMetadata.state');
+ 	    let modified = get_deep(d,fnote+'.cveMetadata.datePublished');
+ 	    if(modified) 
+ 		set_deep(u,'time.modified',modified);
+ 	    u.new = 1;
+ 	    client.cvetable.bootstrapTable('updateByUniqueId',{id: cve,
+ 							       row: u });
+ 	    $('#cveUpdateModal').modal('hide');
+ 	} else {
+ 	    console.log(d);
+ 	    swal_error("Unknown error CVE could not be updated. See console "+
+ 		       " log for details!");
+ 	}
+     }catch(err) {
+ 	console.log(err);
+ 	swal_error("Could not publish this CVE. Fix the errors please!");
+     }
+ }
+
 function to_json(w) {
     let json_data = get_json_data();
     let value_check = true;
