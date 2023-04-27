@@ -240,13 +240,7 @@ async function skip() {
 async function download_json() {
 	console.log("Downloading JSON...");
 	let json_data = get_json_data();
-	console.log("json_data['providerMetadata']")
-	console.log(json_data['providerMetadata']);
-	console.log("json_data['providerMetadata']['orgId']")
-	console.log(json_data['providerMetadata']['orgId']);
-//	console.log("json_data['providerMetadata'][0]['orgId']")
-//	console.log(json_data['providerMetadata'][0]['orgId']);
-	$.fn.modal.Constructor.prototype._enforceFocus = function() {};
+	// $.fn.modal.Constructor.prototype._enforceFocus = function() {};
 	const { CVE: CVE } = await Swal.fire({
 		title: 'Enter CVE Number',
 	    input: 'text',
@@ -260,7 +254,7 @@ async function download_json() {
 			}
 		}
 	})
-	json_data['providerMetadata'][0]['orgId'] = CVE;
+	json_data['providerMetadata']['orgId'] = CVE;
 	$('#nice .form-control').not('.d-none').each(function(_,v) {
 		if($(v).val()) {
 			let props = $(v).data("field");
@@ -278,7 +272,7 @@ async function download_json() {
 			json_data = set_deep(json_data,props,undefined);
 			}
 		}
-		let fileName = json_data["providerMetadata"][0]["orgId"]
+		let fileName = json_data['providerMetadata']['orgId']
 		$('#cveUpdateModal .cveupdate').attr('download',fileName+timefile()+'.json');
     	$('#cveUpdateModal .cveupdate').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(json_data)));
 	});
