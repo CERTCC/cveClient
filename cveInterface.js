@@ -252,6 +252,7 @@ async function download_json() {
 		title: 'Enter CVE Number',
 	    input: 'text',
 		inputLabel: 'Your CVE Number',
+		inputPlaceholder: 'CVE-XXXX-XXXX',
 		showCancelButton: true,
 		inputValidator: (value) => {
 			if (!value) {
@@ -277,10 +278,10 @@ async function download_json() {
 			json_data = set_deep(json_data,props,undefined);
 			}
 		}
+		let fileName = json_data["providerMetadata"][0]["orgId"]
+		$('#cveUpdateModal .cveupdate').attr('download',fileName+timefile()+'.json');
+    	$('#cveUpdateModal .cveupdate').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(json_data)));
 	}));
-	let fileName = json_data["providerMetadata"][0]["orgId"]
-	$('#cveUpdateModal .cveupdate').attr('download',fileName+timefile()+'.json');
-    $('#cveUpdateModal .cveupdate').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(json_data)));
 }
 
 
