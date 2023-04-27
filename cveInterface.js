@@ -253,9 +253,7 @@ async function download_json() {
 			}
 		}
 	})
-	console.log('CVE is ' + CVE)
-	json_data['providerMetadata']['orgId'] = CVE;
-	console.log(json_data['providerMetadata']['orgId'])
+	json_data['providerMetadata']['orgId'] = "00000000-0000-0000-0000-000000000000";
 	$('#nice .form-control').not('.d-none').each(function(_,v) {
 		if($(v).val()) {
 			let props = $(v).data("field");
@@ -274,8 +272,21 @@ async function download_json() {
 			}
 		}
 		let fileName = json_data['providerMetadata']['orgId']
+		let returnJSON = {
+			"dataType": "CVE_RECORD",
+			"dataVersion": "5.0",
+			"containers": {
+				"cna": json_data
+			},
+			"cveMetadata": {
+				"state": "PUBLISHED",
+				"cveId": CVE,
+				"assignerOrgId": "00000000-0000-0000-0000-000000000000"
+			}
+
+		}
 		$('#cveUpdateModal .cveupdate').attr('download',fileName+timefile()+'.json');
-    	$('#cveUpdateModal .cveupdate').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(json_data)));
+    	$('#cveUpdateModal .cveupdate').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(returnJSON)));
 	});
 }
 
