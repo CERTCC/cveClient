@@ -240,6 +240,9 @@ async function skip() {
 async function download_json() {
 	console.log("Downloading JSON...");
 	let json_data = get_json_data();
+	console.log(json_data['providerMetadata'][0]['orgId']);
+	console.log(json_data['providerMetadata']['orgId']);
+	console.log(json_data['providerMetadata']);
 	const { CVE: CVE } = await Swal.fire({
 		title: 'Enter CVE Number',
 	    input: 'text',
