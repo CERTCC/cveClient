@@ -240,7 +240,6 @@ async function skip() {
 async function download_json() {
 	console.log("Downloading JSON...");
 	let json_data = get_json_data();
-	// $.fn.modal.Constructor.prototype._enforceFocus = function() {};
 	const { CVE: CVE } = await Swal.fire({
 		title: 'Enter CVE Number',
 	    input: 'text',
@@ -254,7 +253,9 @@ async function download_json() {
 			}
 		}
 	})
+	console.log('CVE is ' + CVE)
 	json_data['providerMetadata']['orgId'] = CVE;
+	console.log(json_data['providerMetadata']['orgId'])
 	$('#nice .form-control').not('.d-none').each(function(_,v) {
 		if($(v).val()) {
 			let props = $(v).data("field");
