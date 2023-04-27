@@ -240,7 +240,7 @@ async function skip() {
 async function download_json() {
 	console.log("Downloading JSON...");
 	let json_data = get_json_data();
-	const { CVE: CVE } = await Swal.fire({
+	const { value: CVE } = await Swal.fire({
 		title: 'Enter CVE Number',
 	    input: 'text',
 		inputLabel: 'Your CVE Number',
