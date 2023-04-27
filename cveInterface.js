@@ -244,7 +244,8 @@ async function download_json() {
 		title: 'Enter CVE Number',
 	    input: 'text',
 		inputLabel: 'Your CVE Number',
-		inputPlaceholder: 'CVE-XXXX-XXXX',
+		//inputPlaceholder: 'CVE-XXXX-XXXX',
+		inputValue: 'Test',
 		showCancelButton: true,
 		inputValidator: (value) => {
 			if (!value) {
@@ -252,7 +253,7 @@ async function download_json() {
 			}
 		}
 	})
-	json_data['providerMetadata'][0]['orgId'] = result.value;
+	json_data['providerMetadata'][0]['orgId'] = CVE;
 	$('#nice .form-control').not('.d-none').each(function(_,v) {
 		if($(v).val()) {
 			let props = $(v).data("field");
