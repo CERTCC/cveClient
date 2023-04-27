@@ -237,14 +237,6 @@ async function skip() {
 }
 
 
-async function input_CVE() {
-	Swal.fire({
-	    CVE: 'Enter CVE Number'
-	}).then((result) => {
-
-	})
-}
-
 async function download_json() {
 	console.log("Downloading JSON...");
 	let json_data = get_json_data();
@@ -260,7 +252,8 @@ async function download_json() {
 			}
 		}
 	}).then((result) => {
-		json_data['providerMetadata'][0]['orgId'] = result;
+		console.log(result);
+		json_data['providerMetadata'][0]['orgId'] = result.value;
 	}).then($('#nice .form-control').not('.d-none').each(function(_,v) {
 		if($(v).val()) {
 			let props = $(v).data("field");
