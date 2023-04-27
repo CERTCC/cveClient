@@ -252,44 +252,45 @@ async function download_json() {
 			}
 		}
 	})
-	json_data['providerMetadata']['orgId'] = "00000000-0000-0000-0000-000000000000";
-	$('#nice .form-control').not('.d-none').each(function(_,v) {
-		if($(v).val()) {
-			let props = $(v).data("field");
-			if(!props) return;
-			json_data = set_deep(json_data,props,$(v).val());
-			$(v).removeClass('is-invalid').addClass('is-valid');
-		} else {
-			if(v.required) {
-			value_check = false;
-			$(v).removeClass('is-valid').addClass('is-invalid');
+	if (CVE) {
+		json_data['providerMetadata']['orgId'] = "00000000-0000-0000-0000-000000000000";
+		$('#nice .form-control').not('.d-none').each(function(_,v) {
+			if($(v).val()) {
+				let props = $(v).data("field");
+				if(!props) return;
+				json_data = set_deep(json_data,props,$(v).val());
+				$(v).removeClass('is-invalid').addClass('is-valid');
 			} else {
-			let props = $(v).data("field");
-			if(!props) return;
-			/* Delete the field if exists */
-			json_data = set_deep(json_data,props,undefined);
+				if(v.required) {
+				value_check = false;
+				$(v).removeClass('is-valid').addClass('is-invalid');
+				} else {
+				let props = $(v).data("field");
+				if(!props) return;
+				/* Delete the field if exists */
+				json_data = set_deep(json_data,props,undefined);
+				}
 			}
-		}
-		delete json_data ['providerMetadata']['shortName'];
-		let fileName = CVE
-		let returnJSON = {
-			"dataType": "CVE_RECORD",
-			"dataVersion": "5.0",
-			"containers": {
-				"cna": json_data
-			},
-			"cveMetadata": {
-				"state": "PUBLISHED",
-				"cveId": CVE,
-				"assignerOrgId": "00000000-0000-0000-0000-000000000000"
-			}
+			delete json_data ['providerMetadata']['shortName'];
+			let fileName = CVE
+			let returnJSON = {
+				"dataType": "CVE_RECORD",
+				"dataVersion": "5.0",
+				"containers": {
+					"cna": json_data
+				},
+				"cveMetadata": {
+					"state": "PUBLISHED",
+					"cveId": CVE,
+					"assignerOrgId": "00000000-0000-0000-0000-000000000000"
+				}
 
-		}
-		$('#cveUpdateModal .cveupdate').attr('download',fileName+'.json');
-    	$('#cveUpdateModal .cveupdate').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(returnJSON)));
-	});
+			}
+			$('#cveUpdateModal .cveupdate').attr('download',fileName+'.json');
+			$('#cveUpdateModal .cveupdate').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(returnJSON)));
+		});
+	}
 }
-
 
     
 async function login() {
