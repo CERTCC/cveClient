@@ -249,7 +249,15 @@ async function download_json() {
 	console.log("Downloading JSON...");
 	let json_data = get_json_data();
 	Swal.fire({
-	    CVE: 'Enter CVE Number'
+		title: 'Enter CVE Number',
+	    input: 'text',
+		inputLabel: 'Your CVE Number',
+		showCancelButton: true,
+		inputValidator: (value) => {
+			if (!value) {
+				return 'You must enter a CVE.'
+			}
+		}
 	}).then((result) => {
 		json_data['providerMetadata'][0]['orgId'] = result;
 	}).then($('#nice .form-control').not('.d-none').each(function(_,v) {
