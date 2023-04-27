@@ -285,7 +285,7 @@ async function download_json() {
 			}
 
 		}
-		$('#cveUpdateModal .cveupdate').attr('download',fileName+timefile()+'.json');
+		$('#cveUpdateModal .cveupdate').attr('download',fileName+'.json');
     	$('#cveUpdateModal .cveupdate').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(returnJSON)));
 	});
 }
