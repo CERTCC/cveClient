@@ -227,7 +227,6 @@ function timefile() {
 async function skip() {
 	$('#loginModal').modal('hide');
 	const template = _cna_template;
-	delete template["providerMetadata"];
 	let xj = JSON.stringify(template);
 	json_edit(xj);
 	$('#cveUpdateModal').modal();
@@ -237,10 +236,23 @@ async function skip() {
 
 }
 
+
+async function input_CVE() {
+	Swal.fire({
+	    CVE: 'Enter CVE Number'
+	}).then((result) => {
+
+	})
+}
+
 async function download_json() {
 	console.log("Downloading JSON...");
 	let json_data = get_json_data();
-	$('#nice .form-control').not('.d-none').each(function(_,v) {
+	Swal.fire({
+	    CVE: 'Enter CVE Number'
+	}).then((result) => {
+		json_data['providerMetadata'][0]['orgId'] = result;
+	}).then($('#nice .form-control').not('.d-none').each(function(_,v) {
 		if($(v).val()) {
 			let props = $(v).data("field");
 			if(!props) return;
@@ -257,8 +269,8 @@ async function download_json() {
 			json_data = set_deep(json_data,props,undefined);
 			}
 		}
-	});
-	let fileName = json_data["affected"][0]["vendor"]
+	}));
+	let fileName = json_data["providerMetadata"][0]["orgId"]
 	$('#cveUpdateModal .cveupdate').attr('download',fileName+timefile()+'.json');
     $('#cveUpdateModal .cveupdate').attr('href','data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(json_data)));
 }
