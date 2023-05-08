@@ -227,3 +227,6 @@ div.bootstrap-table button.btn {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+.cveupdate {
+    color: white;
+}
