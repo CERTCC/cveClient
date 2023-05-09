@@ -155,7 +155,7 @@
 	</div>
       </div>
     </div>
-    <div class="modal fade cveUpdate" id="cveUpdateModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade cveUpdate" id="cveUpdateModal" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
 	<div class="modal-content">
 	  <div class="modal-header">
@@ -347,9 +347,9 @@
 	    </form>
 	  </div>
 	  <div class="modal-footer">
-	    <button type="button" class="btn btn-primary cveupdate"
+	    <a type="button" class="btn btn-primary cveupdate"
 		    onclick="publish_cve()">
-	      Publish CVE</button>
+	      Publish CVE</a>
 	  </div>
 	</div>
       </div>
@@ -472,7 +472,7 @@
 		  <option value="https://cveawg.mitre.org/api">
 		    Production</option>
 		  <option value="https://cveawg-test.mitre.org/api">
-		    Testing</option>
+		    Test</option>
 		  <option value="http://127.0.0.1:3000/api">Local</option>
 		  <option value="custom">Custom</option>
 		</select>
@@ -490,6 +490,8 @@
 		    data-dismiss="modal">Close</button>
 	    <button type="button" class="btn btn-primary" onclick="login()">
 	      Login</button>
+	    <button type="button" class="btn btn-primary" onclick="skip()">
+	      Skip</button>
 	  </div>
 	</div>
       </div>
@@ -589,7 +591,7 @@
 	    
       </div>    
     </main>
-    <script src="cveInterface.js?version=2022093001"></script>
+    <script src="cveInterface.js?version=2023042716"></script>
   </body>
 </html>
 

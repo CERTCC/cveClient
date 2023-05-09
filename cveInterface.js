@@ -54,8 +54,8 @@ function json_edit(vjson) {
 }
 function get_deep(obj,prop) {
     /* Check if Object obj has all the dot-delimited properties 
-     recursively. example get_deep({a:{b:{c:{"good"}}}},"a.b.c") 
-    will return good */
+       recursively. example get_deep({a:{b:{c:{"good"}}}},"a.b.c") 
+       will return good */
     if(typeof(obj) != "object")
 	return undefined;
     let props = prop.split(".");
@@ -70,8 +70,8 @@ function get_deep(obj,prop) {
 }
 function set_deep(obj,prop,val) {
     /* For the Object obj set the property of a prop to val 
-     recursively. example set_deep({a:{b:{c:{"good"}}}},"a.b.c","bad") 
-    will return {a:{b:{c:{"bad"}}}} */
+       recursively. example set_deep({a:{b:{c:{"good"}}}},"a.b.c","bad") 
+       will return {a:{b:{c:{"bad"}}}} */
     if(typeof(obj) != "object")
 	return undefined;
     let fobj = simpleCopy(obj);
@@ -216,7 +216,76 @@ function saveUserOrgInfo(userobj) {
 	console.log(err);
     };
 }
+
+function timefile() {
+    var d = new Date();
+    return d.getDate()  + "-" + (d.getMonth()+1) + "-" + d.getFullYear() + "-" +
+	d.getHours() + "-" + d.getMinutes()
     
+}
+
+async function skip() {
+    $('#loginModal').modal('hide');
+    const template = _cna_template;
+    let xj = JSON.stringify(template);
+    json_edit(xj);
+    $('#cveUpdateModal').modal();
+    $('#cveUpdateModal .cveupdate').html("Download JSON");
+    $('#cveUpdateModal .cveupdate').removeAttr('onclick');
+    $('#cveUpdateModal .cveupdate').on("click", download_json);
+    if($('#cveUpdateModal input.cve').length < 1) {
+	let cve_nrow = $('<ol>').addClass("form-group frow")
+	    .append($("<label>").html("CVE Number")
+		    .append($("<input>")
+			    .attr({"class": "form-control cve",
+				   "name": "cve",
+				   "placeholder": "CVE-YYYY-NNNN",
+				   "onblur": "clearoff(this)"
+				  })));
+	$('#cveUpdateModal #nice').prepend(cve_nrow);
+    }
+}
+
+
+async function download_json() {
+    let cve = $('#nice .cve').val();
+    if(!cve.match(/^CVE-\d{4}-\d{4,7}$/)) {
+	$('#nice .cve').addClass('is-invalid').focus()
+	return;
+    }
+    try {
+	client = new cveClient();  
+	if($('#nice-or-json').find(".active.show").attr("id") == "nice") {
+            if(to_json() == false) {
+		$('#cveform .is-invalid').focus();
+		swal_error("Some required fields are missing or incomplete");
+		return;
+            }
+	}
+	let editor = $('#mjson .jsoneditor')[0].env.editor;
+	let returnJSON = {"containers": {"cna": JSON.parse(editor.getValue())}};
+	returnJSON["cveMetadata"] = {"cveId": cve,
+				     "assignerOrgId": "00000000-0000-0000-0000-000000000000",
+				     "requesterUserId": "00000000-0000-0000-0000-000000000000",
+				     "serial": 1,
+				     "state": "PUBLISHED"};
+ 	returnJSON["containers"]["cna"]["providerMetadata"] =
+				 { orgId: "00000000-0000-0000-0000-000000000000",
+ 				   shortName: "none" };	
+	if(get_deep(client,'constructor.name') && client._version)
+            returnJSON["x_generator"] = {engine:  client.constructor.name + "/" +
+					 client._version };
+	$('#cveUpdateModal .cveupdate').attr('download',cve+'.json');
+	let cson = encodeURIComponent(JSON.stringify(returnJSON));
+	$('#cveUpdateModal .cveupdate').attr('href','data:text/plain;charset=utf-8,' + cson);
+    } catch (err) {
+        console.log(err);
+        swal_error("Could not create this CVE. Fix the errors please!");
+    }
+}
+ $('#cveUpdateModal .cveupdate').off('onclick');
+    $('#cveUpdateModal .cveupdate').on("click", download_json);
+
 async function login() {
     let vids = ['org','user','key'];
     for(var i=0; i < vids.length; i++) {
@@ -668,7 +737,7 @@ async function show_table(fun,fvars,msg,tag,fld,pmd,clm,tbn,uid,show) {
     } catch(err) {
 	swal_error("Error in collecting data, potentially network error OR "+
 		   " asynchronous decryption in progress.  "+
-		  "Try again in a few seconds.");
+		   "Try again in a few seconds.");
 	console.log(err);
 	return;
     }
@@ -915,7 +984,7 @@ function update_user() {
        {'active_roles.remove':'ADMIN'})
        await client.updateuser('rajo@sendmail.org',
        {'active_roles.add':'ADMIN'})
-       */
+    */
     var row = $('#deepDive').data('crecord');
     let updates = {};
     $('#addUserModal .form-control').each(function(_,x) {
@@ -1060,8 +1129,8 @@ async function adduser() {
 	let fn = simpleCopy(f.created);
 	fn.new = 1;
 	client.usertable.bootstrapTable('insertRow',
-				       {index: 0,
-					row: fn});
+					{index: 0,
+					 row: fn});
 	set_copy_pass(fn.secret);
 	Swal.fire({
 	    title: "User Created!",
@@ -1127,7 +1196,7 @@ function from_json(w) {
 	    });
 	    $(el).find('.versionRangeEnabled').prop('checked',versionRange ? true: false)
 		.trigger('change');
-		
+	    
 	}
     });
     $('#nice .form-control').each(function(_,v) {
@@ -1146,66 +1215,68 @@ function from_json(w) {
 	}
     });
 }
+
 async function publish_cve() {
     try { 
-	if($('#nice-or-json').find(".active.show").attr("id") == "nice") { 
-	    if(to_json() == false) {
-		$('#cveform .is-invalid').focus();
-		swal_error("Some required fields are missing or incomplete");
-		return;
-	    }
-	}
-	let editor = $('#mjson .jsoneditor')[0].env.editor;
-	let pubcve = JSON.parse(editor.getValue());
-	let mr = $('#deepDive').data('crecord');
-	/* Override some fields on submit*/
-	if(get_deep(client,'userobj.org_UUID') &&  client.org) 
-	    pubcve["providerMetadata"] = { orgId: client.userobj.org_UUID,
-					   shortName: client.org };
-	if(get_deep(client,'constructor.name') && client._version)
-	    pubcve["x_generator"] = {engine:  client.constructor.name + "/" +
-				     client._version };
-	let cve = mr.cve_id;
-	let ispublic = mr.state != "RESERVED";
-	let rejected = false;
-	let d = await client.publishcve(cve,pubcve,ispublic,rejected);
-	if("error" in d) {
-	    swal_error("Failed to publish CVE, Error : "+d.error);
-	    console.log(d);
-	    return;
-	}
-	if(("created" in d) || ("updated" in d)) {
-	    let note = "Published";
-	    let fnote = "created";
-	    if(ispublic) {
-		note = "Updated";
-		fnote = "updated";
-	    }
-	    Swal.fire({
-		title: "CVE "+note+" Successfully!",
-		text: d.message,
-		icon: "success",
-		timer: 1800
-	    });
-	    let u = client.cvetable.bootstrapTable('getRowByUniqueId',cve);
-	    u.state = get_deep(d,fnote+'.cveMetadata.state');
-	    let modified = get_deep(d,fnote+'.cveMetadata.datePublished');
-	    if(modified) 
-		set_deep(u,'time.modified',modified);
-	    u.new = 1;
-	    client.cvetable.bootstrapTable('updateByUniqueId',{id: cve,
-							       row: u });
-	    $('#cveUpdateModal').modal('hide');
-	} else {
-	    console.log(d);
-	    swal_error("Unknown error CVE could not be updated. See console "+
-		       " log for details!");
-	}
+ 	if($('#nice-or-json').find(".active.show").attr("id") == "nice") { 
+ 	    if(to_json() == false) {
+ 		$('#cveform .is-invalid').focus();
+ 		swal_error("Some required fields are missing or incomplete");
+ 		return;
+ 	    }
+ 	}
+ 	let editor = $('#mjson .jsoneditor')[0].env.editor;
+ 	let pubcve = JSON.parse(editor.getValue());
+ 	let mr = $('#deepDive').data('crecord');
+ 	/* Override some fields on submit*/
+ 	if(get_deep(client,'userobj.org_UUID') &&  client.org) 
+ 	    pubcve["providerMetadata"] = { orgId: client.userobj.org_UUID,
+ 					   shortName: client.org };
+ 	if(get_deep(client,'constructor.name') && client._version)
+ 	    pubcve["x_generator"] = {engine:  client.constructor.name + "/" +
+ 				     client._version };
+ 	let cve = mr.cve_id;
+ 	let ispublic = mr.state != "RESERVED";
+ 	let rejected = false;
+ 	let d = await client.publishcve(cve,pubcve,ispublic,rejected);
+ 	if("error" in d) {
+ 	    swal_error("Failed to publish CVE, Error : "+d.error);
+ 	    console.log(d);
+ 	    return;
+ 	}
+ 	if(("created" in d) || ("updated" in d)) {
+ 	    let note = "Published";
+ 	    let fnote = "created";
+ 	    if(ispublic) {
+ 		note = "Updated";
+ 		fnote = "updated";
+ 	    }
+ 	    Swal.fire({
+ 		title: "CVE "+note+" Successfully!",
+ 		text: d.message,
+ 		icon: "success",
+ 		timer: 1800
+ 	    });
+ 	    let u = client.cvetable.bootstrapTable('getRowByUniqueId',cve);
+ 	    u.state = get_deep(d,fnote+'.cveMetadata.state');
+ 	    let modified = get_deep(d,fnote+'.cveMetadata.datePublished');
+ 	    if(modified) 
+ 		set_deep(u,'time.modified',modified);
+ 	    u.new = 1;
+ 	    client.cvetable.bootstrapTable('updateByUniqueId',{id: cve,
+ 							       row: u });
+ 	    $('#cveUpdateModal').modal('hide');
+ 	} else {
+ 	    console.log(d);
+ 	    swal_error("Unknown error CVE could not be updated. See console "+
+ 		       " log for details!");
+ 	}
     }catch(err) {
-	console.log(err);
-	swal_error("Could not publish this CVE. Fix the errors please!");
+ 	console.log(err);
+ 	swal_error("Could not publish this CVE. Fix the errors please!");
     }
 }
+
 function to_json(w) {
     let json_data = get_json_data();
     let value_check = true;
