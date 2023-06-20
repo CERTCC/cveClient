@@ -283,8 +283,6 @@ async function download_json() {
         swal_error("Could not create this CVE. Fix the errors please!");
     }
 }
- $('#cveUpdateModal .cveupdate').off('onclick');
-    $('#cveUpdateModal .cveupdate').on("click", download_json);
 
 async function login() {
     let vids = ['org','user','key'];
