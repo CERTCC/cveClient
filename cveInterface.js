@@ -1,5 +1,5 @@
 /* Clientlib, UI html, css and UI js all are version controlled */
-const _version = "1.0.16";
+const _version = "1.0.17";
 const _tool = "CVE Services Client Interface "+_version;
 const _cna_template = { "descriptions": [ { "lang": "${descriptions.0.lang}", "value": "${descriptions.0.value}"} ] ,  "affected": [ { "versions": [{"version": "${affected.0.versions.0.version}"}], "product": "${affected.0.product}", "vendor": "${affected.0.vendor|client.orgobj.name}" } ],"references": [ { "name": "${references.0.name}", "url": "${references.0.url}" }], "providerMetadata": { "orgId": "${client.userobj.org_UUID}", "shortName": "${client.org}" } }
 const valid_states = {PUBLISHED: 1,RESERVED: 1, REJECTED: 1};
@@ -42,15 +42,20 @@ function load_languages() {
 	}
     });
 }
-function json_edit(vjson) {
-    let editor = ace.edit("mjsoneditor");
+function json_edit(vjson,jselector) {
+    if(!jselector) {
+	jselector = "mjsoneditor";
+    }
+    let editor = ace.edit(jselector);
     editor.setTheme("ace/theme/xcode");
     editor.session.setMode("ace/mode/json");
     editor.session.setUseWrapMode(true);
     editor.setValue(vjson);
-    from_json();
-    if(!$('#nice').hasClass("active"))
-	$('#nice-tab').click();
+    if(jselector == "mjsoneditor") {
+	from_json();
+	if(!$('#nice').hasClass("active"))
+	    $('#nice-tab').click();
+    }
 }
 function get_deep(obj,prop) {
     /* Check if Object obj has all the dot-delimited properties 
@@ -554,7 +559,7 @@ function deepdive(_, _, row, el) {
 	}
 	$('#updaterecord').html("Update User");
     } else if(("cve_id" in row) && ("state" in row)) {
-	$('#cveUpdateModal .mtitle').html("("+row.cve_id+")");
+	$('#cveUpdateModal .mtitle').html("("+row.cve_id+")");	
 	if (row.state == "RESERVED") {
 	    $('#updaterecord').html("Edit & Publish CVE").show();
 	    $('#cveUpdateModal .cveupdate').html("Publish CVE");
@@ -578,6 +583,7 @@ function deepdive(_, _, row, el) {
     $('#deepDive').data('crecord',row).modal();
 }
 async function display_cvedetails(cve) {
+    $('#deepDive .nav-default').click();    
     if(!cve)
 	cve = $('#deepDive').data('crecord').cve_id;
     let f = await client.getcvedetail(cve);
@@ -586,30 +592,42 @@ async function display_cvedetails(cve) {
 		   ": " + f.message);
 	return;
     }
-    if(("containers" in f) && ("cna" in f.containers))
-	display_object(f.containers.cna);
+    let adp = get_deep(f,"containers.adp");
+    if(get_deep(f,"containers.cna"))
+	display_object(f.containers.cna,adp);
     else
 	swal_error("Required information in cna.container is not " +
 		   "available or missing ");
 }
 function swapout(w) {
-    $(w).parent().find('table tbody tr').toggleClass('d-none');
+    $(w).parent().find('table tbody tr.normal').toggleClass('d-none');
     if($(w).html().indexOf('View') > -1)
 	$(w).html('Hide JSON');
     else
-	$(w).html('View JSON');	
+	$(w).html('View JSON');
 }
-function display_object(obj) {
-    let tjson = '<tr class="d-none"> <td colspan="2"> '+
-	'<div style="white-space: break-spaces;">' +
-	safeHTML(JSON.stringify(obj,null,3)) + '</div></td></tr>';
-    let alink = '<a href="javascript:void(0)" class="link float-right" '+
-	'onclick="swapout(this)">View JSON</a>';
-    let ttable = '<table class="table table-striped">';
-    var html =  Object.keys(obj).reduce(function(h,d) {
-	return objwalk(h,d,obj);
-    },alink+ttable+"<tbody>"+tjson);
-    $('#deepDive .modal-body').html(html+'</tbody></table>');
+function display_object() {
+    $('#deepDive .tab-pane').removeClass('active show');
+    $('#f0').addClass('active show');
+    for(let i=0; i<arguments.length; i++) {
+	let obj = arguments[i];
+	if(obj) { 
+	    let tjson = '<tr class="d-none normal"> <td colspan="2"> '+
+		'<div style="white-space: break-spaces;">' +
+		safeHTML(JSON.stringify(obj,null,3)) + '</div></td></tr>';
+	    let alink = '<a href="javascript:void(0)" class="link float-right" '+
+		'onclick="swapout(this)">View JSON </a>';
+	    let ttable = '<table class="table table-striped">';
+	    var html =  Object.keys(obj).reduce(function(h,d) {
+		return objwalk(h,d,obj);
+	    },alink+ttable+"<tbody>"+tjson);
+	    $('#f'+String(i)).html(html+'</tbody></table>');
+	}
+    }
+    if(arguments[1])
+	$('#display_tabs').removeClass('d-none');
+    else
+	$('#display_tabs').addClass('d-none');	
 }
 function add_user_modal() {
     $('#addUserModal').modal();
@@ -694,9 +712,9 @@ async function cve_update_modal() {
     $('#cveform').trigger('reset');
     $('#cveUpdateModal').modal();
     var mr = $('#deepDive').data('crecord');
+    $('#adpjson').removeData();
     if(('state' in mr) && (mr.state == 'PUBLISHED')) {
 	let c = await client.getcvedetail(mr.cve_id);
-	console.log(c);
 	if(('containers' in c) && (c.containers.cna))
 	    json_edit(JSON.stringify(c.containers.cna,null,3));
 	else if('error' in c)
@@ -705,10 +723,14 @@ async function cve_update_modal() {
 	else
 	    swal_error("Unknown error when fetching details of CVE. "+
 		       "See console log for details");
+	if(c.containers.adp)
+	    $('#adpjson').data('adp',c.containers.adp);
+	$('#morjson .adp').show();
     } else {
 	let mjson = JSON.stringify(_cna_template,null,2)
 	    .replace(/\$\{([^\}]+)\}/g,vreplace);
 	json_edit(mjson);
+	$('#morjson .adp').hide();
     }
 }
 function mupdate() {
@@ -1160,7 +1182,17 @@ function get_json_data() {
     }
 
 }
+function show_adp(w) {
+    let json_data = $('#adpjson').data('adp');
+    if(!json_data)
+	json_data = [];
+    json_edit(JSON.stringify(json_data,null,3),'adpjsoneditor');
+    $('.cveupdate').addClass('d-none');
+    $('.adpupdate').removeClass('d-none');
+}
 function from_json(w) {
+    $('.cveupdate').removeClass('d-none');
+    $('.adpupdate').addClass('d-none');
     let json_data = get_json_data();
     if(!json_data)
 	return;
@@ -1213,7 +1245,44 @@ function from_json(w) {
 	}
     });
 }
-
+async function publish_adp() {
+    try {
+	let editor = $('#adpjson .jsoneditor')[0].env.editor;
+	let alladp = JSON.parse(editor.getValue());
+	let adp;
+	for(let i=0; i < alladp.length; i++) {
+	    if(get_deep(alladp[i],'providerMetadata.shortName') == client.org) {
+		adp = {"adpContainer": alladp[i]};
+	    }
+	}
+	let mr = $('#deepDive').data('crecord');
+	let cve_id =  mr.cve_id;
+	adp.adpContainer.metrics[0].id = cve_id;
+	adp.adpContainer.metrics[0].other.content.id = cve_id;
+	let d = await client.publishadp(cve_id,adp) 
+	if("error" in d) {
+            swal_error("Failed to publish CVE, Error : "+d.error);
+            console.log(d);
+            return;
+	}
+	if(("created" in d) || ("updated" in d)) {
+            Swal.fire({
+                title: "ADP data created/updated successfully!",
+                text: d.message,
+                icon: "success",
+                timer: 1800
+            });
+	    $('#cveUpdateModal').modal('hide');	    
+	} else {
+            console.log(d);
+            swal_error("Unknown error CVE could not be updated. See console "+
+                       " log for details!");
+	}
+    } catch(err) {
+        console.log(err);
+        swal_error("Could not publish this ADP data. Fix the errors please!");
+    }
+}
 async function publish_cve() {
     try { 
  	if($('#nice-or-json').find(".active.show").attr("id") == "nice") { 
@@ -1276,6 +1345,8 @@ async function publish_cve() {
 }
 
 function to_json(w) {
+    $('.cveupdate').removeClass('d-none');
+    $('.adpupdate').addClass('d-none');
     let json_data = get_json_data();
     let value_check = true;
     $('#nice .form-control').not('.d-none').each(function(_,v) {

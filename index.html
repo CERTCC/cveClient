@@ -28,7 +28,7 @@
 	 <script src="https://cdn.jsdelivr.net/npm/ace-editor-builds@1.2.4/src-min-noconflict/ace.js"></script>
 	 -->
     <script src="cveClientlib.js?v=2022093001"></script>
-    <link rel="stylesheet" href="cveInterface.css?version=2022103001">
+    <link rel="stylesheet" href="cveInterface.css?version=2023071001">
   </head>
   <body class="text-center whitebody">
     <div class="alert position-fixed w-100" id="topalert" role="alert"
@@ -181,12 +181,19 @@
 		     onclick="show_cve_table()">Refresh</a>
 		</li>
 		<li class="nav-item waves-effect waves-light">
-		  <a class="nav-link" id="msjon-tab" data-toggle="tab"
+		  <a class="nav-link" data-toggle="tab"
 		     href="#mjson" role="tab" aria-controls="mjson"
 		     aria-selected="false" onclick="to_json(this)">
 		    JSON
 		  </a>
 		</li>
+		<li class="nav-item waves-effect waves-light adp">
+		  <a class="nav-link" data-toggle="tab"
+		     href="#adpjson" role="tab" aria-controls="adpjson"
+		     aria-selected="false" onclick="show_adp(this)">
+		    ADP
+		  </a>
+		</li>		
 	      </ul>
 	      <div class="tab-content" id="nice-or-json">
 		<div class="tab-pane fade active show" id="nice"
@@ -339,10 +346,14 @@
 		    <textarea class="form-control rawjson d-none"></textarea> 
 		  </div>
 		</div>
-		<div class="tab-pane fade" id="mjson" role="tabpanel"
+		<div class="tab-pane fade editorwrap" id="mjson" role="tabpanel"
 		     aria-labelledby="mjson-tab">
 		  <div class="jsoneditor" id="mjsoneditor"></div>
 		</div>
+		<div class="tab-pane fade editorwrap" id="adpjson" role="tabpanel"
+		     aria-labelledby="adpjson-tab">
+		  <div class="jsoneditor" id="adpjsoneditor"></div>
+		</div>		
 	      </div>
 	    </form>
 	  </div>
@@ -350,6 +361,9 @@
 	    <a type="button" class="btn btn-primary cveupdate"
 		    onclick="publish_cve()">
 	      Publish CVE</a>
+	    <a type="button" class="btn btn-primary adpupdate d-none"
+		    onclick="publish_adp()">
+	      Publish ADP</a>
 	  </div>
 	</div>
       </div>
@@ -366,6 +380,30 @@
 	    </h5>
 	  </div>
 	  <div class="modal-body">
+	    <ul class="nav nav-tabs d-none" role="tablist" id="display_tabs">
+	      <li class="nav-item waves-effect waves-light">
+		<a class="nav-link nav-default active" data-toggle="tab"
+		   href="#f0" role="tab" aria-controls="f1"
+		   aria-selected="false">
+		  CVE
+		</a>
+	      </li>
+	      <li class="nav-item waves-effect waves-light">
+		<a class="nav-link" data-toggle="tab"
+		   href="#f1" role="tab" aria-controls="f2"
+		   aria-selected="false">
+		    ADP
+		</a>
+	      </li>		
+	    </ul>
+	    <div class="tab-content">
+	      <div class="tab-pane fade active show" id="f0"
+		   role="tabpanel">
+	      </div>
+	      <div class="tab-pane fade" id="f1"
+		   role="tabpanel">
+	      </div>
+	    </div>
 	    <form autocomplete="off" onsubmit="return false">
 	      <div class="form-group">
 	      </div>
@@ -591,7 +629,7 @@
 	    
       </div>    
     </main>
-    <script src="cveInterface.js?version=2023042716"></script>
+    <script src="cveInterface.js?version=2023071101"></script>
   </body>
 </html>
 
