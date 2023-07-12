@@ -9,10 +9,10 @@ button.arrowdown {
     transform: rotate(90deg);
     color: #999;
 }
-#mjson.show {
+.editorwrap.show {
     display: inline-block;
 }    
-#mjson {
+.editorwrap {
     width: 100%;
     min-height: 600px;
     position: relative;
@@ -227,6 +227,6 @@ div.bootstrap-table button.btn {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-#cveUpdateModal .cveupdate {
+#cveUpdateModal .btn {
     color: white;
 }
