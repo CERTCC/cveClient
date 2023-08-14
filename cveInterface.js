@@ -11,6 +11,13 @@ function add_option(w,v,f,s) {
     $(w).append($('<option/>').attr({value:v,selected:s})
 		.html(f));
 }
+function triggerversionRange(w) {
+    if(w.checked) 
+	$(w).parent().find(".versionRange").removeClass("d-none");
+    else
+	$(w).parent().find(".versionRange").addClass("d-none");
+    
+}
 function showByClassName(w,c) {
     if(w)
 	$(c).removeClass('d-none');
@@ -128,7 +135,7 @@ function duplicate(pe) {
     let pclass = $(pe).data('rclass');
     let childclass = "." + pclass;
     let nrow = $(pe).parent().find(childclass).clone().removeClass(pclass);
-    let offset = $(pe).find(".erow").length;
+    let offset = $(pe).find(">.erow").length;
     nrow.find(".form-control").each(function(_,p) {
 	let rv = $(p).data('field');
 	if(!rv) return;
@@ -1190,6 +1197,18 @@ function show_adp(w) {
     $('.cveupdate').addClass('d-none');
     $('.adpupdate').removeClass('d-none');
 }
+function apply_diff(diff,el) {
+    if(diff > 0) {
+	/* Add elements */
+	for(let i=1; i <= diff; i++) 
+	    $(el).find("> .addrow").click();
+    } else if (diff < 0) {
+	/* Remove elements */
+	for(let i=1; i <= Math.abs(diff); i++) 
+	    $(el).find("> .deleterow").click();		
+    }
+    
+}
 function from_json(w) {
     $('.cveupdate').removeClass('d-none');
     $('.adpupdate').addClass('d-none');
@@ -1200,33 +1219,44 @@ function from_json(w) {
 	var field = $(el).data("rclass");
 	if(field in json_data) {
 	    let diff = json_data[field].length - $(el).find("> .erow").length;
-	    if(diff > 0) {
-		/* Add elements */
-		for(var i=1; i <= diff; i++) 
-		    $(el).find(".addrow").click();
-	    } else if (diff < 0) {
-		/* Remove elements */
-		for(var i=1; i <= Math.abs(diff); i++) 
-		    $(el).find(".deleterow").click();		
-	    }
-	    /* Check if Range is selected for affected version */
-	    var versionRange = undefined;
-	    json_data[field].forEach(function(x) {
-		if('versions' in x) {
-		    x.versions.forEach(function(y) {
-			/* if( ('lessThan' in y) || ('lessThanOrEqual' in y))  */
-			['lessThan','lessThanOrEqual'].forEach(function(q) {
-			    if(q in y) {
-				versionRange = q
-				$(el).find('.versionRangeType').val(q).trigger('change');
-			    }
-			})
-		    })
+	    $(el).find(".childarray").each(function(i,x) {
+		elfield = $(x).data("rclass");
+		if (elfield in json_data[field][i]) {
+		    let idiff = json_data[field][i][elfield].length -
+			$(x).find("> .erow").length;
+		    if(idiff != 0) 
+			apply_diff(idiff,x);
 		}
 	    });
-	    $(el).find('.versionRangeEnabled').prop('checked',versionRange ? true: false)
-		.trigger('change');
-	    
+	    if(diff != 0)
+		apply_diff(diff,el);
+	    json_data[field].forEach(function(x,i) {
+		let elf = $(el).find(".childarray").find(".erow");
+		if('versions' in x) {
+		    x.versions.forEach(function(y,j) {
+			let q;
+			['lessThan','lessThanOrEqual'].forEach(function(r) {
+			    if(r in y) 
+				q = r;
+			});
+			let w = $(elf[j]).find(".versionRangeEnabled")[0];
+			if(w) {
+			    if(q) {
+				w.checked = true;
+				$(elf[j]).find(".versionRangeType").val(q);
+				$(elf[j]).find(".versionRangeValue").val(y[q]);
+			    } else {
+				w.checked = false;
+			    }
+			    if('versionType' in y)
+				$(elf[j]).find('.versionTypeValue')
+				.val(y['versionType']);
+
+			    triggerversionRange(w);
+			}
+		    });
+		}
+	    });
 	}
     });
     $('#nice .form-control').each(function(_,v) {
