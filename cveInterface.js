@@ -111,10 +111,15 @@ function set_deep(obj,prop,val) {
     }
     /* If the value is being set to be undefined then delete this property
        of this object */
-    if(val === undefined)
-	delete x[fprop];
-    else
+    if(val === undefined) {
+	if (fprop.match(/^\d+$/)) {
+	    x.splice(parseInt(fprop),1);
+	} else {
+	    delete x[fprop];
+	}
+    } else {
 	x[fprop] = val;
+    }
     return fobj;
 }
 
@@ -133,28 +138,35 @@ function selectpass(passid) {
 function duplicate(pe) {
     /* Label has only one class just copy it*/
     let pclass = $(pe).data('rclass');
-    let childclass = "." + pclass;
+    let childclass = "." + pclass; 
     let nrow = $(pe).parent().find(childclass).clone().removeClass(pclass);
     let offset = $(pe).find(">.erow").length;
     nrow.find(".form-control").each(function(_,p) {
-	let rv = $(p).data('field');
-	if(!rv) return;
-	rv = rv.replace(/\.(\d+)\.([^\d]+)+$/,function(s0,s1,s2) {
-	    try { 
-		return '.' + String(offset) + '.' + s2;
-	    } catch(err) {
-		console.log(err);
-		console.log("Error while incrementing data-field id");
-		return s0;
-	    };
-	});
-	$(p).attr("data-field",rv);
-	/* jquery data() method is distinct from data- fields so do both*/
-	$(p).data("field",rv);
+        let rv = $(p).data('field');
+        if(!rv) return;
+        
+        let regx =  new RegExp("("+pclass+")\\.(\\d+)"); console.log(regx);
+        rv = rv.replace(regx,function(s0,s1,s2) {
+            try {
+                return s1 + "." + String(offset);
+            } catch(err) {
+                console.log(err);
+                console.log("Error while incrementing data-field id");
+                return s0;
+            };
+        });
+        $(p).attr("data-field",rv);
+        /* jquery data() method is distinct from data- fields so do both*/
+        $(p).data("field",rv);
     });
     $(pe).append(nrow);
 }
 function unduplicate(pe) {
+    let field = $(pe).parent().find(".form-control").data("field");
+    let rv = field.replace(/(\d)+\.[^\.]+$/,"$1");
+    json_data = set_deep(get_json_data(),rv,undefined);
+    let editor = $('#mjson .jsoneditor')[0].env.editor;
+    editor.setValue(JSON.stringify(json_data,null,2));
     $(pe).remove();
 }
 function data_selector(el,dfield,dvalue) {
