@@ -27,8 +27,8 @@
     <!-- Alternate load from jsdelivr
 	 <script src="https://cdn.jsdelivr.net/npm/ace-editor-builds@1.2.4/src-min-noconflict/ace.js"></script>
 	 -->
-    <script src="cveClientlib.js?v=2022093001"></script>
-    <link rel="stylesheet" href="cveInterface.css?version=2023071001">
+	 <script src="cveClientlib.js"></script>
+	 <link rel="stylesheet" href="cveInterface.css">
   </head>
   <body class="text-center whitebody">
     <div class="alert position-fixed w-100" id="topalert" role="alert"
@@ -52,9 +52,10 @@
 	      <div class="form-group">
 		<label class="d-none" for="cve">CVE ID
 		</label>
-		<input type="email" name="cve" readonly
+		<input type="text" name="cve" readonly
 		       required="required" 
 		       class="form-control cve"
+		       title="CVE Number"
 		       placeholder="CVE-yyyy-nnnn"/>
 	      </div>
 	      <div class="form-group">
@@ -64,6 +65,7 @@
 			  required="required" 
 			  onblur="clearoff(this)" 
 			  name="description"  rows="4"
+			  title="CVE Rejected Reason" 
 			  placeholder="CVE ID Rejected reason"></textarea>
 	      </div>
 	    </form>
@@ -98,7 +100,8 @@
 		<input type="email" name="username" data-update="new_username"
 		       required="required" id="username"
 		       class="form-control username"
-		       onchange="checkchange(this)" 
+		       onchange="checkchange(this)"
+		       title="Username" 
 		       placeholder="Username (user@example.com)"/>
 	      </div>
 	      <div class="form-group">
@@ -108,6 +111,7 @@
 		       required="required" id="name_first"
 		       onchange="checkchange(this)" 		       
 		       class="form-control name_first"
+		       title="First Name"
 		       placeholder="First Name (John)"/>
 	      </div>
 	      <div class="form-group">
@@ -117,6 +121,7 @@
 		       required="required" id="name_last"
 		       onchange="checkchange(this)" 		       
 		       class="form-control name_last"
+		       title="Last Name"
 		       placeholder="Last Name (Smith)"/>
 	      </div>
 	      <div class="form-group">
@@ -135,7 +140,8 @@
 		</div>
 		<label class="tswitch admin">
 		  <input type="checkbox" class="tnotify enabled active"
-			 title="Active"  onchange="update_user_status(this)" value="1">
+			 title="Active"  onchange="update_user_status(this)"
+			 value="1">
 		  <span class="tslider round"></span>
 		</label>
 	      </div>
@@ -199,19 +205,20 @@
 		<div class="tab-pane fade active show" id="nice"
 		     role="tabpanel" aria-labelledby="nice-tab">
 		  <ol class="form-group frow" data-rclass="descriptions">
-		    <label>Description(s)
-		    </label>
-		      <button class="duplicator addrow" title="Add Description"
-			      onclick="duplicate(this.parentNode)">&#8853;
-		      </button>		    
+		    <button class="duplicator addrow" title="Add Description"
+			    onclick="duplicate(this.parentNode)">&#8853;
+		    </button>		    
 		    <li class="erow position-relative descriptions">
+		      <label>Description(s)
+		      </label>
 		      <button class="duplicator deleterow text-danger"
 			      title="Delete row" 			      
-			    onclick="unduplicate(this.parentNode)">
+			      onclick="unduplicate(this.parentNode)">
 			&#8854;
 		      </button>
 		      Language:
 		      <select name="lang" class="form-control lang"
+			      title="Description Language"
 			      required="required" 
 			      data-field="descriptions.0.lang">
 			<option selected value="en">English (en)</option>
@@ -221,18 +228,20 @@
 				onblur="clearoff(this)" 
 				name="description"  rows="4"
 				data-field="descriptions.0.value"
+				title="Description of Vulnerability"
 				placeholder="Description of the vulnerability" 
 				example="[PROBLEMTYPE] in [COMPONENT] in [VENDOR] [PRODUCT] [VERSION] on [PLATFORMS] allows [ATTACKER] to [IMPACT] via [VECTOR]"></textarea>
 		    </li>
 		  </ol>
 		  <ol class="form-group frow" data-rclass="affected">
-		    <label>Impacted Product(s)
-		    </label>
 		    <button class="duplicator addrow"
 			    title="Add Impacted Product"
 			    onclick="duplicate(this.parentNode)">&#8853;
-		      </button>		    
+		    </button>
 		    <li class="erow position-relative affected">
+		      <label>Impacted Product(s)
+		      </label>
+		      
 		      <button class="duplicator deleterow text-danger"
 			      title="Delete row" 			      
 			      onclick="unduplicate(this.parentNode)">
@@ -241,31 +250,32 @@
 		      <input type="text" name="vendor" onblur="clearoff(this)"
 			     class="form-control vendor" required="required"
 			     data-field="affected.0.vendor"
+			     title="Vendor or Project"
 			     placeholder="Vendor or Project (Mitre or Mozilla)"
 			     required="required">
 		      <input type="text" name="product" onblur="clearoff(this)"
 			     class="form-control product"
 			     data-field="affected.0.product"
+			     title="Product"
 			     placeholder="Product (Firefox)"
 			     required="required">
-		      <!-- optional way avoided for now 
-		      <select name="defaultstatus" onblur="clearoff(this)"
+		      <select name="defaultStatus"
+			      title="Product's Default Status"
 			      data-field="affected.0.defaultStatus"
-			      class="form-control defaultstatus">
-			<option value="">Default Status (Affected)</option>
-			<option value="affected">Affected</option>
-			<option value="unaffected">Not Affected</option>
+			      class="form-control defaultStatus">
+			<option value=""> Product's Default Status</option>
 			<option value="unknown">Unknown</option>
+			<option value="unaffected">Not Affected</option>
+			<option value="affected">Affected</option>
 		      </select>
-		      -->
 		      <ol class="childarray" data-rclass="versions">
-			<label>Version(s)
-			</label>
 			<button class="duplicator addrow"
 				title="Add Impacted Versions"
 				onclick="duplicate(this.parentNode)"> &#8853;
 			</button>
 			<li class="erow position-relative versions text-left">
+			  <label>Version(s)
+			  </label>
 			  <button class="duplicator deleterow text-danger"
 				  title="Delete row" 			      
 				  onclick="unduplicate(this.parentNode)">
@@ -276,9 +286,11 @@
 				 data-field="affected.0.versions.0.version"
 				 required="required"
 				 class="form-control version"
+				 title="Version"
 				 placeholder="Version String (1.1.0)"/>
 			  <select name="status" onblur="clearoff(this)"
 				  required="required"
+				  title="Status"
 				  data-field="affected.0.versions.0.status"
 				  class="form-control status">
 			    <option value="">Version Status (Affected)</option>
@@ -287,9 +299,11 @@
 			    <option value="unknown">Unknown</option>
 			  </select>
 			  <input type="checkbox" class="versionRangeEnabled"
-				 onchange="showByClassName(this.checked,'.versionRange')">
+				 title="Use Range"
+				 onchange="triggerversionRange(this)">
 			  Range
 			  <select name="versionRangeType"
+				  title="Range Type"
 				  onchange="update_related(this)"
 				  data-related="versionRangeValue"
 				  data-relatedfield="affected.0.versions.0.$"
@@ -301,9 +315,12 @@
 			  <input type="text" name="versionRangeValue"
 				 onblur="clearoff(this)"
 				 class="form-control versionRange versionRangeValue mauto d-none"
-				 placeholder="Version Range &lt;/&lt;= (1.2.0)">
+				 title="Limit of Range Version"
+				 placeholder="Limit Version (1.2.0)">
 			  <input type="text" name="versionTypeValue"
 				 onblur="clearoff(this)"
+				 title="Version Type used"
+				 
 				 class="form-control versionRange versionTypeValue mauto d-none"
 				 data-field="affected.0.versions.0.versionType"
 				 placeholder="Version Type git,maven,python,npm">
@@ -313,12 +330,13 @@
 		  </ol>
 		  
 		  <ol class="form-group frow" data-rclass="references">
-		    <label>Reference(s)
-		    </label>
-		      <button class="duplicator addrow" title="Add Reference"
-			      onclick="duplicate(this.parentNode)">&#8853;
-		      </button>		    
+		    <button class="duplicator addrow" title="Add Reference"
+			    onclick="duplicate(this.parentNode)">&#8853;
+		    </button>		    
 		    <li class="erow position-relative references">
+		      <label>Reference(s)
+		      </label>
+		      
 		      <button class="duplicator deleterow text-danger"
 			      title="Delete row" 
 			      onclick="unduplicate(this.parentNode)">
@@ -326,11 +344,13 @@
 		      </button>		      		      
 		      <input type="url" name="url" class="form-control url"
 			     onblur="clearoff(this)"			     
-			     data-field="references.0.url" 
+			     data-field="references.0.url"
+			     title="Reference URL"
 			     placeholder="URL (https://ex.co/psirt/id:11)"
 			     required="required">
 		      <input type="text" class="form-control name"
-			     onblur="clearoff(this)"			     
+			     onblur="clearoff(this)"
+			     title="URL descriptive name"
 			     data-field="references.0.name"
 			     placeholder="Optional URL name (Example's PSIRT advisory #11)"
 			     name="name" maxlength="512">
@@ -340,9 +360,9 @@
 		    <label>
 		      Additional Field(s) JSON
 		    </label>
-		      <button class="duplicator addrow" data-show="rawjson"
-			      title="Show additional properties JSON"
-			      onclick="show_field(this)">&#10148;</button>
+		    <button class="duplicator addrow" data-show="rawjson"
+			    title="Show additional properties JSON"
+			    onclick="show_field(this)">&#10148;</button>
 		    <textarea class="form-control rawjson d-none"></textarea> 
 		  </div>
 		</div>
@@ -359,10 +379,10 @@
 	  </div>
 	  <div class="modal-footer">
 	    <a type="button" class="btn btn-primary cveupdate"
-		    onclick="publish_cve()">
+	       onclick="publish_cve()">
 	      Publish CVE</a>
 	    <a type="button" class="btn btn-primary adpupdate d-none"
-		    onclick="publish_adp()">
+	       onclick="publish_adp()">
 	      Publish ADP</a>
 	  </div>
 	</div>
@@ -392,7 +412,7 @@
 		<a class="nav-link" data-toggle="tab"
 		   href="#f1" role="tab" aria-controls="f2"
 		   aria-selected="false">
-		    ADP
+		  ADP
 		</a>
 	      </li>		
 	    </ul>
@@ -602,7 +622,7 @@
 			      onchange="doRefresh()"
 			      style="width:auto">
 		  <option value="0">All </option>
-		  </select>
+		</select>
 	      </div>
 	      
 	      <table id="cvetable">
@@ -626,10 +646,10 @@
 	    at <a href="https://github.com/CERTCC/cveClient/">GitHub</a>
 	  </small>
 	</p>
-	    
+	
       </div>    
     </main>
-    <script src="cveInterface.js?version=2023071101"></script>
+    <script src="cveInterface.js"></script>
   </body>
 </html>
 

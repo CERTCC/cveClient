@@ -1,4 +1,4 @@
-/* version 1.0.5 */
+/* version 1.0.7 */
 .childarray {
     margin: 0px 0px 0px 16px;
     border-left: 2px dotted #999;
@@ -64,13 +64,10 @@ ol.frow li.erow:nth-of-type(1)::marker {
     pointer-events: none;
     background: #eee;
 }
-.erow .deleterow {
-    display:none;
-}
-.erow:last-of-type .deleterow {
+.erow:last-of-type:not(:first-of-type) > .deleterow {
     display: block;
 }
-.erow:nth-of-type(1) .deleterow {
+.deleterow {
     display: none;
 }
 .erow:nth-of-type(n+2) > input:nth-of-type(1) {
@@ -83,7 +80,8 @@ ol.frow li.erow:nth-of-type(1)::marker {
     font-size: 20px;
     top: 2px;
     right:2px;
-    position: absolute;    
+    position: absolute;
+    z-Index: 10;
 }
 .mauto { 
     width: auto;
