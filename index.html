@@ -231,7 +231,15 @@
 		    <button class="duplicator addrow"
 			    title="Add Impacted Product"
 			    onclick="duplicate(this.parentNode)">&#8853;
-		      </button>		    
+		    </button>
+		    <select name="defaultStatus"
+			    data-field="affected.0.defaultStatus"
+			    class="form-control defaultStatus">
+			    <option value="">Default Status</option>
+			    <option value="unknown">unknown</option>
+			    <option value="unaffected">unaffected</option>
+			    <option value="affected">affected</option>
+		    </select>
 		    <li class="erow position-relative affected">
 		      <button class="duplicator deleterow text-danger"
 			      title="Delete row" 			      

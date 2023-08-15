@@ -145,7 +145,7 @@ function duplicate(pe) {
         let rv = $(p).data('field');
         if(!rv) return;
         
-        let regx =  new RegExp("("+pclass+")\\.(\\d+)"); console.log(regx);
+        let regx =  new RegExp("("+pclass+")\\.(\\d+)");
         rv = rv.replace(regx,function(s0,s1,s2) {
             try {
                 return s1 + "." + String(offset);
@@ -1325,6 +1325,21 @@ async function publish_adp() {
         swal_error("Could not publish this ADP data. Fix the errors please!");
     }
 }
+function add_validators(pubcve) {
+    let validStatus = {"affected": true, "unknown": true }
+    for (let i = 0; i < pubcve.affected; i++) {
+	let m = pubcve.affected[i];
+	if(('defaultStatus' in m) && (m.defaultStatus in validStatus))
+	    return true;
+	if('affected' in m)
+            for(let j=0; j<m.affected; j++)
+		if(('status' in m[j]) && (m[j].status in validStatus))
+                    return true;
+    }
+    swal_error("At least one product that is \"affected\" or " +
+	       "\"unknown\" is needed");
+    return false;
+}
 async function publish_cve() {
     try { 
  	if($('#nice-or-json').find(".active.show").attr("id") == "nice") { 
@@ -1336,6 +1351,8 @@ async function publish_cve() {
  	}
  	let editor = $('#mjson .jsoneditor')[0].env.editor;
  	let pubcve = JSON.parse(editor.getValue());
+	if(add_validators(pubcve) != true)
+	    return;
  	let mr = $('#deepDive').data('crecord');
  	/* Override some fields on submit*/
  	if(get_deep(client,'userobj.org_UUID') &&  client.org) 
