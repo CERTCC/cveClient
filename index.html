@@ -52,9 +52,10 @@
 	      <div class="form-group">
 		<label class="d-none" for="cve">CVE ID
 		</label>
-		<input type="email" name="cve" readonly
+		<input type="text" name="cve" readonly
 		       required="required" 
 		       class="form-control cve"
+		       title="CVE Number"
 		       placeholder="CVE-yyyy-nnnn"/>
 	      </div>
 	      <div class="form-group">
@@ -64,6 +65,7 @@
 			  required="required" 
 			  onblur="clearoff(this)" 
 			  name="description"  rows="4"
+			  title="CVE Rejected Reason" 
 			  placeholder="CVE ID Rejected reason"></textarea>
 	      </div>
 	    </form>
@@ -98,7 +100,8 @@
 		<input type="email" name="username" data-update="new_username"
 		       required="required" id="username"
 		       class="form-control username"
-		       onchange="checkchange(this)" 
+		       onchange="checkchange(this)"
+		       title="Username" 
 		       placeholder="Username (user@example.com)"/>
 	      </div>
 	      <div class="form-group">
@@ -108,6 +111,7 @@
 		       required="required" id="name_first"
 		       onchange="checkchange(this)" 		       
 		       class="form-control name_first"
+		       title="First Name"
 		       placeholder="First Name (John)"/>
 	      </div>
 	      <div class="form-group">
@@ -117,6 +121,7 @@
 		       required="required" id="name_last"
 		       onchange="checkchange(this)" 		       
 		       class="form-control name_last"
+		       title="Last Name"
 		       placeholder="Last Name (Smith)"/>
 	      </div>
 	      <div class="form-group">
@@ -135,7 +140,8 @@
 		</div>
 		<label class="tswitch admin">
 		  <input type="checkbox" class="tnotify enabled active"
-			 title="Active"  onchange="update_user_status(this)" value="1">
+			 title="Active"  onchange="update_user_status(this)"
+			 value="1">
 		  <span class="tslider round"></span>
 		</label>
 	      </div>
@@ -212,6 +218,7 @@
 		      </button>
 		      Language:
 		      <select name="lang" class="form-control lang"
+			      title="Description Language"
 			      required="required" 
 			      data-field="descriptions.0.lang">
 			<option selected value="en">English (en)</option>
@@ -221,6 +228,7 @@
 				onblur="clearoff(this)" 
 				name="description"  rows="4"
 				data-field="descriptions.0.value"
+				title="Description of Vulnerability"
 				placeholder="Description of the vulnerability" 
 				example="[PROBLEMTYPE] in [COMPONENT] in [VENDOR] [PRODUCT] [VERSION] on [PLATFORMS] allows [ATTACKER] to [IMPACT] via [VECTOR]"></textarea>
 		    </li>
@@ -242,20 +250,20 @@
 		      <input type="text" name="vendor" onblur="clearoff(this)"
 			     class="form-control vendor" required="required"
 			     data-field="affected.0.vendor"
+			     title="Vendor or Project"
 			     placeholder="Vendor or Project (Mitre or Mozilla)"
 			     required="required">
 		      <input type="text" name="product" onblur="clearoff(this)"
 			     class="form-control product"
 			     data-field="affected.0.product"
+			     title="Product"
 			     placeholder="Product (Firefox)"
 			     required="required">
-		      <label>
-			Product's Default Status
-		      </label>
 		      <select name="defaultStatus"
+			      title="Product's Default Status"
 			      data-field="affected.0.defaultStatus"
 			      class="form-control defaultStatus">
-			<option value="">Default Status</option>
+			<option value=""> Product's Default Status</option>
 			<option value="unknown">Unknown</option>
 			<option value="unaffected">Not Affected</option>
 			<option value="affected">Affected</option>
@@ -278,9 +286,11 @@
 				 data-field="affected.0.versions.0.version"
 				 required="required"
 				 class="form-control version"
+				 title="Version"
 				 placeholder="Version String (1.1.0)"/>
 			  <select name="status" onblur="clearoff(this)"
 				  required="required"
+				  title="Status"
 				  data-field="affected.0.versions.0.status"
 				  class="form-control status">
 			    <option value="">Version Status (Affected)</option>
@@ -289,9 +299,11 @@
 			    <option value="unknown">Unknown</option>
 			  </select>
 			  <input type="checkbox" class="versionRangeEnabled"
+				 title="Use Range"
 				 onchange="triggerversionRange(this)">
 			  Range
 			  <select name="versionRangeType"
+				  title="Range Type"
 				  onchange="update_related(this)"
 				  data-related="versionRangeValue"
 				  data-relatedfield="affected.0.versions.0.$"
@@ -303,9 +315,12 @@
 			  <input type="text" name="versionRangeValue"
 				 onblur="clearoff(this)"
 				 class="form-control versionRange versionRangeValue mauto d-none"
-				 placeholder="Version Range &lt;/&lt;= (1.2.0)">
+				 title="Limit of Range Version"
+				 placeholder="Limit Version (1.2.0)">
 			  <input type="text" name="versionTypeValue"
 				 onblur="clearoff(this)"
+				 title="Version Type used"
+				 
 				 class="form-control versionRange versionTypeValue mauto d-none"
 				 data-field="affected.0.versions.0.versionType"
 				 placeholder="Version Type git,maven,python,npm">
@@ -329,11 +344,13 @@
 		      </button>		      		      
 		      <input type="url" name="url" class="form-control url"
 			     onblur="clearoff(this)"			     
-			     data-field="references.0.url" 
+			     data-field="references.0.url"
+			     title="Reference URL"
 			     placeholder="URL (https://ex.co/psirt/id:11)"
 			     required="required">
 		      <input type="text" class="form-control name"
-			     onblur="clearoff(this)"			     
+			     onblur="clearoff(this)"
+			     title="URL descriptive name"
 			     data-field="references.0.name"
 			     placeholder="Optional URL name (Example's PSIRT advisory #11)"
 			     name="name" maxlength="512">
