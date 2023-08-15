@@ -1326,18 +1326,21 @@ async function publish_adp() {
     }
 }
 function add_validators(pubcve) {
-    let validStatus = {"affected": true, "unknown": true }
-    for (let i = 0; i < pubcve.affected; i++) {
-	let m = pubcve.affected[i];
-	if(('defaultStatus' in m) && (m.defaultStatus in validStatus))
-	    return true;
-	if('affected' in m)
-            for(let j=0; j<m.affected; j++)
-		if(('status' in m[j]) && (m[j].status in validStatus))
-                    return true;
-    }
-    swal_error("At least one product that is \"affected\" or " +
-	       "\"unknown\" is needed");
+    let validStatus = {"affected": true, "unknown": true };
+    if('affected' in pubcve)
+	for (let i = 0; i < pubcve.affected.length; i++) {
+	    let m = pubcve.affected[i];
+	    if(('defaultStatus' in m) && (m.defaultStatus in validStatus))
+		return true;
+	    if('versions' in m)
+		for(let j=0; j<m.versions.length; j++)
+                    if(('status' in m.versions[j]) &&
+		       (m.versions[j].status in validStatus))
+			return true;
+	}
+    swal_error("At least one product that has Status \"affected\" or " +
+	       "\"unknown\" is required. Optionally, you can make the " +
+	       "Default Status as \"affected\" or \"unknown\".");
     return false;
 }
 async function publish_cve() {

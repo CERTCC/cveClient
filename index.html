@@ -232,14 +232,6 @@
 			    title="Add Impacted Product"
 			    onclick="duplicate(this.parentNode)">&#8853;
 		    </button>
-		    <select name="defaultStatus"
-			    data-field="affected.0.defaultStatus"
-			    class="form-control defaultStatus">
-			    <option value="">Default Status</option>
-			    <option value="unknown">unknown</option>
-			    <option value="unaffected">unaffected</option>
-			    <option value="affected">affected</option>
-		    </select>
 		    <li class="erow position-relative affected">
 		      <button class="duplicator deleterow text-danger"
 			      title="Delete row" 			      
@@ -267,6 +259,14 @@
 		      </select>
 		      -->
 		      <ol class="childarray" data-rclass="versions">
+			<select name="defaultStatus"
+				data-field="affected.0.defaultStatus"
+				class="form-control defaultStatus">
+			  <option value="">Default Status</option>
+			  <option value="unknown">Unknown</option>
+			  <option value="unaffected">Not Affected</option>
+			  <option value="affected">Affected</option>
+			</select>
 			<label>Version(s)
 			</label>
 			<button class="duplicator addrow"
