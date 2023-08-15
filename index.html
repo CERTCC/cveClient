@@ -27,8 +27,8 @@
     <!-- Alternate load from jsdelivr
 	 <script src="https://cdn.jsdelivr.net/npm/ace-editor-builds@1.2.4/src-min-noconflict/ace.js"></script>
 	 -->
-    <script src="cveClientlib.js?v=2022093001"></script>
-    <link rel="stylesheet" href="cveInterface.css?version=2023071001">
+	 <script src="cveClientlib.js"></script>
+	 <link rel="stylesheet" href="cveInterface.css">
   </head>
   <body class="text-center whitebody">
     <div class="alert position-fixed w-100" id="topalert" role="alert"
@@ -199,15 +199,15 @@
 		<div class="tab-pane fade active show" id="nice"
 		     role="tabpanel" aria-labelledby="nice-tab">
 		  <ol class="form-group frow" data-rclass="descriptions">
-		    <label>Description(s)
-		    </label>
-		      <button class="duplicator addrow" title="Add Description"
-			      onclick="duplicate(this.parentNode)">&#8853;
-		      </button>		    
+		    <button class="duplicator addrow" title="Add Description"
+			    onclick="duplicate(this.parentNode)">&#8853;
+		    </button>		    
 		    <li class="erow position-relative descriptions">
+		      <label>Description(s)
+		      </label>
 		      <button class="duplicator deleterow text-danger"
 			      title="Delete row" 			      
-			    onclick="unduplicate(this.parentNode)">
+			      onclick="unduplicate(this.parentNode)">
 			&#8854;
 		      </button>
 		      Language:
@@ -226,13 +226,14 @@
 		    </li>
 		  </ol>
 		  <ol class="form-group frow" data-rclass="affected">
-		    <label>Impacted Product(s)
-		    </label>
 		    <button class="duplicator addrow"
 			    title="Add Impacted Product"
 			    onclick="duplicate(this.parentNode)">&#8853;
 		    </button>
 		    <li class="erow position-relative affected">
+		      <label>Impacted Product(s)
+		      </label>
+		      
 		      <button class="duplicator deleterow text-danger"
 			      title="Delete row" 			      
 			      onclick="unduplicate(this.parentNode)">
@@ -248,17 +249,10 @@
 			     data-field="affected.0.product"
 			     placeholder="Product (Firefox)"
 			     required="required">
-		      <!-- optional way avoided for now 
-		      <select name="defaultstatus" onblur="clearoff(this)"
-			      data-field="affected.0.defaultStatus"
-			      class="form-control defaultstatus">
-			<option value="">Default Status (Affected)</option>
-			<option value="affected">Affected</option>
-			<option value="unaffected">Not Affected</option>
-			<option value="unknown">Unknown</option>
-		      </select>
-		      -->
 		      <ol class="childarray" data-rclass="versions">
+			<label>
+			  Product's Default Status
+			</label>
 			<select name="defaultStatus"
 				data-field="affected.0.defaultStatus"
 				class="form-control defaultStatus">
@@ -267,13 +261,13 @@
 			  <option value="unaffected">Not Affected</option>
 			  <option value="affected">Affected</option>
 			</select>
-			<label>Version(s)
-			</label>
 			<button class="duplicator addrow"
 				title="Add Impacted Versions"
 				onclick="duplicate(this.parentNode)"> &#8853;
 			</button>
 			<li class="erow position-relative versions text-left">
+			  <label>Version(s)
+			  </label>
 			  <button class="duplicator deleterow text-danger"
 				  title="Delete row" 			      
 				  onclick="unduplicate(this.parentNode)">
@@ -321,12 +315,13 @@
 		  </ol>
 		  
 		  <ol class="form-group frow" data-rclass="references">
-		    <label>Reference(s)
-		    </label>
-		      <button class="duplicator addrow" title="Add Reference"
-			      onclick="duplicate(this.parentNode)">&#8853;
-		      </button>		    
+		    <button class="duplicator addrow" title="Add Reference"
+			    onclick="duplicate(this.parentNode)">&#8853;
+		    </button>		    
 		    <li class="erow position-relative references">
+		      <label>Reference(s)
+		      </label>
+		      
 		      <button class="duplicator deleterow text-danger"
 			      title="Delete row" 
 			      onclick="unduplicate(this.parentNode)">
@@ -348,9 +343,9 @@
 		    <label>
 		      Additional Field(s) JSON
 		    </label>
-		      <button class="duplicator addrow" data-show="rawjson"
-			      title="Show additional properties JSON"
-			      onclick="show_field(this)">&#10148;</button>
+		    <button class="duplicator addrow" data-show="rawjson"
+			    title="Show additional properties JSON"
+			    onclick="show_field(this)">&#10148;</button>
 		    <textarea class="form-control rawjson d-none"></textarea> 
 		  </div>
 		</div>
@@ -367,10 +362,10 @@
 	  </div>
 	  <div class="modal-footer">
 	    <a type="button" class="btn btn-primary cveupdate"
-		    onclick="publish_cve()">
+	       onclick="publish_cve()">
 	      Publish CVE</a>
 	    <a type="button" class="btn btn-primary adpupdate d-none"
-		    onclick="publish_adp()">
+	       onclick="publish_adp()">
 	      Publish ADP</a>
 	  </div>
 	</div>
@@ -400,7 +395,7 @@
 		<a class="nav-link" data-toggle="tab"
 		   href="#f1" role="tab" aria-controls="f2"
 		   aria-selected="false">
-		    ADP
+		  ADP
 		</a>
 	      </li>		
 	    </ul>
@@ -610,7 +605,7 @@
 			      onchange="doRefresh()"
 			      style="width:auto">
 		  <option value="0">All </option>
-		  </select>
+		</select>
 	      </div>
 	      
 	      <table id="cvetable">
@@ -634,10 +629,10 @@
 	    at <a href="https://github.com/CERTCC/cveClient/">GitHub</a>
 	  </small>
 	</p>
-	    
+	
       </div>    
     </main>
-    <script src="cveInterface.js?version=2023071101"></script>
+    <script src="cveInterface.js"></script>
   </body>
 </html>
 
