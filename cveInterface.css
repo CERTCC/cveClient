@@ -80,7 +80,8 @@ ol.frow li.erow:nth-of-type(1)::marker {
     font-size: 20px;
     top: 2px;
     right:2px;
-    position: absolute;    
+    position: absolute;
+    z-Index: 10;
 }
 .mauto { 
     width: auto;

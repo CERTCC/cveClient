@@ -249,18 +249,18 @@
 			     data-field="affected.0.product"
 			     placeholder="Product (Firefox)"
 			     required="required">
+		      <label>
+			Product's Default Status
+		      </label>
+		      <select name="defaultStatus"
+			      data-field="affected.0.defaultStatus"
+			      class="form-control defaultStatus">
+			<option value="">Default Status</option>
+			<option value="unknown">Unknown</option>
+			<option value="unaffected">Not Affected</option>
+			<option value="affected">Affected</option>
+		      </select>
 		      <ol class="childarray" data-rclass="versions">
-			<label>
-			  Product's Default Status
-			</label>
-			<select name="defaultStatus"
-				data-field="affected.0.defaultStatus"
-				class="form-control defaultStatus">
-			  <option value="">Default Status</option>
-			  <option value="unknown">Unknown</option>
-			  <option value="unaffected">Not Affected</option>
-			  <option value="affected">Affected</option>
-			</select>
 			<button class="duplicator addrow"
 				title="Add Impacted Versions"
 				onclick="duplicate(this.parentNode)"> &#8853;
