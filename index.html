@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta name="version" content="1.0.19"/>
+    <meta name="version" content="1.0.20"/>
     <title> CVE Services Client Interface</title>
     <link rel="icon" href="./certicon.ico" type="image/x-icon" />
     <link rel="stylesheet"
@@ -204,10 +204,31 @@
 	      <div class="tab-content" id="nice-or-json">
 		<div class="tab-pane fade active show" id="nice"
 		     role="tabpanel" aria-labelledby="nice-tab">
+		  <ol class="form-group frow nologin" style="display:none">
+		    <label>
+		      CVE Number 
+		      <input class="form-control cve w-auto d-inline" name="cve" placeholder="CVE-YYYY-NNNN" onblur="clearoff(this)"> 
+		      <button class="btn btn-secondary" type="button" alt="Download CVE" title="Download CVE" onclick="get_cve()">&#8595;</button>
+		    </label>
+		  </ol>
+		  <ol class="form-group frow">
+		    <li class="erow position-relative">
+		      <label>Title (Optional)
+		      </label>
+		      <button class="duplicator addrow toggler" data-show="title"
+			      title="Show Title field"
+			      onclick="show_field(this)">&#10148;</button>
+		      <textarea class="form-control title d-none" onblur="clearoff(this)"
+				name="title" rows="1"
+				data-field="title"
+				title="Title of the vulnerability"
+				placeholder="Title of the vulnerability"
+				example="(Optional Title) Acme Product X version 1.0 found vulnerable"></textarea>
+		  </ol>
 		  <ol class="form-group frow" data-rclass="descriptions">
 		    <button class="duplicator addrow" title="Add Description"
 			    onclick="duplicate(this.parentNode)">&#8853;
-		    </button>		    
+		    </button>  
 		    <li class="erow position-relative descriptions">
 		      <label>Description(s)
 		      </label>
@@ -360,7 +381,7 @@
 		    <label>
 		      Additional Field(s) JSON
 		    </label>
-		    <button class="duplicator addrow" data-show="rawjson"
+		    <button class="duplicator addrow toggler" data-show="rawjson"
 			    title="Show additional properties JSON"
 			    onclick="show_field(this)">&#10148;</button>
 		    <textarea class="form-control rawjson d-none"></textarea> 

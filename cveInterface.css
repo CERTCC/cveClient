@@ -1,4 +1,10 @@
-/* version 1.0.7 */
+/* version 1.0.9 */
+head {
+    --version: 1.0.9;
+}
+.nologin label * {
+    margin: 2px !important;
+}
 .childarray {
     margin: 0px 0px 0px 16px;
     border-left: 2px dotted #999;

@@ -1,5 +1,5 @@
 /* Clientlib, UI html, css and UI js all are version controlled */
-const _version = "1.0.18";
+const _version = "1.0.19";
 const _tool = "CVE Services Client Interface "+_version;
 const _cna_template = { "descriptions": [ { "lang": "${descriptions.0.lang}", "value": "${descriptions.0.value}"} ] ,  "affected": [ { "versions": [{"version": "${affected.0.versions.0.version}"}], "product": "${affected.0.product}", "vendor": "${affected.0.vendor|client.orgobj.name}" } ],"references": [ { "name": "${references.0.name}", "url": "${references.0.url}" }], "providerMetadata": { "orgId": "${client.userobj.org_UUID}", "shortName": "${client.org}" } }
 const valid_states = {PUBLISHED: 1,RESERVED: 1, REJECTED: 1};
@@ -139,7 +139,7 @@ function duplicate(pe) {
     /* Label has only one class just copy it*/
     let pclass = $(pe).data('rclass');
     let childclass = "." + pclass; 
-    let nrow = $(pe).parent().find(childclass).clone().removeClass(pclass);
+    let nrow = $(pe).parent().find(childclass).clone().removeClass(pclass).addClass("duplicated");
     let offset = $(pe).find(">.erow").length;
     nrow.find(".form-control").each(function(_,p) {
         let rv = $(p).data('field');
@@ -167,7 +167,8 @@ function unduplicate(pe) {
     json_data = set_deep(get_json_data(),rv,undefined);
     let editor = $('#mjson .jsoneditor')[0].env.editor;
     editor.setValue(JSON.stringify(json_data,null,2));
-    $(pe).remove();
+    if($(pe).hasClass("duplicated"))
+	$(pe).remove();
 }
 function data_selector(el,dfield,dvalue) {
     let sel = '[data-' + dfield + '="' + dvalue + '"]';
@@ -188,7 +189,7 @@ function urlprompt(w) {
 	$('#loginModal').removeAttr("tabindex");
 	Swal.fire({
 	    title: 'Enter API URL',
-	    input: 'text',
+	    input: 'url',
 	    inputLabel: 'API URL',
 	    inputPlaceholder: 'API URL',
 	    showCancelButton: true,
@@ -247,9 +248,70 @@ function timefile() {
 	d.getHours() + "-" + d.getMinutes()
     
 }
-
+async function get_cve() {
+    let cve = $('#nice .cve').val();
+    if(!cve.match(/^CVE-\d{4}-\d{4,7}$/)) {
+	$('#nice .cve').addClass('is-invalid').focus()
+	return;
+    }
+    if((!client) || (!client.url)) {
+	client = new cveClient();
+	let loc = await Swal.fire({
+	    title: 'CVE Download',
+	    input: 'select',
+	    inputOptions: $('#url option').toArray()
+		.reduce(function(a,x,i) {
+		    a[x.value] = x.innerHTML;
+		    return a;
+		},{}), 
+	    inputPlaceholder: 'Download Location',
+	    showCancelButton: true,
+	});
+	console.log(loc);
+	let value = loc.value;
+	if(!value)
+	    return;
+	if (value == 'custom') {
+	    let url = await Swal.fire({
+		title: 'Enter API URL',
+		input: 'url',
+		inputLabel: 'API URL',
+		inputPlaceholder: 'API URL',
+     		showCancelButton: true,
+		inputValidator: function(rvalue) {
+		    try {
+			new URL(rvalue);
+			client.url = rvalue;
+		    } catch(err) {
+			console.log(err);
+			return "URL is invalid";
+		    }
+		}
+	    });
+	} else {
+	    client.url = value;
+	}
+    }
+    get_display_cve(cve);    
+}
+function get_display_cve(cve) {
+    client.getcvedetail(cve)
+	.then(function(x) {
+	    if(get_deep(x,"containers.cna"))
+		json_edit(JSON.stringify(x.containers.cna));
+	    else
+		swal_error("Could not find data to load! " +
+			   "See console for details.");
+	    console.log(x);
+	},function(y) {
+	    swal_error("Unable to collect CVE information! " +
+		       "See console for details");
+	    console.log(y);
+	});
+}
 async function skip() {
     $('#loginModal').modal('hide');
+    $('#morjson li.adp').hide();
     const template = _cna_template;
     let xj = JSON.stringify(template);
     json_edit(xj);
@@ -257,17 +319,7 @@ async function skip() {
     $('#cveUpdateModal .cveupdate').html("Download JSON");
     $('#cveUpdateModal .cveupdate').removeAttr('onclick');
     $('#cveUpdateModal .cveupdate').on("click", download_json);
-    if($('#cveUpdateModal input.cve').length < 1) {
-	let cve_nrow = $('<ol>').addClass("form-group frow")
-	    .append($("<label>").html("CVE Number")
-		    .append($("<input>")
-			    .attr({"class": "form-control cve",
-				   "name": "cve",
-				   "placeholder": "CVE-YYYY-NNNN",
-				   "onblur": "clearoff(this)"
-				  })));
-	$('#cveUpdateModal #nice').prepend(cve_nrow);
-    }
+    $('.nologin').show();
 }
 
 
@@ -1217,9 +1269,15 @@ function apply_diff(diff,el) {
     } else if (diff < 0) {
 	/* Remove elements */
 	for(let i=1; i <= Math.abs(diff); i++) 
-	    $(el).find("> .deleterow").click();		
+	    $(el).find(">li > .deleterow").click();		
     }
     
+}
+function show_optional(v) {
+    /* Show optional fields if present*/
+    if($(v).hasClass("d-none") &&
+       $(v).parent().find(".toggler").length)
+	$(v).parent().find(".toggler").click();
 }
 function from_json(w) {
     $('.cveupdate').removeClass('d-none');
@@ -1231,6 +1289,8 @@ function from_json(w) {
 	var field = $(el).data("rclass");
 	if(field in json_data) {
 	    let diff = json_data[field].length - $(el).find("> .erow").length;
+	    if(diff != 0)
+		apply_diff(diff,el);	    
 	    $(el).find(".childarray").each(function(i,x) {
 		elfield = $(x).data("rclass");
 		if (elfield in json_data[field][i]) {
@@ -1240,41 +1300,49 @@ function from_json(w) {
 			apply_diff(idiff,x);
 		}
 	    });
-	    if(diff != 0)
-		apply_diff(diff,el);
-	    json_data[field].forEach(function(x,i) {
-		let elf = $(el).find(".childarray").find(".erow");
-		if('versions' in x) {
-		    x.versions.forEach(function(y,j) {
-			let q;
-			['lessThan','lessThanOrEqual'].forEach(function(r) {
-			    if(r in y) 
-				q = r;
-			});
-			let w = $(elf[j]).find(".versionRangeEnabled")[0];
-			if(w) {
-			    if(q) {
-				w.checked = true;
-				$(elf[j]).find(".versionRangeType").val(q);
-				$(elf[j]).find(".versionRangeValue").val(y[q]);
-			    } else {
-				w.checked = false;
+	    /* Handling versions the child field */
+	    if(field == "affected") {
+		json_data[field].forEach(function(x,i) {
+		    let elf = $(el).find(".childarray").find(".erow");
+		    if('versions' in x) {
+			x.versions.forEach(function(y,j) {
+			    let q;
+			    ['lessThan','lessThanOrEqual']
+				.forEach(function(r) {
+				    if(r in y) 
+					q = r;
+				});
+			    let w = $(elf[j]).find(".versionRangeEnabled")[0];
+			    if(w) {
+				if(q) {
+				    w.checked = true;
+				    $(elf[j]).find(".versionRangeType").val(q);
+				    $(elf[j]).find(".versionRangeValue")
+					.val(y[q]);
+				    if('versionType' in y)
+					$(elf[j]).find('.versionTypeValue')
+					.val(y['versionType']);
+				} else {
+				    w.checked = false;
+				}
+				triggerversionRange(w);
 			    }
-			    if('versionType' in y)
-				$(elf[j]).find('.versionTypeValue')
-				.val(y['versionType']);
-
-			    triggerversionRange(w);
-			}
-		    });
-		}
-	    });
+			});
+		    }
+		});
+	    }
 	}
     });
+    /* populate the fields. raw_json is used to capture fields
+     that are not part of cveInterface but present in CVE data*/
+    let raw_json = simpleCopy(json_data);
     $('#nice .form-control').each(function(_,v) {
 	let props = $(v).data("field");
-	if(props) { 
+	if(props) {
+	    show_optional(v);
 	    let oval = get_deep(json_data,props);
+	    let field = props.split(".").shift();
+	    delete raw_json[field];
 	    if(oval && oval[0] != '$') {
 		/* Value map exists and does not begin with $ */
 		$(v).val(oval);
@@ -1286,6 +1354,11 @@ function from_json(w) {
 	    }
 	}
     });
+    delete raw_json['providerMetadata'];
+    if(Object.keys(raw_json).length) {
+	show_optional('#nice .rawjson');
+	$('#nice .rawjson').val(JSON.stringify(raw_json,null,2));
+    }
 }
 async function publish_adp() {
     try {
@@ -1299,8 +1372,11 @@ async function publish_adp() {
 	}
 	let mr = $('#deepDive').data('crecord');
 	let cve_id =  mr.cve_id;
-	adp.adpContainer.metrics[0].id = cve_id;
-	adp.adpContainer.metrics[0].other.content.id = cve_id;
+	if(get_deep(adp,'adp.adpContainer.metrics')) {
+	    /* In case of metrics match ID value to CVE*/
+	    adp.adpContainer.metrics[0].id = cve_id;
+	    adp.adpContainer.metrics[0].other.content.id = cve_id;
+	}
 	let d = await client.publishadp(cve_id,adp) 
 	if("error" in d) {
             swal_error("Failed to publish CVE, Error : "+d.error);
@@ -1344,6 +1420,7 @@ function add_validators(pubcve) {
     return false;
 }
 async function publish_cve() {
+    $('#topalert').hide();
     try { 
  	if($('#nice-or-json').find(".active.show").attr("id") == "nice") { 
  	    if(to_json() == false) {
@@ -1409,11 +1486,18 @@ async function publish_cve() {
 function to_json(w) {
     $('.cveupdate').removeClass('d-none');
     $('.adpupdate').addClass('d-none');
-    let json_data = get_json_data();
+    let json_data = {};
     let value_check = true;
     $('#nice .form-control').not('.d-none').each(function(_,v) {
+	console.log(v);
 	if($(v).val()) {
-	    let props = $(v).data("field");
+	    if($(v).data("related")) {
+		v = update_related(v);
+		console.log("Related",v);
+		if(!$(v).val())
+		    return;
+	    }
+	    let props = $(v).attr("data-field"); 
 	    if(!props) return;
 	    json_data = set_deep(json_data,props,$(v).val());
 	    $(v).removeClass('is-invalid').addClass('is-valid');
@@ -1430,19 +1514,32 @@ function to_json(w) {
 	}
     });
     let editor = $('#mjson .jsoneditor')[0].env.editor;
-    editor.setValue(JSON.stringify(json_data,null,2));
+    let raw_json = {};
+    if($('#nice .rawjson').val()) {
+	try {
+	    raw_json = JSON.parse($('#nice .rawjson').val());
+	} catch(err) {
+	    top_alert("danger",
+		      "Additional Fields JSON is invalid, please fix this!");
+	    return false;
+	}
+    }
+    let full_json = Object.assign({},json_data,raw_json);
+    editor.setValue(JSON.stringify(full_json,null,2));
     return value_check;
 }
 function update_related(w) {
-    /* Function to update the data-field of a related item*/
-    /* data-related="versionRangeValue" data-relatedfield="affected.0.versions.0.$" */
+    /* Function to update the data-field of a related item 
+       data-related="versionRangeValue"
+       data-relatedfield="affected.0.versions.0.$" */
     let related = $(w).data("related");
-    if($(w).val()) {
+    if($(w).val() && $(w).parent().find("."+related).length) {
 	let field = $(w).data("relatedfield").replace("$",$(w).val());
 	$(w).parent().find("."+related).attr("data-field",field);
     } else {
 	$(w).parent().find("."+related).removeAttr("data-field");
     }
+    return $(w).parent().find("."+related);
 }
 function clearoff(w) {
     if($(w).val() && (get_deep(w,'validity.valid') == true))
