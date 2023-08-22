@@ -1,5 +1,12 @@
 # cveClient Changelog
 
+Version 1.0.18  2023-08-21
+
+* Fixed some bugs on cveInterface.js related to apply_diff
+* Added the ability to download CVE JSON from repositories for edit/duplicate
+* Moved display capabilities using CSS.
+
+
 Version 1.0.18  2023-08-09
 
 * Fixed some bugs on cveInterface.js related to from_json and to_json routines

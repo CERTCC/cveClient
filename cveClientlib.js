@@ -5,7 +5,7 @@ class cveClient {
 	this.key = key;
 	this.url = url;
 	this.user_path = "/org/" + this.org + "/user/" + this.user;
-	this._version = "1.0.14";
+	this._version = "1.0.15";
     }
     publishadp(cve,adp) {
 	let path = "/cve/" + cve + "/adp";
@@ -102,15 +102,12 @@ class cveClient {
 	return this.getjson(path);
     }
     gethealth() {
-	try { 
-	    return this.rfetch("/health-check");
-	} catch(err) {
-	    return {"error": err};
-	}
+	return this.rfetch("/health-check");
     }
     getjson(path,opts,qvars) {
 	return this.rfetch(path,opts,qvars).then(function(j) {
-	    return j.json();
+	    if(j && j.ok) 
+		return j.json();
 	});
     }
     putjson(path,opts,qvars,pvars) {
@@ -126,7 +123,14 @@ class cveClient {
 	});
     }    
     rfetch(path,opts,qvars) {
-	let url = new URL(this.url);
+	let url;
+	try {
+	    url = new URL(this.url);
+	    delete this.error;
+	} catch(err) {
+	    this.error = err;
+	    return;
+	}
 	url.pathname = url.pathname + path;
 	if(!opts) {
 	    opts = {method:'GET'};
@@ -149,8 +153,17 @@ class cveClient {
 				     {'CVE-API-KEY': this.key,
 				      'CVE-API-ORG': this.org,
 				      'CVE-API-USER': this.user });
+	let client = this;
 	return fetch(url.toString(),opts).then(function(r) {
-	    return r;
-	}); 
+	    client.response = r;
+	    if(r.ok) {
+		delete client.error;
+		return r;
+	    }
+	    client.error = "Error see client.response for full error";
+	}).catch(function(err) {
+	    delete client.response;
+	    client.error = err;
+	});
     }
 }
