@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta name="version" content="1.0.20"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" >
+    <meta name="version" content="1.0.21">
     <title> CVE Services Client Interface</title>
-    <link rel="icon" href="./certicon.ico" type="image/x-icon" />
+    <link rel="icon" href="./certicon.ico" type="image/x-icon" >
     <link rel="stylesheet"
 	  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -28,6 +28,8 @@
 	 <script src="https://cdn.jsdelivr.net/npm/ace-editor-builds@1.2.4/src-min-noconflict/ace.js"></script>
 	 -->
 	 <script src="cveClientlib.js"></script>
+	 <script src="schemaToForm.js"></script>
+	 <script src="autoCompleter.js"></script>
 	 <link rel="stylesheet" href="cveInterface.css">
   </head>
   <body class="text-center whitebody">
@@ -50,16 +52,16 @@
 	  <div class="modal-body">
 	    <form autocomplete="off" onsubmit="return false">
 	      <div class="form-group">
-		<label class="d-none" for="cve">CVE ID
+		<label class="d-none">CVE ID
 		</label>
 		<input type="text" name="cve" readonly
 		       required="required" 
 		       class="form-control cve"
 		       title="CVE Number"
-		       placeholder="CVE-yyyy-nnnn"/>
+		       placeholder="CVE-yyyy-nnnn">
 	      </div>
 	      <div class="form-group">
-		<label class="d-none" for="description">CVE Reject Description
+		<label class="d-none">CVE Reject Description
 		</label>
 		<textarea class="form-control description"
 			  required="required" 
@@ -95,14 +97,14 @@
 	    <form autocomplete="off" onsubmit="return false">
 	      <div id="cpassword" class="d-none cpassword">SYHpbZuvOGS80P5oNX</div>
 	      <div class="form-group">
-		<label class="d-none" for="amount">Username
+		<label class="d-none">Username
 		</label>
 		<input type="email" name="username" data-update="new_username"
 		       required="required" id="username"
 		       class="form-control username"
 		       onchange="checkchange(this)"
 		       title="Username" 
-		       placeholder="Username (user@example.com)"/>
+		       placeholder="Username (user@example.com)">
 	      </div>
 	      <div class="form-group">
 		<label class="d-none" for="name_first">First Name
@@ -112,7 +114,7 @@
 		       onchange="checkchange(this)" 		       
 		       class="form-control name_first"
 		       title="First Name"
-		       placeholder="First Name (John)"/>
+		       placeholder="First Name (John)">
 	      </div>
 	      <div class="form-group">
 		<label class="d-none" for="name_last">Last Name
@@ -122,7 +124,7 @@
 		       onchange="checkchange(this)" 		       
 		       class="form-control name_last"
 		       title="Last Name"
-		       placeholder="Last Name (Smith)"/>
+		       placeholder="Last Name (Smith)">
 	      </div>
 	      <div class="form-group">
 		<label class="d-none" for="active_roles">Role
@@ -175,7 +177,7 @@
 	    </h5>
 	  </div>
 	  <div class="modal-body">
-	    <form autocomplete="off" id="cveform" onsubmit="return false">
+	    <form autocomplete="off" id="cveform" onsubmit="return false" novalidate>
 	      <ul class="nav nav-tabs" id="morjson" role="tablist">
 		<li class="nav-item waves-effect waves-light">
 		  <a class="nav-link active" id="nice-tab" data-toggle="tab"
@@ -187,14 +189,22 @@
 		     onclick="show_cve_table()">Refresh</a>
 		</li>
 		<li class="nav-item waves-effect waves-light">
-		  <a class="nav-link" data-toggle="tab"
+		  <a class="nav-link" data-toggle="tab" id="allfields-tab"
+		     href="#allFields" role="tab"
+		     aria-controls="allFields"
+		     aria-selected="false">
+		    All Fields
+		  </a>
+		</li>		
+		<li class="nav-item waves-effect waves-light">
+		  <a class="nav-link" data-toggle="tab" id="mjson-tab"
 		     href="#mjson" role="tab" aria-controls="mjson"
 		     aria-selected="false" onclick="to_json(this)">
 		    JSON
 		  </a>
 		</li>
 		<li class="nav-item waves-effect waves-light adp">
-		  <a class="nav-link" data-toggle="tab"
+		  <a class="nav-link" data-toggle="tab" id="adpjson-tab"
 		     href="#adpjson" role="tab" aria-controls="adpjson"
 		     aria-selected="false" onclick="show_adp(this)">
 		    ADP
@@ -202,18 +212,24 @@
 		</li>		
 	      </ul>
 	      <div class="tab-content" id="nice-or-json">
+		<div id="allFields" class="tab-pane fade"
+		     role="tabpanel" aria-labelledby="allfields-tab">
+		  <!-- Dynamic Form for full CVE record acts on event listener for on.show.bs.tab -->
+		</div>
 		<div class="tab-pane fade active show" id="nice"
 		     role="tabpanel" aria-labelledby="nice-tab">
 		  <ol class="form-group frow nologin" style="display:none">
-		    <label>
-		      CVE Number 
+		    <li class="nonumber">
+		      <label id="cvenumber">
+			CVE Number
+		      </label>
 		      <input class="form-control cve w-auto d-inline" name="cve" placeholder="CVE-YYYY-NNNN" onblur="clearoff(this)"> 
-		      <button class="btn btn-secondary" type="button" alt="Download CVE" title="Download CVE" onclick="get_cve()">&#8595;</button>
-		    </label>
+		      <button class="btn btn-secondary" type="button" title="Download CVE" onclick="get_cve()">&#8595;</button>
+		    </li>
 		  </ol>
 		  <ol class="form-group frow">
 		    <li class="erow position-relative">
-		      <label>Title (Optional)
+		      <label class="optional">Title (Optional)
 		      </label>
 		      <button class="duplicator addrow toggler" data-show="title"
 			      title="Show Title field"
@@ -221,44 +237,116 @@
 		      <textarea class="form-control title d-none" onblur="clearoff(this)"
 				name="title" rows="1"
 				data-field="title"
+				data-rshow="title"
 				title="Title of the vulnerability"
 				placeholder="Title of the vulnerability"
-				example="(Optional Title) Acme Product X version 1.0 found vulnerable"></textarea>
-		  </ol>
-		  <ol class="form-group frow" data-rclass="descriptions">
-		    <button class="duplicator addrow" title="Add Description"
-			    onclick="duplicate(this.parentNode)">&#8853;
-		    </button>  
-		    <li class="erow position-relative descriptions">
-		      <label>Description(s)
-		      </label>
-		      <button class="duplicator deleterow text-danger"
-			      title="Delete row" 			      
-			      onclick="unduplicate(this.parentNode)">
-			&#8854;
-		      </button>
-		      Language:
-		      <select name="lang" class="form-control lang"
-			      title="Description Language"
-			      required="required" 
-			      data-field="descriptions.0.lang">
-			<option selected value="en">English (en)</option>
-		      </select>
-		      <textarea class="form-control description"
-				required="required" 
-				onblur="clearoff(this)" 
-				name="description"  rows="4"
-				data-field="descriptions.0.value"
-				title="Description of Vulnerability"
-				placeholder="Description of the vulnerability" 
-				example="[PROBLEMTYPE] in [COMPONENT] in [VENDOR] [PRODUCT] [VERSION] on [PLATFORMS] allows [ATTACKER] to [IMPACT] via [VECTOR]"></textarea>
+				data-example="(Optional Title) Acme Product X version 1.0 found vulnerable"></textarea>
 		    </li>
 		  </ol>
-		  <ol class="form-group frow" data-rclass="affected">
+		  <ol class="form-group frow">
+		    <li class="erow position-relative">
+		      <label class="optional">Problem Type(s) - e.g., CWE (optional)
+		      </label>
+		      <button class="duplicator showrow toggler"
+			      data-show="problemTypesShow"
+			      title="Show Problem Types field"
+			      onclick="show_field(this)">&#10148;</button>
+		      <div class="form-group drow position-relative problemTypesShow d-none lowbottom" data-rclass="problemTypes">
+			<button class="duplicator addrow" title="Add problemType"
+				onclick="duplicate(this.parentNode)">&#8853;
+			</button>
+			
+			<ol class="form-group frow lowbottom"  data-rshow="problemTypesShow">
+			  <li class="erow position-relative problemTypes">
+			    <label>CWE/OWASP</label>
+			    <button class="duplicator deleterow text-danger"
+				    title="Delete row"
+				    onclick="unduplicate(this.parentNode)">
+			      &#8854;
+			    </button>
+			    <div class="form-group drow position-relative mrpad"  data-rclass="descriptions">
+			      
+			      <button class="duplicator addrow" title="Add Problem Description"
+				      onclick="duplicate(this.parentNode)">&#8853;
+			      </button>
+			      
+			      <ol class="childarray">
+				<li class="erow position-relative descriptions">
+				  <label>Problem Type Details</label>
+				  <button class="duplicator deleterow text-danger"
+					  title="Delete row"
+					  onclick="unduplicate(this.parentNode)">
+				    &#8854;
+				  </button>				  
+				  
+				  Language:
+				  <select name="lang" class="form-control lang"
+					  title="Problem Type Description Language"
+					  data-field="problemTypes.0.descriptions.0.lang">
+				    <option selected value="en">English (en)</option>
+				    <option onclick="add_new(this)">Other</option>
+				  </select>
+				  <input name="problemtype" class="form-control" type="hidden"
+					 title="Problem Type Description Language"
+					 data-field="problemTypes.0.descriptions.0.type">
+				  <input name="cweId" class="form-control" type="hidden"
+					 title="Problem Type Description Language"
+					 data-field="problemTypes.0.descriptions.0.cweId">
+				  <input class="form-control problemTypeDescription"
+					 onblur="clearoff(this)"
+					 data-update="cweUpdate" 
+					 name="problemTypeDescription" 
+					 data-field="problemTypes.0.descriptions.0.description"
+					 title="Description of Problem Type"
+					 placeholder="Description of the Problem Type (CWE, OWASP)"
+					 data-example="CWE-416: Use After Free">
+				</li>
+			      </ol>
+			    </div>
+			  </li>
+			</ol>
+		      </div>
+		  </ol>
+		  <div class="form-group drow position-relative" data-rclass="descriptions">
+		    <button class="duplicator addrow" title="Add Description"
+			    onclick="duplicate(this.parentNode)">&#8853;
+		    </button>
+		    <ol class="form-group frow">
+		      <li class="erow position-relative descriptions">
+			<label>Description(s)
+			</label>
+			<button class="duplicator deleterow text-danger"
+				title="Delete row" 			      
+				onclick="unduplicate(this.parentNode)">
+			  &#8854;
+			</button>
+			Language:
+			<select name="lang" class="form-control lang enoncerequired"
+				title="Description Language"
+				required="required" 
+				data-field="descriptions.0.lang">
+			  <option class="d-none" value="">None</option>
+			  <option selected value="en">English (en)</option>
+			  <option onclick="add_new(this)">Other</option>
+			</select>
+			<textarea class="form-control description"
+				  required="required" 
+				  onblur="clearoff(this)" 
+				  name="description"  rows="4"
+				  data-field="descriptions.0.value"
+				  title="Description of Vulnerability"
+				  placeholder="Description of the vulnerability" 
+				  data-example="[PROBLEMTYPE] in [COMPONENT] in [VENDOR] [PRODUCT] [VERSION] on [PLATFORMS] allows [ATTACKER] to [IMPACT] via [VECTOR]"></textarea>
+		      </li>
+		    </ol>
+		  </div>
+		  <div class="form-group drow position-relative" data-rclass="affected">
 		    <button class="duplicator addrow"
 			    title="Add Impacted Product"
 			    onclick="duplicate(this.parentNode)">&#8853;
 		    </button>
+		    
+		  <ol class="form-group frow">
 		    <li class="erow position-relative affected">
 		      <label>Impacted Product(s)
 		      </label>
@@ -272,8 +360,7 @@
 			     class="form-control vendor" required="required"
 			     data-field="affected.0.vendor"
 			     title="Vendor or Project"
-			     placeholder="Vendor or Project (Mitre or Mozilla)"
-			     required="required">
+			     placeholder="Vendor or Project (Mitre or Mozilla)">
 		      <input type="text" name="product" onblur="clearoff(this)"
 			     class="form-control product"
 			     data-field="affected.0.product"
@@ -289,11 +376,13 @@
 			<option value="unaffected">Not Affected</option>
 			<option value="affected">Affected</option>
 		      </select>
-		      <ol class="childarray" data-rclass="versions">
+		      <div class="form-group drow position-relative" data-rclass="versions">
 			<button class="duplicator addrow"
 				title="Add Impacted Versions"
 				onclick="duplicate(this.parentNode)"> &#8853;
 			</button>
+			<ol class="childarray">
+
 			<li class="erow position-relative versions text-left">
 			  <label>Version(s)
 			  </label>
@@ -308,7 +397,7 @@
 				 required="required"
 				 class="form-control version"
 				 title="Version"
-				 placeholder="Version String (1.1.0)"/>
+				 placeholder="Version String (1.1.0)">
 			  <select name="status" onblur="clearoff(this)"
 				  required="required"
 				  title="Status"
@@ -346,14 +435,16 @@
 				 data-field="affected.0.versions.0.versionType"
 				 placeholder="Version Type git,maven,python,npm">
 			</li>
-		      </ol>
+			</ol>
+			</div>
 		    </li>
 		  </ol>
-		  
-		  <ol class="form-group frow" data-rclass="references">
+		  </div>
+		  <div class="form-group drow position-relative" data-rclass="references"> 
 		    <button class="duplicator addrow" title="Add Reference"
 			    onclick="duplicate(this.parentNode)">&#8853;
 		    </button>		    
+		  <ol class="form-group frow">
 		    <li class="erow position-relative references">
 		      <label>Reference(s)
 		      </label>
@@ -377,6 +468,7 @@
 			     name="name" maxlength="512">
 		    </li>
 		  </ol>
+		  </div>
 		  <div class="form-group frow" data-rclass="extrajson">
 		    <label>
 		      Additional Field(s) JSON
@@ -384,7 +476,7 @@
 		    <button class="duplicator addrow toggler" data-show="rawjson"
 			    title="Show additional properties JSON"
 			    onclick="show_field(this)">&#10148;</button>
-		    <textarea class="form-control rawjson d-none"></textarea> 
+		    <textarea class="form-control rawjson d-none" data-rshow="rawjson"></textarea> 
 		  </div>
 		</div>
 		<div class="tab-pane fade editorwrap" id="mjson" role="tabpanel"
@@ -399,10 +491,10 @@
 	    </form>
 	  </div>
 	  <div class="modal-footer">
-	    <a type="button" class="btn btn-primary cveupdate"
+	    <a href="javascript:void(0)" class="btn btn-primary cveupdate"
 	       onclick="publish_cve()">
 	      Publish CVE</a>
-	    <a type="button" class="btn btn-primary adpupdate d-none"
+	    <a href="javascript:void(0)" class="btn btn-primary adpupdate d-none"
 	       onclick="publish_adp()">
 	      Publish ADP</a>
 	  </div>
@@ -431,7 +523,7 @@
 	      </li>
 	      <li class="nav-item waves-effect waves-light">
 		<a class="nav-link" data-toggle="tab"
-		   href="#f1" role="tab" aria-controls="f2"
+		   href="#f1" role="tab" aria-controls="f1"
 		   aria-selected="false">
 		  ADP
 		</a>
@@ -466,7 +558,7 @@
 	</div>
       </div>
     </div>
-    <div class="modal fade" id="reserveCVEModal" tabindex="-1" role="dialog" aria-labelledby="CVEModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="reserveCVEModal" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
 	<div class="modal-content">
 	  <div class="modal-header">
@@ -479,23 +571,23 @@
 	  <div class="modal-body">
 	    <form autocomplete="off" onsubmit="return false">
 	      <div class="form-group">
-		<label class="d-none" for="amount">Count of CVEs to reserve
+		<label class="d-none">Count of CVEs to reserve
 		</label>
 		<input type="number" name="amount"
 		       required="required"
 		       class="form-control amount"
-		       placeholder="How many CVE's? (default 1)"/>
+		       placeholder="How many CVE's? (default 1)">
 	      </div>
 	      <div class="form-group">
-		<label class="d-none" for="cve_year">Year
+		<label class="d-none">Year
 		</label>
 		<input type="number" name="cve_year" 
-		       maxlength="4" required="required"
+		       required="required"
 		       class="form-control cve_year"
-		       placeholder="Year (default Current Year)"/>
+		       placeholder="Year (default Current Year)">
 	      </div>
 	      <div class="form-group">
-		<label class="d-none" for="batchtype">Type for Batch
+		<label class="d-none">Type for Batch
 		</label>
 		<select name="batch_type" class="form-control batch_type">
 		  <option value="sequential">Sequential</option>
@@ -513,7 +605,7 @@
 	</div>
       </div>
     </div>
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
       <div class="modal-dialog modal-dialog-centered" role="document">
 	<div class="modal-content">
 	  <div class="modal-header">
@@ -530,19 +622,19 @@
 		<label class="d-none" for="org">Organization Short Name</label>
 		<input type="text" name="org" id="org"
 		       maxlength="255" required="required"
-		       class="form-control" placeholder="CNA Short Name"/>
+		       class="form-control" placeholder="CNA Short Name">
 	      </div>
 	      <div class="form-group">
 		<label class="d-none" for="username">Username</label>	      
 		<input type="email" name="user" id="user"
 		       maxlength="255" required="required"
-		       class="form-control" placeholder="Username"/>
+		       class="form-control" placeholder="Username">
 	      </div>
 	      <div class="form-group">
 		<label class="d-none" for="key">API Key</label>	      
 		<input type="password" name="key" id="key"
 		       maxlength="64" minlength="31"
-		       class="form-control" placeholder="API Key"/>
+		       class="form-control" placeholder="API Key">
 	      </div>
 	      <div class="form-group">
 		<label class="d-none" for="url">Service Location (URL)</label>	      
@@ -559,7 +651,7 @@
 	      <div class="form-group">
 		<label class="d-none" for="storeLocal">Remember Credentials</label>
 		<input type="checkbox" value="1" id="storeLocal"
-		       name="storeLocal" unchecked/>
+		       name="storeLocal">
 		Keep me logged in.
 	      </div>
 	    </form>
@@ -575,7 +667,7 @@
 	</div>
       </div>
     </div>
-    <main role="main" class="inner cover">
+    <main class="inner cover">
       <div class="container my-4">
 	<section>
 	  <h6> Demo of CVE 5.0 service client</h6>
