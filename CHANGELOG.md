@@ -1,6 +1,12 @@
 # cveClient Changelog
 
-Version 1.0.18  2023-08-21
+Version 1.0.20  2023-08-21
+
+* Add schemaToJson.js generic library to support conversion of CVE schema
+* Added updates to support viewing of full schema as presented by CVE5.0 schema
+
+
+Version 1.0.19  2023-08-21
 
 * Fixed some bugs on cveInterface.js related to apply_diff
 * Added the ability to download CVE JSON from repositories for edit/duplicate
