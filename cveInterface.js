@@ -1,12 +1,16 @@
 /* Clientlib, UI html, css and UI js all are version controlled */
-const _version = "1.0.19";
+const _version = "1.0.20";
 const _tool = "CVE Services Client Interface "+_version;
 const _cna_template = { "descriptions": [ { "lang": "${descriptions.0.lang}", "value": "${descriptions.0.value}"} ] ,  "affected": [ { "versions": [{"version": "${affected.0.versions.0.version}"}], "product": "${affected.0.product}", "vendor": "${affected.0.vendor|client.orgobj.name}" } ],"references": [ { "name": "${references.0.name}", "url": "${references.0.url}" }], "providerMetadata": { "orgId": "${client.userobj.org_UUID}", "shortName": "${client.org}" } }
+const schemaUrl = "https://cveproject.github.io/cve-schema/schema/docs/CVE_Record_Format_bundled.json";
 const valid_states = {PUBLISHED: 1,RESERVED: 1, REJECTED: 1};
 let store;
 let store_tag = "cveClient/";
 /* User var to access client as window.client global var */
 var client;
+/* Global variables for dynamic forms */
+var autoCompleter;
+var allFieldsForm;
 function add_option(w,v,f,s) {
     $(w).append($('<option/>').attr({value:v,selected:s})
 		.html(f));
@@ -28,6 +32,12 @@ function show_field(w) {
     var fclass = $(w).data("show");
     $('.'+fclass).toggleClass("d-none");
     $(w).toggleClass("arrowdown");
+}
+function load_cwes() {
+    /*Load cwes */
+    let suggestionUrl = location.origin + "/" + location.pathname.split("/").slice(0,-1).join("/") +
+	"/cwe-common.json";
+    autoComplete = autoCompleter($('.problemTypeDescription')[0],null,suggestionUrl,"cwe-common");
 }
 function load_languages() {
     $.getJSON("language-codes.json").done(function(d) {
@@ -138,8 +148,9 @@ function selectpass(passid) {
 function duplicate(pe) {
     /* Label has only one class just copy it*/
     let pclass = $(pe).data('rclass');
-    let childclass = "." + pclass; 
-    let nrow = $(pe).parent().find(childclass).clone().removeClass(pclass).addClass("duplicated");
+    let childclass = "." + pclass;
+    let orow = $(pe).find(childclass);
+    let nrow = $(pe).find(childclass).clone().removeClass(pclass).addClass("duplicated");
     let offset = $(pe).find(">.erow").length;
     nrow.find(".form-control").each(function(_,p) {
         let rv = $(p).data('field');
@@ -159,7 +170,7 @@ function duplicate(pe) {
         /* jquery data() method is distinct from data- fields so do both*/
         $(p).data("field",rv);
     });
-    $(pe).append(nrow);
+    orow.parent().append(nrow);
 }
 function unduplicate(pe) {
     let field = $(pe).parent().find(".form-control").data("field");
@@ -303,6 +314,7 @@ function get_display_cve(cve) {
 		swal_error("Could not find data to load! " +
 			   "See console for details.");
 	    console.log(x);
+	    client["cveDownload"] = x;
 	},function(y) {
 	    swal_error("Unable to collect CVE information! " +
 		       "See console for details");
@@ -501,11 +513,21 @@ $(function() {
     } else if(sessionStorage.getItem(store_tag+"url")) {
 	store = sessionStorage;
     }
-
+    let qparams = queryParser();
+    try {
+	load_languages();
+	load_cwes();
+	allFieldsForm = schemaToForm(schemaUrl, "allFields");
+    } catch(err) {
+	console.error(err);
+	console.log("Failed to create autocompleters");
+    }
     if (store == null) {
-	$('#loginModal').modal();
+	if("skip" in qparams)
+	    skip();
+	else
+	    $('#loginModal').modal();
     } else {
-	load_languages();	
 	$('#loginModal .form-control').each(function(_,x) {
 	    var vid = $(x).attr('id');
 	    var val = store.getItem(store_tag+vid);
@@ -531,6 +553,10 @@ $(function() {
 	}
 	
     }
+    
+    $('#allfields-tab').on('shown.bs.tab', function (event) {
+	allFields(event.target, event.relatedTarget);
+    });
 });
 async function get_pages(m,tag,fld,tbn,fun,fvars) {
     let itime = 0;
@@ -1285,10 +1311,10 @@ function from_json(w) {
     let json_data = get_json_data();
     if(!json_data)
 	return;
-    $('#nice .frow').each(function(_,el) {
+    $('#nice .drow').each(function(_,el) {
 	var field = $(el).data("rclass");
-	if(field in json_data) {
-	    let diff = json_data[field].length - $(el).find("> .erow").length;
+	if(field && field in json_data) {
+	    let diff = json_data[field].length - $(el).find(" .erow").length;
 	    if(diff != 0)
 		apply_diff(diff,el);	    
 	    $(el).find(".childarray").each(function(i,x) {
@@ -1346,6 +1372,15 @@ function from_json(w) {
 	    if(oval && oval[0] != '$') {
 		/* Value map exists and does not begin with $ */
 		$(v).val(oval);
+		if(!$(v).is(':visible')) {
+		    let dshow = $(v).closest('.frow').data("rshow");
+		    if(dshow) {
+			let el = $('[data-show="' + dshow + '"]');
+			if(el.length) {
+			    show_field(el);
+			}
+		    }
+		}
 		if(oval != $(v).val()) {
 		    /* In case of select field */
 		    add_option(v,oval,oval,1);
@@ -1489,11 +1524,9 @@ function to_json(w) {
     let json_data = {};
     let value_check = true;
     $('#nice .form-control').not('.d-none').each(function(_,v) {
-	console.log(v);
 	if($(v).val()) {
 	    if($(v).data("related")) {
 		v = update_related(v);
-		console.log("Related",v);
 		if(!$(v).val())
 		    return;
 	    }
@@ -1541,9 +1574,27 @@ function update_related(w) {
     }
     return $(w).parent().find("."+related);
 }
+function cweUpdate(w) {
+    if($(w).val() && $(w).data("field")) {
+	const match_cwe = $(w).val().toUpperCase().match(/^CWE\-[1-9][0-9]*/);
+	if(match_cwe.length) {
+	    let ufield = {"cweId": match_cwe[0], "type": "CWE"};
+	    let path = $(w).data("field").split(".");	    
+	    Object.keys(ufield).forEach(function(f) {
+		path[path.length - 1] = f;
+		$('[data-field="' + path.join(".") + '"]').val(ufield[f]); 
+	    });
+	}
+    }
+}
 function clearoff(w) {
     if($(w).val() && (get_deep(w,'validity.valid') == true))
 	$(w).removeClass('is-invalid').addClass('is-valid');
+    if($(w).data("update") && $(w).data("update") in window) {
+	let f = window[$(w).data("update")];
+	if(typeof(f) == "function")
+	    f(w);
+    }
 }
 function disable_encryption() {
     if(!('dfetch' in client)) {
@@ -1680,4 +1731,52 @@ async function reject_cve(confirm) {
 	$('#rejectcveModal').find(".cve").val(mr.cve_id);
     }
 
+}
+function queryParser(query) {
+    const urlParams={};
+    let match;
+    const pl = /\+/g;
+    const search = /([^&=:]+)[=:]?([^&]*)/g;
+    const decode = function (s) {
+	return decodeURIComponent(s.replace(pl, " ")); };
+    if(!query) 
+	query  = window.location.search.substring(1);
+    if((location.search == "") && (location.hash != ""))
+	query = location.hash.substring(1)
+    while (match = search.exec(query))
+	urlParams[decode(match[1])] = decode(match[2])
+    return urlParams
+}
+function allFields(newTab,oldTab) {
+    let cveData = {};
+    const href = oldTab.getAttribute('href');
+    if(href == "#nice") {
+	if(to_json()) {
+	    cveData = {containers:{ cna: get_json_data()}};
+	}
+    }else if(href == "#mjson") {
+	cveData = {containers:{ cna: get_json_data()}};
+    }
+    if(Object.keys(cveData).length) {
+	allFieldsForm.populate(cveData, null);
+    }
+}
+function add_new(opt) {
+    if(opt.parentElement && opt.parentElement.tagName == "SELECT") {
+	Swal.fire({
+	    title: 'Enter New Option',
+	    input: 'text',
+	    inputPlaceholder: 'New option',
+	    showCancelButton: true,
+	    inputValidator: function(value) {
+		if (!value) {
+		    return 'You need to write something!';
+		}
+		add_option(opt.parentElement,value,value,1);
+	    }
+	}).then(function(result) {
+	    if('dismiss' in result)
+		opt.parentElement.selectedIndex = opt.parentElement.selectedIndex - 1;
+	});
+    }
 }

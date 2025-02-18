@@ -1,9 +1,6 @@
-/* version 1.0.9 */
+/* version 1.0.10 */
 head {
-    --version: 1.0.9;
-}
-.nologin label * {
-    margin: 2px !important;
+    --version: 1.0.10;
 }
 .childarray {
     margin: 0px 0px 0px 16px;
@@ -66,7 +63,7 @@ ol.frow li.erow:nth-of-type(1)::marker {
     list-style-type: none;
     content: "";
 }
-.erow:nth-of-type(1) > .lang {
+.erow:nth-of-type(1) > .enoncerequired {
     pointer-events: none;
     background: #eee;
 }
@@ -234,3 +231,15 @@ div.bootstrap-table button.btn {
 #cveUpdateModal .btn {
     color: white;
 }
+#allFields { all: initial; }
+#allFields:not(.active) { display: none; }
+#allFields fieldset {  all:revert;}
+#allFields label { all:revert;}
+#allFields * { all:revert;}
+.nologin { padding: 2px;}
+.nologin label * {  margin: 2px !important;}
+li.nonumber {   list-style-type: none;}
+label#cvenumber {    display: inline-block;}
+label.optional { color: #999; }
+.lowbottom { margin-bottom: 0px; border: none; }
+.mrpad { margin-right: 28px;}
