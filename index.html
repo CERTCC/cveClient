@@ -30,7 +30,7 @@
 	 <script src="cveClientlib.js"></script>
 	 <script src="schemaToForm.js"></script>
 	 <script src="autoCompleter.js"></script>
-	 <link rel="stylesheet" href="cveInterface.css">
+	 <link rel="stylesheet" href="cveInterface.css?v=2.0.12">
   </head>
   <body class="text-center whitebody">
     <div class="alert position-fixed w-100" id="topalert" role="alert"
@@ -180,6 +180,13 @@
 	    <form autocomplete="off" id="cveform" onsubmit="return false" novalidate>
 	      <ul class="nav nav-tabs" id="morjson" role="tablist">
 		<li class="nav-item waves-effect waves-light">
+		  <a class="nav-link" id="chat-tab" data-toggle="tab"
+		     onclick="clearChat()"
+		     href="#chat" role="tab" aria-controls="chat">
+		    CVE Chatbot
+		  </a>
+		</li>
+		<li class="nav-item waves-effect waves-light">
 		  <a class="nav-link active" id="nice-tab" data-toggle="tab"
 		     href="#nice" role="tab" aria-controls="nice"
 		     aria-selected="true" onclick="from_json(this)">
@@ -187,7 +194,7 @@
 		  </a>
 		  <a class="refresh d-none"
 		     onclick="show_cve_table()">Refresh</a>
-		</li>
+		</li>		
 		<li class="nav-item waves-effect waves-light">
 		  <a class="nav-link" data-toggle="tab" id="allfields-tab"
 		     href="#allFields" role="tab"
@@ -215,6 +222,21 @@
 		<div id="allFields" class="tab-pane fade"
 		     role="tabpanel" aria-labelledby="allfields-tab">
 		  <!-- Dynamic Form for full CVE record acts on event listener for on.show.bs.tab -->
+		</div>
+		<div class="tab-pane fade cvechat" id="chat"
+		     role="tabpanel" aria-labelledby="chat-tab">
+		  <div id="chatbox"></div>
+		  <div>
+		    <div>
+		      <input type="text" class="form-control mauto" id="chatinput"
+			     placeholder="Type your answer..." />
+		    </div>
+		  </div>
+		  <button id="chatmsg" class="btn btn-info">Send</button>
+
+		  <pre id="chatoutput" style="display:none">{}</pre>
+		  <button class="btn btn-dark d-none" id="chatsend" onclick="chat_tocve()">Use CVE</button>
+		  <button class="btn btn-danger" onclick="clearChat()">Clear</button>
 		</div>
 		<div class="tab-pane fade active show" id="nice"
 		     role="tabpanel" aria-labelledby="nice-tab">
@@ -494,6 +516,8 @@
 	    <a href="javascript:void(0)" class="btn btn-primary cveupdate"
 	       onclick="publish_cve()">
 	      Publish CVE</a>
+	    <A href="javascript:void(0)" class="btn btn-info askgpt"
+	       onclick="askchatGPT(ace.edit('mjsoneditor').getValue())"> Ask ChatGPT</a>
 	    <a href="javascript:void(0)" class="btn btn-primary adpupdate d-none"
 	       onclick="publish_adp()">
 	      Publish ADP</a>
@@ -762,7 +786,7 @@
 	
       </div>    
     </main>
-    <script src="cveInterface.js"></script>
+    <script src="cveInterface.js?v=1.0.57"></script>
   </body>
 </html>
 
