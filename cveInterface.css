@@ -1,4 +1,40 @@
-/* version 1.0.10 */
+/* version 1.0.11 */
+#chatbox {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    max-width: 600px;
+    overflow-y: auto;
+    background: #f9f9f9;
+    border-radius: 5px;
+    clear: both;
+}
+.cvechat input.form-control {
+    display: inline-block;
+    min-width: 40ch;
+}
+.cvechat .bot,
+.cvechat .user {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+.cvechat .bot {
+    background: #e6f2ff;
+}
+.cvechat .user {
+    background: #dfffd6;
+    text-align: right;
+}
+.cvechat button {
+    padding: 0.5rem 1rem;
+}
+.cvechat pre {
+    background: #333;
+    color: #fff;
+    padding: 1rem;
+    overflow-x: auto;
+}
+
 head {
     --version: 1.0.10;
 }

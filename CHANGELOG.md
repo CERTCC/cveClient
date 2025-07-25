@@ -1,5 +1,12 @@
 # cveClient Changelog
 
+
+Version 1.0.21 2025-06-24
+* Added a new version of CVE Chatbot
+* Ask chatGPT button
+* Fixed bugs on multi-row elements
+
+
 Version 1.0.20  2023-08-21
 
 * Add schemaToJson.js generic library to support conversion of CVE schema

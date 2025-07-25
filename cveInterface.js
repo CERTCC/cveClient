@@ -1,5 +1,5 @@
 /* Clientlib, UI html, css and UI js all are version controlled */
-const _version = "1.0.20";
+const _version = "1.0.21";
 const _tool = "CVE Services Client Interface "+_version;
 const _cna_template = { "descriptions": [ { "lang": "${descriptions.0.lang}", "value": "${descriptions.0.value}"} ] ,  "affected": [ { "versions": [{"version": "${affected.0.versions.0.version}"}], "product": "${affected.0.product}", "vendor": "${affected.0.vendor|client.orgobj.name}" } ],"references": [ { "name": "${references.0.name}", "url": "${references.0.url}" }], "providerMetadata": { "orgId": "${client.userobj.org_UUID}", "shortName": "${client.org}" } }
 const schemaUrl = "https://cveproject.github.io/cve-schema/schema/docs/CVE_Record_Format_bundled.json";
@@ -15,6 +15,177 @@ function add_option(w,v,f,s) {
     $(w).append($('<option/>').attr({value:v,selected:s})
 		.html(f));
 }
+function askchatGPT(CVE_JSON) {
+    if(!CVE_JSON)
+	CVE_JSON = ace.edit('mjsoneditor').getValue();
+    const prompt = "I have this CVE record and want help improve it especially the \"affected\" block.\nPlease check it against the CVE JSON 5.0 schema guidance (https://github.com/CVEProject/cve-schema/blob/main/schema/docs/versions.md).\nHere is the full CVE Record:\n\n " + CVE_JSON;
+    const url = "https://chat.openai.com/?prompt=" + encodeURIComponent(prompt);
+    window.open(url, "_blank");
+}
+function checkurl(x) {
+    try {
+	new URL(x);
+	return true;
+    } catch(e) {
+	console.log("URL Validator failed " + e);
+	return false
+    }
+}
+function clearChat() {
+    Swal.fire({
+	title: 'Start a new CVE chat?',
+	showDenyButton: true,
+	showCancelButton: false,
+	confirmButtonText: 'Sure',
+	denyButtonText: 'Cancel',
+    }).then(function(result) {
+	if(result.isConfirmed) {
+	    cveChat();
+	};
+    });
+}
+function cveChat() {
+    const cweUrl = location.origin + "/" + location.pathname.split("/").slice(0,-1).join("/") +
+          "/cwe-common.json";
+    const questions = [
+	{ key: "title", prompt: "Provide a title for the CVE Record.", example:"Buffer overflow in FooBar 1.0 ..." },
+	{ key: "description", prompt: "Describe the vulnerability.", example: "Buffer overflow in FooBar 1.0 causes DOS when crafted input..." },
+	{ key: "cweObj", example: "CWE-121: Stack-based Buffer Overflow.", prompt: "Enter the CWE-ID", "suggestionUrl": cweUrl, "selector": "cwe-common" },
+	{ key: "vendor", prompt: "What is the vendor name?", example: "Acme" },
+	{ key: "product", prompt: "What is the product name?", example: "Widget" },
+	{ key: "versions", prompt: "What specific version(s) are affected? [comma-separated]", example: "1.0.1,2.1.1" },
+	{ key: "refUrl", prompt: "Provide the reference URL.", example: "https://example.com/security/psirt/CVE-1900-0001", validator: checkurl}
+    ];
+
+    let answers = {};
+    const chatbox = document.getElementById("chatbox");
+    let step = 0;
+    chatbox.innerHTML = "";
+    const addMessage = function(text, sender) {
+	if(!sender)
+	    sender = "bot";
+	const msg = document.createElement("div");
+	msg.className = sender;
+	msg.textContent = text;
+	chatbox.appendChild(msg);
+	chatbox.scrollTop = chatbox.scrollHeight;
+    }
+    let chatbutton = document.getElementById("chatmsg");
+    let chatinput = document.getElementById("chatinput");
+    chatbutton.value = "";
+    chatbutton.style.display = "inline-block";
+    chatinput.value = "";
+    chatinput.style.display = "inline-block";
+    document.getElementById("chatsend").classList.add("d-none");    
+    if(!chatbutton.hasAttribute('handleinputadded')) {
+	chatbutton.setAttribute('handleinputadded', 'true');
+	chatbutton.addEventListener('click', function() {
+	    let input = document.getElementById("chatinput");
+	    let step = parseInt(chatbox.getAttribute("data-step"));
+	    const val = input.value.trim();
+	    if (!val) return;
+	    const qn = questions[step-1];
+	    if(qn.validator && (!qn.validator(val))) {
+		input.classList.add("is-invalid");
+		return;
+	    }
+	    addMessage(val, "user");
+	    answers[qn.key] = val;
+	    if (step >= questions.length) {
+		buildCVE();
+		return;
+	    }	    
+	    
+	    const q = questions[step];	    
+	    if(q.example)
+		input.placeholder = "e.g.. " + q.example;
+	    	    
+	    input.value = "";
+	    input.classList.remove("is-valid","is-invalid")
+	    const iclone = input.cloneNode(true);
+	    input.after(iclone);
+	    input.remove();
+	    if(q.suggestionUrl) {
+		let _ = new autoCompleter(iclone,q.suggestionsArray,q.suggestionUrl,q.selector);
+		iclone.addEventListener('input', function(event) {
+		    iclone.focus();
+		    console.log("Changed");
+		});
+	    }
+	    iclone.addEventListener('keydown', function(event) {
+		if (event.key === 'Enter') {
+		    console.log('Enter key pressed in the input field!');
+		    chatbutton.click();		    
+		}
+	    });
+	    iclone.focus();
+	    setTimeout(function() {
+		addMessage(questions[step].prompt);
+		step++;
+		chatbox.setAttribute("data-step",step);
+	    }, 300);
+	});
+    }
+
+    const buildCVE = function() {
+	console.log(answers);
+	let cve = {
+	    title: answers.title,
+	    descriptions: [
+		{
+		    lang: "en",
+		    value: answers.description
+		}
+	    ],
+	    problemTypes: [],
+	    affected: [
+		{
+		    vendor: answers.vendor,
+		    product: answers.product,
+		    versions: answers.versions.split(",").map(v => ({ version: v.trim(),status: "affected" }))
+		}
+	    ],
+	    references: [
+		{
+		url: answers.refUrl
+		}
+	    ]
+	};
+	document.getElementById("chatinput").style.display = "none";
+	chatbutton.style.display = "none";
+	document.getElementById("chatsend").classList.remove("d-none");
+	const match_cwe = answers.cweObj.toUpperCase().match(/^(cwe-[0-9]+)(.*)$/i);
+	if(match_cwe && match_cwe.length == 3) {
+	    cve.problemTypes[0] = {
+		descriptions: [
+		    {
+			lang: "en",
+			type: "CWE",
+			cweId: match_cwe[1],
+			description: answers.cweObj
+		    }
+		]
+	    };
+	} else {
+	    cve.problemTypes[0] = {
+		descriptions: [
+		    {
+			lang: "en",
+			description: answers.cweObj
+		    }
+		]
+	    };
+	}
+	let output = document.getElementById("chatoutput");
+	output.textContent = JSON.stringify(cve, null, 2);
+    }
+    if(questions[step].example)
+	document.getElementById("chatinput").placeholder = String(step) + " e.g.. " + questions[step].example;
+    addMessage(questions[step].prompt);
+    chatbox.setAttribute("data-step",step + 1);
+
+}
+
 function triggerversionRange(w) {
     if(w.checked) 
 	$(w).parent().find(".versionRange").removeClass("d-none");
@@ -59,7 +230,10 @@ function load_languages() {
 	}
     });
 }
-function json_edit(vjson,jselector) {
+function chat_tocve() {
+    json_edit($('#chatoutput').text(),"mjsoneditor",true);
+}
+function json_edit(vjson,jselector,noshownice) {
     if(!jselector) {
 	jselector = "mjsoneditor";
     }
@@ -69,9 +243,13 @@ function json_edit(vjson,jselector) {
     editor.session.setUseWrapMode(true);
     editor.setValue(vjson);
     if(jselector == "mjsoneditor") {
-	from_json();
-	if(!$('#nice').hasClass("active"))
-	    $('#nice-tab').click();
+	if(noshownice) {
+	    $('#mjson-tab').tab('show');
+	} else {
+	    from_json();
+	    if(!$('#nice').hasClass("active")) 
+		$('#nice-tab').click();
+	}
     }
 }
 function get_deep(obj,prop) {
@@ -151,7 +329,7 @@ function duplicate(pe) {
     let childclass = "." + pclass;
     let orow = $(pe).find(childclass);
     let nrow = $(pe).find(childclass).clone().removeClass(pclass).addClass("duplicated");
-    let offset = $(pe).find(">.erow").length;
+    let offset = $(pe).find("> > .erow").length;
     nrow.find(".form-control").each(function(_,p) {
         let rv = $(p).data('field');
         if(!rv) return;
@@ -358,8 +536,8 @@ async function download_json() {
 				     "serial": 1,
 				     "state": "PUBLISHED"};
  	returnJSON["containers"]["cna"]["providerMetadata"] =
-				 { orgId: "00000000-0000-0000-0000-000000000000",
- 				   shortName: "none" };	
+	    { orgId: "00000000-0000-0000-0000-000000000000",
+ 	      shortName: "none" };	
 	if(get_deep(client,'constructor.name') && client._version)
             returnJSON["x_generator"] = {engine:  client.constructor.name + "/" +
 					 client._version };
@@ -1314,6 +1492,7 @@ function from_json(w) {
     $('#nice .drow').each(function(_,el) {
 	var field = $(el).data("rclass");
 	if(field && field in json_data) {
+	    console.log(el, field, json_data[field]);
 	    let diff = json_data[field].length - $(el).find(" .erow").length;
 	    if(diff != 0)
 		apply_diff(diff,el);	    
@@ -1331,6 +1510,11 @@ function from_json(w) {
 		json_data[field].forEach(function(x,i) {
 		    let elf = $(el).find(".childarray").find(".erow");
 		    if('versions' in x) {
+			if(x.versions.length) {
+			    let diff = x.versions.length - $(elf).find(" .erow").length;
+			    if(diff != 0)
+				apply_diff(diff,elf);
+			}
 			x.versions.forEach(function(y,j) {
 			    let q;
 			    ['lessThan','lessThanOrEqual']
@@ -1360,7 +1544,7 @@ function from_json(w) {
 	}
     });
     /* populate the fields. raw_json is used to capture fields
-     that are not part of cveInterface but present in CVE data*/
+       that are not part of cveInterface but present in CVE data*/
     let raw_json = simpleCopy(json_data);
     $('#nice .form-control').each(function(_,v) {
 	let props = $(v).data("field");
@@ -1576,9 +1760,9 @@ function update_related(w) {
 }
 function cweUpdate(w) {
     if($(w).val() && $(w).data("field")) {
-	const match_cwe = $(w).val().toUpperCase().match(/^CWE\-[1-9][0-9]*/);
-	if(match_cwe.length) {
-	    let ufield = {"cweId": match_cwe[0], "type": "CWE"};
+	const match_cwe = $(w).val().toUpperCase().match(/^(cwe-[0-9]+)(.*)$/i);
+	if(match_cwe && match_cwe.length == 3) {
+	    let ufield = {"cweId": match_cwe[1], "type": "CWE"};
 	    let path = $(w).data("field").split(".");	    
 	    Object.keys(ufield).forEach(function(f) {
 		path[path.length - 1] = f;
@@ -1593,7 +1777,9 @@ function clearoff(w) {
     if($(w).data("update") && $(w).data("update") in window) {
 	let f = window[$(w).data("update")];
 	if(typeof(f) == "function")
-	    f(w);
+	    setTimeout(function() {
+		f(w);
+	    },500);
     }
 }
 function disable_encryption() {
