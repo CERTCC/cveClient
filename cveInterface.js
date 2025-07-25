@@ -98,7 +98,7 @@ function cveChat() {
 	    
 	    const q = questions[step];	    
 	    if(q.example)
-		input.placeholder = String(step) + "e.g.. " + q.example;
+		input.placeholder = "e.g.. " + q.example;
 	    	    
 	    input.value = "";
 	    input.classList.remove("is-valid","is-invalid")
