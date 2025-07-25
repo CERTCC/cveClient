@@ -180,7 +180,7 @@ function cveChat() {
 	output.textContent = JSON.stringify(cve, null, 2);
     }
     if(questions[step].example)
-	document.getElementById("chatinput").placeholder = String(step) + " e.g.. " + questions[step].example;
+	document.getElementById("chatinput").placeholder = " e.g.. " + questions[step].example;
     addMessage(questions[step].prompt);
     chatbox.setAttribute("data-step",step + 1);
 
