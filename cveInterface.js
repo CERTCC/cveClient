@@ -1505,11 +1505,12 @@ function from_json(w) {
 	    let diff = json_data[field].length - $(el).find(" .erow").length;
 	    if(diff != 0)
 		apply_diff(diff,el);	    
-	    $(el).find(".childarray").each(function(i,x) {
+	    $(el).find(".childarray").each(function(i,elx) {
+		let x = elx.parentNode;
 		elfield = $(x).attr("data-rclass");
 		if (elfield in json_data[field][i]) {
 		    let idiff = json_data[field][i][elfield].length -
-			$(x).find("> .erow").length;
+			$(x).find(".erow").length;
 		    if(idiff != 0) 
 			apply_diff(idiff,x);
 		}
