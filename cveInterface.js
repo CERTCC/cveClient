@@ -328,11 +328,17 @@ function duplicate(pe) {
     let pclass = $(pe).data('rclass');
     let childclass = "." + pclass;
     let orow = $(pe).find(childclass);
-    let nrow = $(pe).find(childclass).clone().removeClass(pclass).addClass("duplicated");
+    let nrow = $(pe).find(childclass).clone(1).removeClass(pclass).addClass("duplicated");
     let offset = $(pe).find("> > .erow").length;
     nrow.find(".form-control").each(function(_,p) {
         let rv = $(p).data('field');
-        if(!rv) return;
+        if(!rv) {
+	    rv = $(p).data('relatedfield');
+	    if(!rv) {
+		console.log("Ignoring field with no data attribute",p);
+		return;
+	    }
+	}
         
         let regx =  new RegExp("("+pclass+")\\.(\\d+)");
         rv = rv.replace(regx,function(s0,s1,s2) {
@@ -344,7 +350,11 @@ function duplicate(pe) {
                 return s0;
             };
         });
-        $(p).attr("data-field",rv);
+	if($(p).data('relatedfield')) {
+	    $(p).attr("data-relatedfield",rv);
+	} else if (($(p).data('field')){
+            $(p).attr("data-field",rv);
+	}
         /* jquery data() method is distinct from data- fields so do both*/
         $(p).data("field",rv);
     });
@@ -1492,7 +1502,6 @@ function from_json(w) {
     $('#nice .drow').each(function(_,el) {
 	var field = $(el).data("rclass");
 	if(field && field in json_data) {
-	    console.log(el, field, json_data[field]);
 	    let diff = json_data[field].length - $(el).find(" .erow").length;
 	    if(diff != 0)
 		apply_diff(diff,el);	    
@@ -1508,7 +1517,7 @@ function from_json(w) {
 	    /* Handling versions the child field */
 	    if(field == "affected") {
 		json_data[field].forEach(function(x,i) {
-		    let elf = $(el).find(".childarray").find(".erow");
+		    let elf = $(el).find(".childarray").parent();
 		    if('versions' in x) {
 			if(x.versions.length) {
 			    let diff = x.versions.length - $(elf).find(" .erow").length;
