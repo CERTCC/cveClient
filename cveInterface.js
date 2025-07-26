@@ -36,8 +36,10 @@ function checkurl(x) {
     }
 }
 function clearChat() {
+
     Swal.fire({
 	title: 'Start a new CVE chat?',
+	html: 'This will clear any content entered or downloaded!',
 	showDenyButton: true,
 	showCancelButton: false,
 	confirmButtonText: 'Sure',
@@ -45,7 +47,9 @@ function clearChat() {
     }).then(function(result) {
 	if(result.isConfirmed) {
 	    cveChat();
-	};
+	} else {
+	    $('#nice-tab').click();
+	}
     });
 }
 function cveChat() {
