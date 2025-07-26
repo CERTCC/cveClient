@@ -1723,8 +1723,9 @@ async function publish_cve() {
     }
 }
 function check_json(cjson) {
-    return ((cjson.affected) && (cjson.affected.versions)
-	    && (cjson.affected.versions.length > 0));
+    return ((cjson.affected) && (cjson.affected.length > 0)
+	    && (cjson.affected[0].versions)
+	    && (cjson.affected[0].versions.length > 0));
 }
    
 
@@ -1771,6 +1772,7 @@ function to_json(w) {
     if(check_json(full_json)) {
 	editor.setValue(JSON.stringify(full_json,null,2));
     } else {
+	console.log(full_json);
 	editor.setValue("{}");
 	return false;
     }
