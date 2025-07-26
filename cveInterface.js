@@ -352,7 +352,7 @@ function duplicate(pe) {
         });
 	if($(p).attr('data-relatedfield')) {
 	    $(p).attr("data-relatedfield",rv);
-	} else if (($(p).attr('data-field')){
+	} else if ($(p).attr('data-field')){
             $(p).attr("data-field",rv);
 	}
         /* jquery data() method is distinct from data- fields so do both*/
