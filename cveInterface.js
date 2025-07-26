@@ -18,9 +18,13 @@ function add_option(w,v,f,s) {
 function askchatGPT(CVE_JSON) {
     if(!CVE_JSON)
 	CVE_JSON = ace.edit('mjsoneditor').getValue();
-    const prompt = "I have this CVE record and want help improve it especially the \"affected\" block.\nPlease check it against the CVE JSON 5.0 schema guidance (https://github.com/CVEProject/cve-schema/blob/main/schema/docs/versions.md).\nHere is the full CVE Record:\n\n " + CVE_JSON;
-    const url = "https://chat.openai.com/?prompt=" + encodeURIComponent(prompt);
-    window.open(url, "_blank");
+    if(check_json(CVE_JSON)) {
+	const prompt = "I have this CVE record and want help improve it especially the \"affected\" block.\nPlease check it against the CVE JSON 5.0 schema guidance (https://github.com/CVEProject/cve-schema/blob/main/schema/docs/versions.md).\nHere is the full CVE Record:\n\n " + CVE_JSON;
+	const url = "https://chat.openai.com/?prompt=" + encodeURIComponent(prompt);
+	window.open(url, "_blank");
+    } else {
+	swal.fire({type:"error",html:"It seems like your CVE JSON is not ready. Please inut required content before sending for validation.",title:"CVE JSON not ready or created yet!"});
+    }
 }
 function checkurl(x) {
     try {
@@ -496,11 +500,13 @@ async function get_cve() {
 function get_display_cve(cve) {
     client.getcvedetail(cve)
 	.then(function(x) {
-	    if(get_deep(x,"containers.cna"))
+	    if(get_deep(x,"containers.cna")) {
+		$('.duplicated').remove();
 		json_edit(JSON.stringify(x.containers.cna));
-	    else
+	    } else {
 		swal_error("Could not find data to load! " +
 			   "See console for details.");
+	    }
 	    console.log(x);
 	    client["cveDownload"] = x;
 	},function(y) {
@@ -1524,29 +1530,30 @@ function from_json(w) {
 			    let diff = x.versions.length - $(elf).find(" .erow").length;
 			    if(diff != 0)
 				apply_diff(diff,elf);
-			}
+			} 
 			x.versions.forEach(function(y,j) {
 			    let q;
 			    ['lessThan','lessThanOrEqual']
 				.forEach(function(r) {
 				    if(r in y) 
 					q = r;
-				});
-			    let w = $(elf[j]).find(".versionRangeEnabled")[0];
+				}); 
+			    let w = $(elf[i]).find(".versionRangeEnabled")[j]; 
 			    if(w) {
 				if(q) {
 				    w.checked = true;
-				    $(elf[j]).find(".versionRangeType").val(q);
-				    $(elf[j]).find(".versionRangeValue")
+                    
+				    $(elf[i]).find(".versionRangeType").val(q);
+				    $(elf[i]).find(".versionRangeValue")
 					.val(y[q]);
 				    if('versionType' in y)
-					$(elf[j]).find('.versionTypeValue')
+					$(elf[i]).find('.versionTypeValue')
 					.val(y['versionType']);
 				} else {
 				    w.checked = false;
 				}
-				triggerversionRange(w);
-			    }
+				triggerversionRange(w); 
+			    }; 
 			});
 		    }
 		});
@@ -1711,6 +1718,11 @@ async function publish_cve() {
  	swal_error("Could not publish this CVE. Fix the errors please!");
     }
 }
+function check_json(cjson) {
+    return ((cjson.affected) && (cjson.affected.versions)
+	    && (cjson.affected.versions.length > 0));
+}
+   
 
 function to_json(w) {
     $('.cveupdate').removeClass('d-none');
@@ -1752,7 +1764,12 @@ function to_json(w) {
 	}
     }
     let full_json = Object.assign({},json_data,raw_json);
-    editor.setValue(JSON.stringify(full_json,null,2));
+    if(check_json(full_json)) {
+	editor.setValue(JSON.stringify(full_json,null,2));
+    } else {
+	editor.setValue("{}");
+	return false;
+    }
     return value_check;
 }
 function update_related(w) {
