@@ -1,5 +1,9 @@
 # cveClient Changelog
 
+Version 1.0.22 2025-06-26
+* Resolved a bug as filled in #31 multiple versions under affected tree
+* Moved from jquery .data() to .attr(data- to avoid unexpected behaviors.
+* ProblemTypes can be array of array with only one dictionary object - fixed issue where m*n array can be consisten in JSON view and Friendly (Minimal) view.
 
 Version 1.0.21 2025-06-24
 * Added a new version of CVE Chatbot

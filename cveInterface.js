@@ -1,5 +1,5 @@
 /* Clientlib, UI html, css and UI js all are version controlled */
-const _version = "1.0.21";
+const _version = "1.0.22";
 const _tool = "CVE Services Client Interface "+_version;
 const _cna_template = { "descriptions": [ { "lang": "${descriptions.0.lang}", "value": "${descriptions.0.value}"} ] ,  "affected": [ { "versions": [{"version": "${affected.0.versions.0.version}"}], "product": "${affected.0.product}", "vendor": "${affected.0.vendor|client.orgobj.name}" } ],"references": [ { "name": "${references.0.name}", "url": "${references.0.url}" }], "providerMetadata": { "orgId": "${client.userobj.org_UUID}", "shortName": "${client.org}" } }
 const schemaUrl = "https://cveproject.github.io/cve-schema/schema/docs/CVE_Record_Format_bundled.json";
@@ -18,9 +18,13 @@ function add_option(w,v,f,s) {
 function askchatGPT(CVE_JSON) {
     if(!CVE_JSON)
 	CVE_JSON = ace.edit('mjsoneditor').getValue();
-    const prompt = "I have this CVE record and want help improve it especially the \"affected\" block.\nPlease check it against the CVE JSON 5.0 schema guidance (https://github.com/CVEProject/cve-schema/blob/main/schema/docs/versions.md).\nHere is the full CVE Record:\n\n " + CVE_JSON;
-    const url = "https://chat.openai.com/?prompt=" + encodeURIComponent(prompt);
-    window.open(url, "_blank");
+    if(check_json(CVE_JSON)) {
+	const prompt = "I have this CVE record and want help improve it especially the \"affected\" block.\nPlease check it against the CVE JSON 5.0 schema guidance (https://github.com/CVEProject/cve-schema/blob/main/schema/docs/versions.md).\nHere is the full CVE Record:\n\n " + CVE_JSON;
+	const url = "https://chat.openai.com/?prompt=" + encodeURIComponent(prompt);
+	window.open(url, "_blank");
+    } else {
+	swal.fire({type:"error",html:"It seems like your CVE JSON is not ready. Please inut required content before sending for validation.",title:"CVE JSON not ready or created yet!"});
+    }
 }
 function checkurl(x) {
     try {
@@ -32,8 +36,10 @@ function checkurl(x) {
     }
 }
 function clearChat() {
+
     Swal.fire({
 	title: 'Start a new CVE chat?',
+	html: 'This will clear any content entered or downloaded!',
 	showDenyButton: true,
 	showCancelButton: false,
 	confirmButtonText: 'Sure',
@@ -41,7 +47,9 @@ function clearChat() {
     }).then(function(result) {
 	if(result.isConfirmed) {
 	    cveChat();
-	};
+	} else {
+	    $('#nice-tab').click();
+	}
     });
 }
 function cveChat() {
@@ -200,7 +208,7 @@ function showByClassName(w,c) {
 	$(c).addClass('d-none');
 }
 function show_field(w) {
-    var fclass = $(w).data("show");
+    var fclass = $(w).attr("data-show");
     $('.'+fclass).toggleClass("d-none");
     $(w).toggleClass("arrowdown");
 }
@@ -325,14 +333,20 @@ function selectpass(passid) {
 }
 function duplicate(pe) {
     /* Label has only one class just copy it*/
-    let pclass = $(pe).data('rclass');
+    let pclass = $(pe).attr('data-rclass');
     let childclass = "." + pclass;
     let orow = $(pe).find(childclass);
-    let nrow = $(pe).find(childclass).clone().removeClass(pclass).addClass("duplicated");
+    let nrow = $(pe).find(childclass).clone(1).removeClass(pclass).addClass("duplicated");
     let offset = $(pe).find("> > .erow").length;
     nrow.find(".form-control").each(function(_,p) {
-        let rv = $(p).data('field');
-        if(!rv) return;
+        let rv = $(p).attr('data-field');
+        if(!rv) {
+	    rv = $(p).attr('data-relatedfield');
+	    if(!rv) {
+		console.log("Ignoring field with no data attribute",p);
+		return;
+	    }
+	}
         
         let regx =  new RegExp("("+pclass+")\\.(\\d+)");
         rv = rv.replace(regx,function(s0,s1,s2) {
@@ -344,14 +358,18 @@ function duplicate(pe) {
                 return s0;
             };
         });
-        $(p).attr("data-field",rv);
+	if($(p).attr('data-relatedfield')) {
+	    $(p).attr("data-relatedfield",rv);
+	} else if ($(p).attr('data-field')){
+            $(p).attr("data-field",rv);
+	}
         /* jquery data() method is distinct from data- fields so do both*/
-        $(p).data("field",rv);
+        $(p).attr("data-field",rv);
     });
     orow.parent().append(nrow);
 }
 function unduplicate(pe) {
-    let field = $(pe).parent().find(".form-control").data("field");
+    let field = $(pe).parent().find(".form-control").attr("data-field");
     let rv = field.replace(/(\d)+\.[^\.]+$/,"$1");
     json_data = set_deep(get_json_data(),rv,undefined);
     let editor = $('#mjson .jsoneditor')[0].env.editor;
@@ -486,11 +504,13 @@ async function get_cve() {
 function get_display_cve(cve) {
     client.getcvedetail(cve)
 	.then(function(x) {
-	    if(get_deep(x,"containers.cna"))
+	    if(get_deep(x,"containers.cna")) {
+		$('.duplicated').remove();
 		json_edit(JSON.stringify(x.containers.cna));
-	    else
+	    } else {
 		swal_error("Could not find data to load! " +
 			   "See console for details.");
+	    }
 	    console.log(x);
 	    client["cveDownload"] = x;
 	},function(y) {
@@ -771,7 +791,7 @@ function rowStyle(r) {
     return {classes: 'normal'};
 }
 function doRefresh() {
-    let tableid = $('#svTab a.active').data('tableid');
+    let tableid = $('#svTab a.active').attr('data-tableid');
     client[tableid].bootstrapTable('destroy');
     $('#svTab a.active').parent().find('a.refresh').click();
 }
@@ -810,7 +830,7 @@ function objwalk(h,d,r,s) {
 }
 function deepdive(_, _, row, el) {
     try {
-	var tinfo = el.closest('tr').data('uniqueid');
+	var tinfo = el.closest('tr').attr('data-uniqueid');
 	if(tinfo)
 	    $('#detailtag').html("("+tinfo+")");
 	else
@@ -855,12 +875,12 @@ function deepdive(_, _, row, el) {
     } else 
 	$('#updaterecord').hide();
     display_object(row);
-    $('#deepDive').data('crecord',row).modal();
+    $('#deepDive').attr('data-crecord',row).modal();
 }
 async function display_cvedetails(cve) {
     $('#deepDive .nav-default').click();    
     if(!cve)
-	cve = $('#deepDive').data('crecord').cve_id;
+	cve = $('#deepDive').attr('data-crecord').cve_id;
     let f = await client.getcvedetail(cve);
     if("error" in f) {
 	swal_error("Unable to view CVE due to error: " + f.error +
@@ -939,22 +959,22 @@ function user_update_modal(mr) {
     $('#updateButton').hide();
     $('#addUserModal .adduser').hide();
     $('#addUserModal .mtitle').html("Update User ("+mr.username+")");
-    $('#addUserModal .username').val(mr.username).data('oldvalue',mr.username);
+    $('#addUserModal .username').val(mr.username).attr('data-oldvalue',mr.username);
     $('#addUserModal .form-control').removeClass('is-valid is-invalid');    
     if('name' in mr) {
 	if('first' in mr.name)
 	    $('#addUserModal .name_first').val(mr.name.first)
-	    .data('oldvalue',mr.name.first);
+	    .attr('data-oldvalue',mr.name.first);
 	if('last' in mr.name)
 	    $('#addUserModal .name_last').val(mr.name.last)
-	    .data('oldvalue',mr.name.last);
+	    .attr('data-oldvalue',mr.name.last);
     }
     if('active' in mr)
 	user_active_view(mr.active);
     if(mr.authority.active_roles.length) {
 	/* Handle user roles currently only ADMIN or Nothing*/
 	let vroles = mr.authority.active_roles.join(",")
-	$('#addUserModal .active_roles').val(vroles).data('oldvalue',vroles);
+	$('#addUserModal .active_roles').val(vroles).attr('data-oldvalue',vroles);
     } else {
 	$('#addUserModal .active_roles').val('');
     }
@@ -967,7 +987,7 @@ function checkchange(w) {
     	    $(w).removeClass('invalid').addClass('is-valid');
     }
     if($('#addUserModal').hasClass("updateUser")) {
-	if(($(w).data('oldvalue') != $(w).val()) && $(w).hasClass('is-valid'))
+	if(($(w).attr('data-oldvalue') != $(w).val()) && $(w).hasClass('is-valid'))
 	    $('#updateButton').show();
     }
 }
@@ -986,7 +1006,7 @@ async function cve_update_modal() {
     $('#cveform ol > li.erow:nth-of-type(n+2)').remove();
     $('#cveform').trigger('reset');
     $('#cveUpdateModal').modal();
-    var mr = $('#deepDive').data('crecord');
+    var mr = $('#deepDive').attr('data-crecord');
     $('#adpjson').removeData();
     if(('state' in mr) && (mr.state == 'PUBLISHED')) {
 	let c = await client.getcvedetail(mr.cve_id);
@@ -999,7 +1019,7 @@ async function cve_update_modal() {
 	    swal_error("Unknown error when fetching details of CVE. "+
 		       "See console log for details");
 	if(c.containers.adp)
-	    $('#adpjson').data('adp',c.containers.adp);
+	    $('#adpjson').attr('data-adp',c.containers.adp);
 	$('#morjson .adp').show();
     } else {
 	let mjson = JSON.stringify(_cna_template,null,2)
@@ -1009,7 +1029,7 @@ async function cve_update_modal() {
     }
 }
 function mupdate() {
-    var mr = $('#deepDive').data('crecord');
+    var mr = $('#deepDive').attr('data-crecord');
     if(!mr)
 	return;
     $('#deepDive').modal('hide');
@@ -1201,7 +1221,7 @@ async function reserve() {
 	}
 	setTimeout(function() {
 	    $('tr.hnew').removeClass('hnew').each(function(_,x) {
-		let cve = $(x).data("uniqueid");
+		let cve = $(x).attr("data-uniqueid");
 		let g = client.cvetable
 		    .bootstrapTable('getRowByUniqueId',cve);
 		g.new = 0;
@@ -1233,7 +1253,7 @@ async function reset_user(w,confirmed) {
 	});
     } else {
 	lock_unlock(1,w);
-	let username = $('#addUserModal .username').data('oldvalue');
+	let username = $('#addUserModal .username').attr('data-oldvalue');
 	let d = await client.resetuser(username);
 	if("API-secret" in d) {
 	    let f = client.usertable
@@ -1280,13 +1300,13 @@ function update_user() {
        await client.updateuser('rajo@sendmail.org',
        {'active_roles.add':'ADMIN'})
     */
-    var row = $('#deepDive').data('crecord');
+    var row = $('#deepDive').attr('data-crecord');
     let updates = {};
     $('#addUserModal .form-control').each(function(_,x) {
-	//console.log($(x).data('update'));
-	var field = $(x).data('update');
+	//console.log($(x).attr('data-update'));
+	var field = $(x).attr('data-update');
 	if(($(x).val() || $(x).prop('tagName').toUpperCase() == "SELECT")
-	   && ($(x).data('oldvalue') != $(x).val())) 
+	   && ($(x).attr('data-oldvalue') != $(x).val())) 
 	    updates[field] = $(x).val();
     });
     if(Object.keys(updates).length) {
@@ -1362,7 +1382,7 @@ function lock_unlock(dolock,w) {
 }
 async function update_user_status(w) {
     lock_unlock(1,w);
-    let username = $('#addUserModal .username').data('oldvalue');
+    let username = $('#addUserModal .username').attr('data-oldvalue');
     let model = {};
     model.active = w.checked;
     let d = await client.updateuser(username,model);
@@ -1458,7 +1478,7 @@ function get_json_data() {
 
 }
 function show_adp(w) {
-    let json_data = $('#adpjson').data('adp');
+    let json_data = $('#adpjson').attr('data-adp');
     if(!json_data)
 	json_data = [];
     json_edit(JSON.stringify(json_data,null,3),'adpjsoneditor');
@@ -1490,17 +1510,17 @@ function from_json(w) {
     if(!json_data)
 	return;
     $('#nice .drow').each(function(_,el) {
-	var field = $(el).data("rclass");
+	var field = $(el).attr("data-rclass");
 	if(field && field in json_data) {
-	    console.log(el, field, json_data[field]);
 	    let diff = json_data[field].length - $(el).find(" .erow").length;
 	    if(diff != 0)
 		apply_diff(diff,el);	    
-	    $(el).find(".childarray").each(function(i,x) {
-		elfield = $(x).data("rclass");
+	    $(el).find(".childarray").each(function(i,elx) {
+		let x = elx.parentNode;
+		elfield = $(x).attr("data-rclass");
 		if (elfield in json_data[field][i]) {
 		    let idiff = json_data[field][i][elfield].length -
-			$(x).find("> .erow").length;
+			$(x).find(".erow").length;
 		    if(idiff != 0) 
 			apply_diff(idiff,x);
 		}
@@ -1508,35 +1528,36 @@ function from_json(w) {
 	    /* Handling versions the child field */
 	    if(field == "affected") {
 		json_data[field].forEach(function(x,i) {
-		    let elf = $(el).find(".childarray").find(".erow");
+		    let elf = $(el).find(".childarray").parent();
 		    if('versions' in x) {
 			if(x.versions.length) {
 			    let diff = x.versions.length - $(elf).find(" .erow").length;
 			    if(diff != 0)
 				apply_diff(diff,elf);
-			}
+			} 
 			x.versions.forEach(function(y,j) {
 			    let q;
 			    ['lessThan','lessThanOrEqual']
 				.forEach(function(r) {
 				    if(r in y) 
 					q = r;
-				});
-			    let w = $(elf[j]).find(".versionRangeEnabled")[0];
+				}); 
+			    let w = $(elf[i]).find(".versionRangeEnabled")[j]; 
 			    if(w) {
 				if(q) {
 				    w.checked = true;
-				    $(elf[j]).find(".versionRangeType").val(q);
-				    $(elf[j]).find(".versionRangeValue")
+                    
+				    $(elf[i]).find(".versionRangeType").val(q);
+				    $(elf[i]).find(".versionRangeValue")
 					.val(y[q]);
 				    if('versionType' in y)
-					$(elf[j]).find('.versionTypeValue')
+					$(elf[i]).find('.versionTypeValue')
 					.val(y['versionType']);
 				} else {
 				    w.checked = false;
 				}
-				triggerversionRange(w);
-			    }
+				triggerversionRange(w); 
+			    }; 
 			});
 		    }
 		});
@@ -1547,7 +1568,7 @@ function from_json(w) {
        that are not part of cveInterface but present in CVE data*/
     let raw_json = simpleCopy(json_data);
     $('#nice .form-control').each(function(_,v) {
-	let props = $(v).data("field");
+	let props = $(v).attr("data-field");
 	if(props) {
 	    show_optional(v);
 	    let oval = get_deep(json_data,props);
@@ -1557,7 +1578,7 @@ function from_json(w) {
 		/* Value map exists and does not begin with $ */
 		$(v).val(oval);
 		if(!$(v).is(':visible')) {
-		    let dshow = $(v).closest('.frow').data("rshow");
+		    let dshow = $(v).closest('.frow').attr("data-rshow");
 		    if(dshow) {
 			let el = $('[data-show="' + dshow + '"]');
 			if(el.length) {
@@ -1589,7 +1610,7 @@ async function publish_adp() {
 		adp = {"adpContainer": alladp[i]};
 	    }
 	}
-	let mr = $('#deepDive').data('crecord');
+	let mr = $('#deepDive').attr('data-crecord');
 	let cve_id =  mr.cve_id;
 	if(get_deep(adp,'adp.adpContainer.metrics')) {
 	    /* In case of metrics match ID value to CVE*/
@@ -1652,7 +1673,7 @@ async function publish_cve() {
  	let pubcve = JSON.parse(editor.getValue());
 	if(add_validators(pubcve) != true)
 	    return;
- 	let mr = $('#deepDive').data('crecord');
+ 	let mr = $('#deepDive').attr('data-crecord');
  	/* Override some fields on submit*/
  	if(get_deep(client,'userobj.org_UUID') &&  client.org) 
  	    pubcve["providerMetadata"] = { orgId: client.userobj.org_UUID,
@@ -1701,6 +1722,12 @@ async function publish_cve() {
  	swal_error("Could not publish this CVE. Fix the errors please!");
     }
 }
+function check_json(cjson) {
+    return ((cjson.affected) && (cjson.affected.length > 0)
+	    && (cjson.affected[0].versions)
+	    && (cjson.affected[0].versions.length > 0));
+}
+   
 
 function to_json(w) {
     $('.cveupdate').removeClass('d-none');
@@ -1709,7 +1736,7 @@ function to_json(w) {
     let value_check = true;
     $('#nice .form-control').not('.d-none').each(function(_,v) {
 	if($(v).val()) {
-	    if($(v).data("related")) {
+	    if($(v).attr("data-related")) {
 		v = update_related(v);
 		if(!$(v).val())
 		    return;
@@ -1723,7 +1750,7 @@ function to_json(w) {
 		value_check = false;
 		$(v).removeClass('is-valid').addClass('is-invalid');
 	    } else {
-		let props = $(v).data("field");
+		let props = $(v).attr("data-field");
 		if(!props) return;
 		/* Delete the field if exists */
 		json_data = set_deep(json_data,props,undefined);
@@ -1742,16 +1769,22 @@ function to_json(w) {
 	}
     }
     let full_json = Object.assign({},json_data,raw_json);
-    editor.setValue(JSON.stringify(full_json,null,2));
+    if(check_json(full_json)) {
+	editor.setValue(JSON.stringify(full_json,null,2));
+    } else {
+	console.log(full_json);
+	editor.setValue("{}");
+	return false;
+    }
     return value_check;
 }
 function update_related(w) {
     /* Function to update the data-field of a related item 
        data-related="versionRangeValue"
        data-relatedfield="affected.0.versions.0.$" */
-    let related = $(w).data("related");
+    let related = $(w).attr("data-related");
     if($(w).val() && $(w).parent().find("."+related).length) {
-	let field = $(w).data("relatedfield").replace("$",$(w).val());
+	let field = $(w).attr("data-relatedfield").replace("$",$(w).val());
 	$(w).parent().find("."+related).attr("data-field",field);
     } else {
 	$(w).parent().find("."+related).removeAttr("data-field");
@@ -1759,11 +1792,11 @@ function update_related(w) {
     return $(w).parent().find("."+related);
 }
 function cweUpdate(w) {
-    if($(w).val() && $(w).data("field")) {
+    if($(w).val() && $(w).attr("data-field")) {
 	const match_cwe = $(w).val().toUpperCase().match(/^(cwe-[0-9]+)(.*)$/i);
 	if(match_cwe && match_cwe.length == 3) {
 	    let ufield = {"cweId": match_cwe[1], "type": "CWE"};
-	    let path = $(w).data("field").split(".");	    
+	    let path = $(w).attr("data-field").split(".");	    
 	    Object.keys(ufield).forEach(function(f) {
 		path[path.length - 1] = f;
 		$('[data-field="' + path.join(".") + '"]').val(ufield[f]); 
@@ -1774,8 +1807,8 @@ function cweUpdate(w) {
 function clearoff(w) {
     if($(w).val() && (get_deep(w,'validity.valid') == true))
 	$(w).removeClass('is-invalid').addClass('is-valid');
-    if($(w).data("update") && $(w).data("update") in window) {
-	let f = window[$(w).data("update")];
+    if($(w).attr("data-update") && $(w).attr("data-update") in window) {
+	let f = window[$(w).attr("data-update")];
 	if(typeof(f) == "function")
 	    setTimeout(function() {
 		f(w);
@@ -1859,7 +1892,7 @@ async function showorg() {
 }
 async function reject_cve(confirm) {
     $('#deepDive').modal('hide');
-    var mr = $('#deepDive').data('crecord');
+    var mr = $('#deepDive').attr('data-crecord');
     if(!('cve_id' in mr))
 	swal_error("Error there seems to no CVE number selected");
     if(confirm) {
@@ -1934,6 +1967,7 @@ function queryParser(query) {
     return urlParams
 }
 function allFields(newTab,oldTab) {
+    top_alert("warning","All Fields is experimental and useful in seeing the full CVE5.0 JSON schema representation!",8000);
     let cveData = {};
     const href = oldTab.getAttribute('href');
     if(href == "#nice") {
