@@ -603,6 +603,7 @@ async function login() {
 	}
     } catch(err) {
 	console.log("Could not find json text");
+	swal_error("Login failed or network error! See console for details!");
 	console.log(err);
     }
     if(d.status == 401) {
@@ -875,12 +876,14 @@ function deepdive(_, _, row, el) {
     } else 
 	$('#updaterecord').hide();
     display_object(row);
-    $('#deepDive').attr('data-crecord',row).modal();
+    $('#deepDive').attr('data-crecord',JSON.stringify(row)).modal();
 }
 async function display_cvedetails(cve) {
     $('#deepDive .nav-default').click();    
-    if(!cve)
-	cve = $('#deepDive').attr('data-crecord').cve_id;
+    if(!cve) {
+	let crecord = JSON.parse($('#deepDive').attr('data-crecord'));
+	cve = crecord.cve_id;
+    }
     let f = await client.getcvedetail(cve);
     if("error" in f) {
 	swal_error("Unable to view CVE due to error: " + f.error +
