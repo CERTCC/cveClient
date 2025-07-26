@@ -1967,6 +1967,7 @@ function queryParser(query) {
     return urlParams
 }
 function allFields(newTab,oldTab) {
+    top_alert("warning","All Fields is experimental and useful in seeing the full CVE5.0 JSON schema representation!",8000);
     let cveData = {};
     const href = oldTab.getAttribute('href');
     if(href == "#nice") {
