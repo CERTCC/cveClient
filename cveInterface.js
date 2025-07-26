@@ -200,7 +200,7 @@ function showByClassName(w,c) {
 	$(c).addClass('d-none');
 }
 function show_field(w) {
-    var fclass = $(w).data("show");
+    var fclass = $(w).attr("data-show");
     $('.'+fclass).toggleClass("d-none");
     $(w).toggleClass("arrowdown");
 }
@@ -325,15 +325,15 @@ function selectpass(passid) {
 }
 function duplicate(pe) {
     /* Label has only one class just copy it*/
-    let pclass = $(pe).data('rclass');
+    let pclass = $(pe).attr('data-rclass');
     let childclass = "." + pclass;
     let orow = $(pe).find(childclass);
     let nrow = $(pe).find(childclass).clone(1).removeClass(pclass).addClass("duplicated");
     let offset = $(pe).find("> > .erow").length;
     nrow.find(".form-control").each(function(_,p) {
-        let rv = $(p).data('field');
+        let rv = $(p).attr('data-field');
         if(!rv) {
-	    rv = $(p).data('relatedfield');
+	    rv = $(p).attr('data-relatedfield');
 	    if(!rv) {
 		console.log("Ignoring field with no data attribute",p);
 		return;
@@ -350,18 +350,18 @@ function duplicate(pe) {
                 return s0;
             };
         });
-	if($(p).data('relatedfield')) {
+	if($(p).attr('data-relatedfield')) {
 	    $(p).attr("data-relatedfield",rv);
-	} else if (($(p).data('field')){
+	} else if (($(p).attr('data-field')){
             $(p).attr("data-field",rv);
 	}
         /* jquery data() method is distinct from data- fields so do both*/
-        $(p).data("field",rv);
+        $(p).attr("data-field",rv);
     });
     orow.parent().append(nrow);
 }
 function unduplicate(pe) {
-    let field = $(pe).parent().find(".form-control").data("field");
+    let field = $(pe).parent().find(".form-control").attr("data-field");
     let rv = field.replace(/(\d)+\.[^\.]+$/,"$1");
     json_data = set_deep(get_json_data(),rv,undefined);
     let editor = $('#mjson .jsoneditor')[0].env.editor;
@@ -781,7 +781,7 @@ function rowStyle(r) {
     return {classes: 'normal'};
 }
 function doRefresh() {
-    let tableid = $('#svTab a.active').data('tableid');
+    let tableid = $('#svTab a.active').attr('data-tableid');
     client[tableid].bootstrapTable('destroy');
     $('#svTab a.active').parent().find('a.refresh').click();
 }
@@ -820,7 +820,7 @@ function objwalk(h,d,r,s) {
 }
 function deepdive(_, _, row, el) {
     try {
-	var tinfo = el.closest('tr').data('uniqueid');
+	var tinfo = el.closest('tr').attr('data-uniqueid');
 	if(tinfo)
 	    $('#detailtag').html("("+tinfo+")");
 	else
@@ -865,12 +865,12 @@ function deepdive(_, _, row, el) {
     } else 
 	$('#updaterecord').hide();
     display_object(row);
-    $('#deepDive').data('crecord',row).modal();
+    $('#deepDive').attr('data-crecord',row).modal();
 }
 async function display_cvedetails(cve) {
     $('#deepDive .nav-default').click();    
     if(!cve)
-	cve = $('#deepDive').data('crecord').cve_id;
+	cve = $('#deepDive').attr('data-crecord').cve_id;
     let f = await client.getcvedetail(cve);
     if("error" in f) {
 	swal_error("Unable to view CVE due to error: " + f.error +
@@ -949,22 +949,22 @@ function user_update_modal(mr) {
     $('#updateButton').hide();
     $('#addUserModal .adduser').hide();
     $('#addUserModal .mtitle').html("Update User ("+mr.username+")");
-    $('#addUserModal .username').val(mr.username).data('oldvalue',mr.username);
+    $('#addUserModal .username').val(mr.username).attr('data-oldvalue',mr.username);
     $('#addUserModal .form-control').removeClass('is-valid is-invalid');    
     if('name' in mr) {
 	if('first' in mr.name)
 	    $('#addUserModal .name_first').val(mr.name.first)
-	    .data('oldvalue',mr.name.first);
+	    .attr('data-oldvalue',mr.name.first);
 	if('last' in mr.name)
 	    $('#addUserModal .name_last').val(mr.name.last)
-	    .data('oldvalue',mr.name.last);
+	    .attr('data-oldvalue',mr.name.last);
     }
     if('active' in mr)
 	user_active_view(mr.active);
     if(mr.authority.active_roles.length) {
 	/* Handle user roles currently only ADMIN or Nothing*/
 	let vroles = mr.authority.active_roles.join(",")
-	$('#addUserModal .active_roles').val(vroles).data('oldvalue',vroles);
+	$('#addUserModal .active_roles').val(vroles).attr('data-oldvalue',vroles);
     } else {
 	$('#addUserModal .active_roles').val('');
     }
@@ -977,7 +977,7 @@ function checkchange(w) {
     	    $(w).removeClass('invalid').addClass('is-valid');
     }
     if($('#addUserModal').hasClass("updateUser")) {
-	if(($(w).data('oldvalue') != $(w).val()) && $(w).hasClass('is-valid'))
+	if(($(w).attr('data-oldvalue') != $(w).val()) && $(w).hasClass('is-valid'))
 	    $('#updateButton').show();
     }
 }
@@ -996,7 +996,7 @@ async function cve_update_modal() {
     $('#cveform ol > li.erow:nth-of-type(n+2)').remove();
     $('#cveform').trigger('reset');
     $('#cveUpdateModal').modal();
-    var mr = $('#deepDive').data('crecord');
+    var mr = $('#deepDive').attr('data-crecord');
     $('#adpjson').removeData();
     if(('state' in mr) && (mr.state == 'PUBLISHED')) {
 	let c = await client.getcvedetail(mr.cve_id);
@@ -1009,7 +1009,7 @@ async function cve_update_modal() {
 	    swal_error("Unknown error when fetching details of CVE. "+
 		       "See console log for details");
 	if(c.containers.adp)
-	    $('#adpjson').data('adp',c.containers.adp);
+	    $('#adpjson').attr('data-adp',c.containers.adp);
 	$('#morjson .adp').show();
     } else {
 	let mjson = JSON.stringify(_cna_template,null,2)
@@ -1019,7 +1019,7 @@ async function cve_update_modal() {
     }
 }
 function mupdate() {
-    var mr = $('#deepDive').data('crecord');
+    var mr = $('#deepDive').attr('data-crecord');
     if(!mr)
 	return;
     $('#deepDive').modal('hide');
@@ -1211,7 +1211,7 @@ async function reserve() {
 	}
 	setTimeout(function() {
 	    $('tr.hnew').removeClass('hnew').each(function(_,x) {
-		let cve = $(x).data("uniqueid");
+		let cve = $(x).attr("data-uniqueid");
 		let g = client.cvetable
 		    .bootstrapTable('getRowByUniqueId',cve);
 		g.new = 0;
@@ -1243,7 +1243,7 @@ async function reset_user(w,confirmed) {
 	});
     } else {
 	lock_unlock(1,w);
-	let username = $('#addUserModal .username').data('oldvalue');
+	let username = $('#addUserModal .username').attr('data-oldvalue');
 	let d = await client.resetuser(username);
 	if("API-secret" in d) {
 	    let f = client.usertable
@@ -1290,13 +1290,13 @@ function update_user() {
        await client.updateuser('rajo@sendmail.org',
        {'active_roles.add':'ADMIN'})
     */
-    var row = $('#deepDive').data('crecord');
+    var row = $('#deepDive').attr('data-crecord');
     let updates = {};
     $('#addUserModal .form-control').each(function(_,x) {
-	//console.log($(x).data('update'));
-	var field = $(x).data('update');
+	//console.log($(x).attr('data-update'));
+	var field = $(x).attr('data-update');
 	if(($(x).val() || $(x).prop('tagName').toUpperCase() == "SELECT")
-	   && ($(x).data('oldvalue') != $(x).val())) 
+	   && ($(x).attr('data-oldvalue') != $(x).val())) 
 	    updates[field] = $(x).val();
     });
     if(Object.keys(updates).length) {
@@ -1372,7 +1372,7 @@ function lock_unlock(dolock,w) {
 }
 async function update_user_status(w) {
     lock_unlock(1,w);
-    let username = $('#addUserModal .username').data('oldvalue');
+    let username = $('#addUserModal .username').attr('data-oldvalue');
     let model = {};
     model.active = w.checked;
     let d = await client.updateuser(username,model);
@@ -1468,7 +1468,7 @@ function get_json_data() {
 
 }
 function show_adp(w) {
-    let json_data = $('#adpjson').data('adp');
+    let json_data = $('#adpjson').attr('data-adp');
     if(!json_data)
 	json_data = [];
     json_edit(JSON.stringify(json_data,null,3),'adpjsoneditor');
@@ -1500,13 +1500,13 @@ function from_json(w) {
     if(!json_data)
 	return;
     $('#nice .drow').each(function(_,el) {
-	var field = $(el).data("rclass");
+	var field = $(el).attr("data-rclass");
 	if(field && field in json_data) {
 	    let diff = json_data[field].length - $(el).find(" .erow").length;
 	    if(diff != 0)
 		apply_diff(diff,el);	    
 	    $(el).find(".childarray").each(function(i,x) {
-		elfield = $(x).data("rclass");
+		elfield = $(x).attr("data-rclass");
 		if (elfield in json_data[field][i]) {
 		    let idiff = json_data[field][i][elfield].length -
 			$(x).find("> .erow").length;
@@ -1556,7 +1556,7 @@ function from_json(w) {
        that are not part of cveInterface but present in CVE data*/
     let raw_json = simpleCopy(json_data);
     $('#nice .form-control').each(function(_,v) {
-	let props = $(v).data("field");
+	let props = $(v).attr("data-field");
 	if(props) {
 	    show_optional(v);
 	    let oval = get_deep(json_data,props);
@@ -1566,7 +1566,7 @@ function from_json(w) {
 		/* Value map exists and does not begin with $ */
 		$(v).val(oval);
 		if(!$(v).is(':visible')) {
-		    let dshow = $(v).closest('.frow').data("rshow");
+		    let dshow = $(v).closest('.frow').attr("data-rshow");
 		    if(dshow) {
 			let el = $('[data-show="' + dshow + '"]');
 			if(el.length) {
@@ -1598,7 +1598,7 @@ async function publish_adp() {
 		adp = {"adpContainer": alladp[i]};
 	    }
 	}
-	let mr = $('#deepDive').data('crecord');
+	let mr = $('#deepDive').attr('data-crecord');
 	let cve_id =  mr.cve_id;
 	if(get_deep(adp,'adp.adpContainer.metrics')) {
 	    /* In case of metrics match ID value to CVE*/
@@ -1661,7 +1661,7 @@ async function publish_cve() {
  	let pubcve = JSON.parse(editor.getValue());
 	if(add_validators(pubcve) != true)
 	    return;
- 	let mr = $('#deepDive').data('crecord');
+ 	let mr = $('#deepDive').attr('data-crecord');
  	/* Override some fields on submit*/
  	if(get_deep(client,'userobj.org_UUID') &&  client.org) 
  	    pubcve["providerMetadata"] = { orgId: client.userobj.org_UUID,
@@ -1718,7 +1718,7 @@ function to_json(w) {
     let value_check = true;
     $('#nice .form-control').not('.d-none').each(function(_,v) {
 	if($(v).val()) {
-	    if($(v).data("related")) {
+	    if($(v).attr("data-related")) {
 		v = update_related(v);
 		if(!$(v).val())
 		    return;
@@ -1732,7 +1732,7 @@ function to_json(w) {
 		value_check = false;
 		$(v).removeClass('is-valid').addClass('is-invalid');
 	    } else {
-		let props = $(v).data("field");
+		let props = $(v).attr("data-field");
 		if(!props) return;
 		/* Delete the field if exists */
 		json_data = set_deep(json_data,props,undefined);
@@ -1758,9 +1758,9 @@ function update_related(w) {
     /* Function to update the data-field of a related item 
        data-related="versionRangeValue"
        data-relatedfield="affected.0.versions.0.$" */
-    let related = $(w).data("related");
+    let related = $(w).attr("data-related");
     if($(w).val() && $(w).parent().find("."+related).length) {
-	let field = $(w).data("relatedfield").replace("$",$(w).val());
+	let field = $(w).attr("data-relatedfield").replace("$",$(w).val());
 	$(w).parent().find("."+related).attr("data-field",field);
     } else {
 	$(w).parent().find("."+related).removeAttr("data-field");
@@ -1768,11 +1768,11 @@ function update_related(w) {
     return $(w).parent().find("."+related);
 }
 function cweUpdate(w) {
-    if($(w).val() && $(w).data("field")) {
+    if($(w).val() && $(w).attr("data-field")) {
 	const match_cwe = $(w).val().toUpperCase().match(/^(cwe-[0-9]+)(.*)$/i);
 	if(match_cwe && match_cwe.length == 3) {
 	    let ufield = {"cweId": match_cwe[1], "type": "CWE"};
-	    let path = $(w).data("field").split(".");	    
+	    let path = $(w).attr("data-field").split(".");	    
 	    Object.keys(ufield).forEach(function(f) {
 		path[path.length - 1] = f;
 		$('[data-field="' + path.join(".") + '"]').val(ufield[f]); 
@@ -1783,8 +1783,8 @@ function cweUpdate(w) {
 function clearoff(w) {
     if($(w).val() && (get_deep(w,'validity.valid') == true))
 	$(w).removeClass('is-invalid').addClass('is-valid');
-    if($(w).data("update") && $(w).data("update") in window) {
-	let f = window[$(w).data("update")];
+    if($(w).attr("data-update") && $(w).attr("data-update") in window) {
+	let f = window[$(w).attr("data-update")];
 	if(typeof(f) == "function")
 	    setTimeout(function() {
 		f(w);
@@ -1868,7 +1868,7 @@ async function showorg() {
 }
 async function reject_cve(confirm) {
     $('#deepDive').modal('hide');
-    var mr = $('#deepDive').data('crecord');
+    var mr = $('#deepDive').attr('data-crecord');
     if(!('cve_id' in mr))
 	swal_error("Error there seems to no CVE number selected");
     if(confirm) {
