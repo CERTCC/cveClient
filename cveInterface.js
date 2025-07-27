@@ -603,6 +603,7 @@ async function login() {
 	}
     } catch(err) {
 	console.log("Could not find json text");
+	swal_error("Login failed or network error! See console for details!");
 	console.log(err);
     }
     if(d.status == 401) {
@@ -875,12 +876,14 @@ function deepdive(_, _, row, el) {
     } else 
 	$('#updaterecord').hide();
     display_object(row);
-    $('#deepDive').attr('data-crecord',row).modal();
+    $('#deepDive').attr('data-crecord',JSON.stringify(row)).modal();
 }
 async function display_cvedetails(cve) {
     $('#deepDive .nav-default').click();    
-    if(!cve)
-	cve = $('#deepDive').attr('data-crecord').cve_id;
+    if(!cve) {
+	let crecord = JSON.parse($('#deepDive').attr('data-crecord'));
+	cve = crecord.cve_id;
+    }
     let f = await client.getcvedetail(cve);
     if("error" in f) {
 	swal_error("Unable to view CVE due to error: " + f.error +
@@ -1006,7 +1009,7 @@ async function cve_update_modal() {
     $('#cveform ol > li.erow:nth-of-type(n+2)').remove();
     $('#cveform').trigger('reset');
     $('#cveUpdateModal').modal();
-    var mr = $('#deepDive').attr('data-crecord');
+    var mr = JSON.parse($('#deepDive').attr('data-crecord'));
     $('#adpjson').removeData();
     if(('state' in mr) && (mr.state == 'PUBLISHED')) {
 	let c = await client.getcvedetail(mr.cve_id);
@@ -1019,7 +1022,7 @@ async function cve_update_modal() {
 	    swal_error("Unknown error when fetching details of CVE. "+
 		       "See console log for details");
 	if(c.containers.adp)
-	    $('#adpjson').attr('data-adp',c.containers.adp);
+	    $('#adpjson').attr('data-adp',JSON.stringify(c.containers.adp));
 	$('#morjson .adp').show();
     } else {
 	let mjson = JSON.stringify(_cna_template,null,2)
@@ -1029,7 +1032,7 @@ async function cve_update_modal() {
     }
 }
 function mupdate() {
-    var mr = $('#deepDive').attr('data-crecord');
+    var mr = JSON.parse($('#deepDive').attr('data-crecord'));
     if(!mr)
 	return;
     $('#deepDive').modal('hide');
@@ -1300,7 +1303,7 @@ function update_user() {
        await client.updateuser('rajo@sendmail.org',
        {'active_roles.add':'ADMIN'})
     */
-    var row = $('#deepDive').attr('data-crecord');
+    var row = JSON.parse($('#deepDive').attr('data-crecord'));
     let updates = {};
     $('#addUserModal .form-control').each(function(_,x) {
 	//console.log($(x).attr('data-update'));
@@ -1478,7 +1481,7 @@ function get_json_data() {
 
 }
 function show_adp(w) {
-    let json_data = $('#adpjson').attr('data-adp');
+    let json_data = JSON.parse($('#adpjson').attr('data-adp'));
     if(!json_data)
 	json_data = [];
     json_edit(JSON.stringify(json_data,null,3),'adpjsoneditor');
@@ -1610,7 +1613,7 @@ async function publish_adp() {
 		adp = {"adpContainer": alladp[i]};
 	    }
 	}
-	let mr = $('#deepDive').attr('data-crecord');
+	let mr = JSON.parse($('#deepDive').attr('data-crecord'));
 	let cve_id =  mr.cve_id;
 	if(get_deep(adp,'adp.adpContainer.metrics')) {
 	    /* In case of metrics match ID value to CVE*/
@@ -1673,7 +1676,7 @@ async function publish_cve() {
  	let pubcve = JSON.parse(editor.getValue());
 	if(add_validators(pubcve) != true)
 	    return;
- 	let mr = $('#deepDive').attr('data-crecord');
+ 	let mr = JSON.parse($('#deepDive').attr('data-crecord'));
  	/* Override some fields on submit*/
  	if(get_deep(client,'userobj.org_UUID') &&  client.org) 
  	    pubcve["providerMetadata"] = { orgId: client.userobj.org_UUID,
@@ -1892,7 +1895,7 @@ async function showorg() {
 }
 async function reject_cve(confirm) {
     $('#deepDive').modal('hide');
-    var mr = $('#deepDive').attr('data-crecord');
+    var mr = JSON.parse($('#deepDive').attr('data-crecord'));
     if(!('cve_id' in mr))
 	swal_error("Error there seems to no CVE number selected");
     if(confirm) {
