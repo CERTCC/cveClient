@@ -250,7 +250,7 @@
 		    </li>
 		  </ol>
 		  <ol class="form-group frow">
-		    <li class="erow position-relative">
+		    <li class="erow position-relative optional">
 		      <label class="optional">Title (Optional)
 		      </label>
 		      <button class="duplicator addrow toggler" data-show="title"
@@ -266,7 +266,7 @@
 		    </li>
 		  </ol>
 		  <ol class="form-group frow">
-		    <li class="erow position-relative">
+		    <li class="erow position-relative optional">
 		      <label class="optional">Problem Type(s) - e.g., CWE (optional)
 		      </label>
 		      <button class="duplicator showrow toggler"
@@ -513,11 +513,11 @@
 	    </form>
 	  </div>
 	  <div class="modal-footer">
+	    <a href="javascript:void(0)" class="btn btn-info askgpt"
+	       onclick="askchatGPT(ace.edit('mjsoneditor').getValue())"> Ask ChatGPT</a>
 	    <a href="javascript:void(0)" class="btn btn-primary cveupdate"
 	       onclick="publish_cve()">
 	      Publish CVE</a>
-	    <A href="javascript:void(0)" class="btn btn-info askgpt"
-	       onclick="askchatGPT(ace.edit('mjsoneditor').getValue())"> Ask ChatGPT</a>
 	    <a href="javascript:void(0)" class="btn btn-primary adpupdate d-none"
 	       onclick="publish_adp()">
 	      Publish ADP</a>
