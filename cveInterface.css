@@ -1,4 +1,7 @@
-/* version 1.0.11 */
+/* version 1.0.12 */
+li.optional {
+    list-style-type: none;
+}
 #chatbox {
     border: 1px solid #ccc;
     padding: 1rem;

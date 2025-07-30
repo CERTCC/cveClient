@@ -53,6 +53,7 @@ function clearChat() {
     });
 }
 function cveChat() {
+    document.addEventListener('dblclick', (event) => { if(event.target.placeholder) event.target.value = event.target.placeholder.replace('e.g..','') })
     const cweUrl = location.origin + "/" + location.pathname.split("/").slice(0,-1).join("/") +
           "/cwe-common.json";
     const questions = [
