@@ -1,5 +1,5 @@
 /* Clientlib, UI html, css and UI js all are version controlled */
-const _version = "1.0.22";
+const _version = "1.0.23";
 const _tool = "CVE Services Client Interface "+_version;
 const _cna_template = { "descriptions": [ { "lang": "${descriptions.0.lang}", "value": "${descriptions.0.value}"} ] ,  "affected": [ { "versions": [{"version": "${affected.0.versions.0.version}"}], "product": "${affected.0.product}", "vendor": "${affected.0.vendor|client.orgobj.name}" } ],"references": [ { "name": "${references.0.name}", "url": "${references.0.url}" }], "providerMetadata": { "orgId": "${client.userobj.org_UUID}", "shortName": "${client.org}" } }
 const schemaUrl = "https://cveproject.github.io/cve-schema/schema/docs/CVE_Record_Format_bundled.json";
@@ -18,7 +18,7 @@ function add_option(w,v,f,s) {
 function askchatGPT(CVE_JSON) {
     if(!CVE_JSON)
 	CVE_JSON = ace.edit('mjsoneditor').getValue();
-    if(check_json(CVE_JSON)) {
+    if(check_json(JSON.parse(CVE_JSON)) {
 	const prompt = "I have this CVE record and want help improve it especially the \"affected\" block.\nPlease check it against the CVE JSON 5.0 schema guidance (https://github.com/CVEProject/cve-schema/blob/main/schema/docs/versions.md).\nHere is the full CVE Record:\n\n " + CVE_JSON;
 	const url = "https://chat.openai.com/?prompt=" + encodeURIComponent(prompt);
 	window.open(url, "_blank");
