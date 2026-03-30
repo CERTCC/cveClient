@@ -3,7 +3,7 @@ function schemaToForm(schemaUrl, elementId) {
     if( !(this instanceof schemaToForm) ){
 	return new schemaToForm(...arguments);
     }
-    this._version = "1.0.9";
+    this._version = "1.0.10";
     let main = this;
     async function fetchObj(url) {
 	try {
@@ -520,7 +520,6 @@ function schemaToForm(schemaUrl, elementId) {
 		    return;
 	    let x = fobj;
 	    let prop = el.getAttribute("data-path");
-	    console.log(x);
 	    if(!prop)
 		return;
 	    let props = prop.split(".");

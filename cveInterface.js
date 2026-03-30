@@ -1,5 +1,5 @@
 /* Clientlib, UI html, css and UI js all are version controlled */
-const _version = "1.0.23";
+const _version = "1.0.24";
 const _tool = "CVE Services Client Interface "+_version;
 const _cna_template = { "descriptions": [ { "lang": "${descriptions.0.lang}", "value": "${descriptions.0.value}"} ] ,  "affected": [ { "versions": [{"version": "${affected.0.versions.0.version}"}], "product": "${affected.0.product}", "vendor": "${affected.0.vendor|client.orgobj.name}" } ],"references": [ { "name": "${references.0.name}", "url": "${references.0.url}" }], "providerMetadata": { "orgId": "${client.userobj.org_UUID}", "shortName": "${client.org}" } }
 const schemaUrl = "https://cveproject.github.io/cve-schema/schema/docs/CVE_Record_Format_bundled.json";
@@ -13,12 +13,12 @@ var autoCompleter;
 var allFieldsForm;
 function add_option(w,v,f,s) {
     $(w).append($('<option/>').attr({value:v,selected:s})
-		.html(f));
+		.text(f));
 }
 function askchatGPT(CVE_JSON) {
     if(!CVE_JSON)
 	CVE_JSON = ace.edit('mjsoneditor').getValue();
-    if(check_json(JSON.parse(CVE_JSON)) {
+    if(check_json(JSON.parse(CVE_JSON))) {
 	const prompt = "I have this CVE record and want help improve it especially the \"affected\" block.\nPlease check it against the CVE JSON 5.0 schema guidance (https://github.com/CVEProject/cve-schema/blob/main/schema/docs/versions.md).\nHere is the full CVE Record:\n\n " + CVE_JSON;
 	const url = "https://chat.openai.com/?prompt=" + encodeURIComponent(prompt);
 	window.open(url, "_blank");
@@ -384,7 +384,7 @@ function data_selector(el,dfield,dvalue) {
 }
 function top_alert(lvl,msg,tmr) {
     $('#topalert').removeClass("alert-danger alert-warning alert-success")
-	.addClass("alert alert-"+lvl).html(msg).fadeIn();
+	.addClass("alert alert-"+lvl).text(msg).fadeIn();
     if(tmr)
 	setTimeout(function() { $('#topalert').fadeOut();},tmr);
     else
@@ -743,10 +743,8 @@ $(function() {
 	    let _ = new URL($('#key').val());
 	    $.getScript("encrypt-storage.js").done(function() {
 		console.log("Already encrypted key");
-		console.log(client.key);
 		activate_encryption();
 		do_login();
-		console.log(client.key);
 	    });
 	} catch(_) {
 	    do_login();
@@ -834,12 +832,12 @@ function deepdive(_, _, row, el) {
     try {
 	var tinfo = el.closest('tr').attr('data-uniqueid');
 	if(tinfo)
-	    $('#detailtag').html("("+tinfo+")");
+	    $('#detailtag').text("("+tinfo+")");
 	else
-	    $('#detailtag').html('');
+	    $('#detailtag').text('');
     } catch(err) {
 	console.log("Ignore this error");
-	$('#detailtag').html('');	
+	$('#detailtag').text('');	
     }
     /* Show the updaterecord button by default and hide it later
        if user is not admin and not self */
@@ -962,7 +960,7 @@ function user_update_modal(mr) {
     /* update button remains hidden until some values change in the form*/
     $('#updateButton').hide();
     $('#addUserModal .adduser').hide();
-    $('#addUserModal .mtitle').html("Update User ("+mr.username+")");
+    $('#addUserModal .mtitle').text("Update User ("+mr.username+")");
     $('#addUserModal .username').val(mr.username).attr('data-oldvalue',mr.username);
     $('#addUserModal .form-control').removeClass('is-valid is-invalid');    
     if('name' in mr) {
@@ -1343,7 +1341,6 @@ function update_user() {
 		       denyButtonText: "Cancel"
 		      }).then(function(result)  {
 			  if (result.isConfirmed) {    
-			      console.log(updates);
 			      do_update_user(row.username,updates);
 			  }	    
 		      });
@@ -1401,7 +1398,7 @@ async function update_user_status(w) {
 	f.warn = 1;
 	user_active_view(f.active);
 	client.usertable.bootstrapTable('updateByUniqueId',username,f);
-	top_alert("success", "User ("+username+") Active status has been "+
+	top_alert("success", "User ("+safeHTML(username)+") Active status has been "+
 		  "updated to <b>[" + String(f.active)+"]</b>",4000);
 	setTimeout(function() {
 	    /* Just clear out warning */
