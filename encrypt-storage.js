@@ -98,14 +98,19 @@ function dbManager(user,key,sum) {
 async function save_key(user,key) {
     let fpb = await window.crypto.subtle.exportKey("jwk", key.publicKey);
     let fpr = await window.crypto.subtle.exportKey("jwk", key.privateKey);
-    let exportKey = {epr: fpr, epb: fpb};
+    /* Re-import private key as non-extractable to prevent JWK extraction */
+    let safePrivateKey = await window.crypto.subtle.importKey("jwk",fpr,
+	{name:"RSA-OAEP", hash: {name: "SHA-256"}},false,["decrypt"]);
+    let exportKey = {epr: safePrivateKey, epb: fpb};
     let sum = {sha256: await sha256sum(fpb.n)};
     dbManager(user,exportKey,sum);
     return exportKey;
 }
 async function import_key({epr,epb}) {
-    let prkey = await window.crypto.subtle.importKey("jwk",epr,{name:"RSA-OAEP", hash: {name: "SHA-256"}},false,['decrypt']);
-    let pbkey = await window.crypto.subtle.importKey("jwk",epb,{name:"RSA-OAEP", hash: {name: "SHA-256"}},false,['encrypt']);
+    /* epr may be a CryptoKey (new) or JWK object (legacy) */
+    let prkey = (epr instanceof CryptoKey) ? epr :
+	await window.crypto.subtle.importKey("jwk",epr,{name:"RSA-OAEP", hash: {name: "SHA-256"}},false,["decrypt"]);
+    let pbkey = await window.crypto.subtle.importKey("jwk",epb,{name:"RSA-OAEP", hash: {name: "SHA-256"}},false,["encrypt"]);
     return { privateKey: prkey, publicKey: pbkey  };
 }
 

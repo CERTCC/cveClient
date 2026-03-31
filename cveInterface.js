@@ -628,6 +628,9 @@ async function login() {
 	    store = sessionStorage;
 	}
 	$('#loginModal .form-control').each(function(_,x) {
+	    /* Skip storing API key in plaintext; enable_encryption()
+	       will store it after encryption completes */
+	    if($(x).attr('id') === 'key') return;
 	    store.setItem(store_tag+$(x).attr('id'),$(x).val());
 	});
     } else {
@@ -1883,6 +1886,10 @@ function enable_encryption() {
 		top_alert("warning","Encrypting API key failed, see console log for errors");
 	    };
 	}
+    }).fail(function() {
+	/* If encryption script fails to load, store key in session only */
+	sessionStorage.setItem(store_tag+"key",client.key);
+	top_alert("warning","Encryption unavailable. API key stored in session only.");
     });
 }
 async function showorg() {
