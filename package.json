@@ -1,0 +1,14 @@
+{
+  "name": "cveclient",
+  "version": "1.0.24",
+  "private": true,
+  "description": "Tests for cveClient - browser-based CVE management client",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "vitest": "^3.1.0",
+    "jsdom": "^26.1.0"
+  }
+}

@@ -141,7 +141,7 @@ class cveClient {
 	    this.error = err;
 	    return;
 	}
-	url.pathname = url.pathname + path;
+	url.pathname = url.pathname.replace(//$/, "") + path;
 	if(!opts) {
 	    opts = {method:'GET'};
 	}
