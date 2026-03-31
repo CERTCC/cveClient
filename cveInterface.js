@@ -512,12 +512,12 @@ function get_display_cve(cve) {
 		swal_error("Could not find data to load! " +
 			   "See console for details.");
 	    }
-	    console.log(x);
+	    //console.log(x);
 	    client["cveDownload"] = x;
 	},function(y) {
 	    swal_error("Unable to collect CVE information! " +
 		       "See console for details");
-	    console.log(y);
+	    //console.log(y);
 	});
 }
 async function skip() {
@@ -634,7 +634,7 @@ async function login() {
 	title = "Unspecified Error!";
 	if(messages == "Unknown")
 	    messages = "Unknown error! See console for more information";
-	console.log(d);
+	//console.log(d);
     }
     Swal.fire({
 	title: title,
@@ -1621,7 +1621,7 @@ async function publish_adp() {
 	let d = await client.publishadp(cve_id,adp) 
 	if("error" in d) {
             swal_error("Failed to publish CVE, Error : "+d.error);
-            console.log(d);
+            //console.log(d);
             return;
 	}
 	if(("created" in d) || ("updated" in d)) {
@@ -1633,7 +1633,7 @@ async function publish_adp() {
             });
 	    $('#cveUpdateModal').modal('hide');	    
 	} else {
-            console.log(d);
+            //console.log(d);
             swal_error("Unknown error CVE could not be updated. See console "+
                        " log for details!");
 	}
@@ -1688,7 +1688,7 @@ async function publish_cve() {
  	let d = await client.publishcve(cve,pubcve,ispublic,rejected);
  	if("error" in d) {
  	    swal_error("Failed to publish CVE, Error : "+d.error);
- 	    console.log(d);
+ 	    //console.log(d);
  	    return;
  	}
  	if(("created" in d) || ("updated" in d)) {
@@ -1714,7 +1714,7 @@ async function publish_cve() {
  							       row: u });
  	    $('#cveUpdateModal').modal('hide');
  	} else {
- 	    console.log(d);
+ 	    //console.log(d);
  	    swal_error("Unknown error CVE could not be updated. See console "+
  		       " log for details!");
  	}
@@ -1773,7 +1773,7 @@ function to_json(w) {
     if(check_json(full_json)) {
 	editor.setValue(JSON.stringify(full_json,null,2));
     } else {
-	console.log(full_json);
+	//console.log(full_json);
 	editor.setValue("{}");
 	return false;
     }
@@ -1915,7 +1915,7 @@ async function reject_cve(confirm) {
 	let d = await client.publishcve(cve,rejcve,ispublic,rejected);
 	if("error" in d) {
 	    swal_error("Failed to publish CVE, Error : "+d.error);
-	    console.log(d);
+	    //console.log(d);
 	    return;
 	}
 	if(("created" in d) || ("updated" in d)) {
@@ -1942,7 +1942,7 @@ async function reject_cve(confirm) {
 							       row: u });
 	    $('#cveUpdateModal').modal('hide');
 	} else {
-	    console.log(d);
+	    //console.log(d);
 	    swal_error("Unknown error CVE could not be updated. See console "+
 		       " log for details!");
 	}
@@ -1963,8 +1963,12 @@ function queryParser(query) {
 	query  = window.location.search.substring(1);
     if((location.search == "") && (location.hash != ""))
 	query = location.hash.substring(1)
-    while (match = search.exec(query))
-	urlParams[decode(match[1])] = decode(match[2])
+    while (match = search.exec(query)) {
+	let key = decode(match[1]);
+	if(key === "__proto__" || key === "constructor" || key === "prototype")
+	    continue;
+	urlParams[key] = decode(match[2]);
+    }
     return urlParams
 }
 function allFields(newTab,oldTab) {
