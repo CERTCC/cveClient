@@ -1,5 +1,5 @@
 /* Clientlib, UI html, css and UI js all are version controlled */
-const _version = "1.0.24";
+const _version = "1.0.25";
 const _tool = "CVE Services Client Interface "+_version;
 const _cna_template = { "descriptions": [ { "lang": "${descriptions.0.lang}", "value": "${descriptions.0.value}"} ] ,  "affected": [ { "versions": [{"version": "${affected.0.versions.0.version}"}], "product": "${affected.0.product}", "vendor": "${affected.0.vendor|client.orgobj.name}" } ],"references": [ { "name": "${references.0.name}", "url": "${references.0.url}" }], "providerMetadata": { "orgId": "${client.userobj.org_UUID}", "shortName": "${client.org}" } }
 const schemaUrl = "https://cveproject.github.io/cve-schema/schema/docs/CVE_Record_Format_bundled.json";
@@ -628,6 +628,9 @@ async function login() {
 	    store = sessionStorage;
 	}
 	$('#loginModal .form-control').each(function(_,x) {
+	    /* Skip storing API key in plaintext; enable_encryption()
+	       will store it after encryption completes */
+	    if($(x).attr('id') === 'key') return;
 	    store.setItem(store_tag+$(x).attr('id'),$(x).val());
 	});
     } else {
@@ -1883,6 +1886,10 @@ function enable_encryption() {
 		top_alert("warning","Encrypting API key failed, see console log for errors");
 	    };
 	}
+    }).fail(function() {
+	/* If encryption script fails to load, store key in session only */
+	sessionStorage.setItem(store_tag+"key",client.key);
+	top_alert("warning","Encryption unavailable. API key stored in session only.");
     });
 }
 async function showorg() {
