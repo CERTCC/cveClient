@@ -1,6 +1,6 @@
 {
   "name": "cveclient",
-  "version": "1.0.24",
+  "version": "1.0.25",
   "private": true,
   "description": "Tests for cveClient - browser-based CVE management client",
   "scripts": {
