@@ -1623,8 +1623,8 @@ async function publish_adp() {
 	}
 	let d = await client.publishadp(cve_id,adp) 
 	if("error" in d) {
-            swal_error("Failed to publish CVE, Error : "+d.error);
-            //console.log(d);
+            swal_error("Failed to publish ADP, Error : "+d.error);
+            console.log(d);
             return;
 	}
 	if(("created" in d) || ("updated" in d)) {
@@ -1636,7 +1636,7 @@ async function publish_adp() {
             });
 	    $('#cveUpdateModal').modal('hide');	    
 	} else {
-            //console.log(d);
+            console.log(d);
             swal_error("Unknown error CVE could not be updated. See console "+
                        " log for details!");
 	}

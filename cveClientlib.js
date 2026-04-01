@@ -7,6 +7,8 @@ class cveClient {
 	this.user_path = "/org/" + this.org + "/user/" + this.user;
 	this._version = "1.0.15";
     }
+    /* PUT /cve/{id}/adp — the only ADP endpoint per CVE Services API spec
+       See https://cveawg.mitre.org/api-docs/ */
     publishadp(cve,adp) {
 	let path = "/cve/" + cve + "/adp";
 	let opts = {method: "PUT"};
