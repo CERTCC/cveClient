@@ -1,11 +1,6 @@
 import { describe, it, expect } from "vitest";
-import {
-  loadCveInterfaceFunctions,
-  createSafeHTML,
-  createCleanHTML,
-} from "./helpers.js";
+import { queryParser, createSafeHTML, createCleanHTML } from "./helpers.js";
 
-const { queryParser } = loadCveInterfaceFunctions();
 const safeHTML = createSafeHTML();
 const cleanHTML = createCleanHTML();
 

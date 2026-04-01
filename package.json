@@ -2,7 +2,6 @@
   "name": "cveclient",
   "version": "1.0.24",
   "private": true,
-  "type": "module",
   "description": "Tests for cveClient - browser-based CVE management client",
   "scripts": {
     "test": "vitest run",

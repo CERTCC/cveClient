@@ -1,8 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { loadCveInterfaceFunctions } from "./helpers.js";
-
-const { get_deep, set_deep, simpleCopy, checkurl, check_json, queryParser } =
-  loadCveInterfaceFunctions();
+import {
+  get_deep,
+  set_deep,
+  simpleCopy,
+  checkurl,
+  check_json,
+  queryParser,
+} from "./helpers.js";
 
 describe("get_deep", () => {
   it("returns nested property value", () => {
@@ -110,7 +114,7 @@ describe("check_json", () => {
   });
 
   it("rejects missing affected", () => {
-    expect(check_json({})).toBe(false);
+    expect(check_json({})).toBeFalsy();
   });
 
   it("rejects empty affected array", () => {
@@ -118,7 +122,7 @@ describe("check_json", () => {
   });
 
   it("rejects affected without versions", () => {
-    expect(check_json({ affected: [{ product: "x" }] })).toBe(false);
+    expect(check_json({ affected: [{ product: "x" }] })).toBeFalsy();
   });
 
   it("rejects affected with empty versions", () => {
