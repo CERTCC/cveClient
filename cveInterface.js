@@ -31,21 +31,67 @@ var allFieldsForm;
 function add_option(w, v, f, s) {
   $(w).append($("<option/>").attr({ value: v, selected: s }).text(f));
 }
-function askchatGPT(CVE_JSON) {
-  if (!CVE_JSON) CVE_JSON = ace.edit("mjsoneditor").getValue();
-  if (check_json(JSON.parse(CVE_JSON))) {
-    const prompt =
-      'I have this CVE record and want help improve it especially the "affected" block.\nPlease check it against the CVE JSON 5.x schema guidance (https://github.com/CVEProject/cve-schema/blob/main/schema/docs/versions.md).\nHere is the full CVE Record:\n\n ' +
-      CVE_JSON;
-    const url = "https://chat.openai.com/?prompt=" + encodeURIComponent(prompt);
-    window.open(url, "_blank");
-  } else {
+const _ai_providers = {
+  chatgpt: "https://chatgpt.com/",
+  claude: "https://claude.ai/new",
+  gemini: "https://gemini.google.com/app",
+};
+function buildAIPrompt(CVE_JSON) {
+  return (
+    'You are a CVE record quality reviewer. Analyze this CVE JSON 5.x record and provide specific, actionable feedback to improve it before publication.\n\nReview the record for:\n\n1. Description Quality — Is the vulnerability description specific about the impact, attack vector, and affected component? Does it follow the pattern: "[Vulnerability type] in [component] in [product] [version] allows [attacker type] to [impact] via [vector]"?\n\n2. Affected Block — Are vendor, product, and version fields precise? Should versionType (e.g., "semver"), lessThan/lessThanOrEqual, or defaultStatus be used instead of listing only exact versions? Are version ranges properly expressed?\n\n3. Schema Compliance — Does this conform to CVE JSON 5.x per the schema guidance at https://github.com/CVEProject/cve-schema/blob/main/schema/docs/versions.md\n\n4. CWE Classification — Is the CWE ID present and correctly formatted? Does it use the cweId field?\n\n5. References — Are reference URLs present and tagged with appropriate types (e.g., "advisory", "patch", "vendor-advisory")?\n\n6. Completeness — Are there missing recommended fields like metrics (CVSS), timeline, or additional affected products?\n\nFor each issue found, explain what is wrong and why it matters. Then provide a corrected version of the complete JSON with all improvements applied.\n\nCVE Record:\n\n' +
+    CVE_JSON
+  );
+}
+function showAIReview() {
+  var CVE_JSON = ace.edit("mjsoneditor").getValue();
+  try {
+    if (!check_json(JSON.parse(CVE_JSON))) {
+      swal.fire({
+        type: "error",
+        html: "It seems like your CVE JSON is not ready. Please input required content before sending for validation.",
+        title: "CVE JSON not ready or created yet!",
+      });
+      return;
+    }
+  } catch (e) {
     swal.fire({
       type: "error",
-      html: "It seems like your CVE JSON is not ready. Please inut required content before sending for validation.",
-      title: "CVE JSON not ready or created yet!",
+      html: "Invalid JSON. Please fix syntax errors before requesting AI review.",
+      title: "Invalid JSON",
     });
+    return;
   }
+  var prompt = buildAIPrompt(CVE_JSON);
+  document.getElementById("aiReviewPrompt").value = prompt;
+  $("#aiReviewModal").modal("show");
+}
+function copyAndOpenAI() {
+  var prompt = document.getElementById("aiReviewPrompt").value;
+  var provider = document.getElementById("aiProvider").value;
+  var url = _ai_providers[provider] || _ai_providers.chatgpt;
+  navigator.clipboard
+    .writeText(prompt)
+    .then(function () {
+      $("#aiReviewModal").modal("hide");
+      window.open(url, "_blank");
+      swal.fire({
+        type: "success",
+        html:
+          "Prompt copied to clipboard. Paste it into " +
+          provider.charAt(0).toUpperCase() +
+          provider.slice(1) +
+          " to start your review.",
+        title: "Prompt Copied!",
+        timer: 3000,
+      });
+    })
+    .catch(function () {
+      swal.fire({
+        type: "info",
+        html: "Could not copy automatically. Please select all text in the prompt box and copy manually.",
+        title: "Manual Copy Needed",
+      });
+    });
 }
 function checkurl(x) {
   try {
