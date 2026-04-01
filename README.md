@@ -4,13 +4,11 @@ A browser-based CVE management client and JavaScript library for [CVE Services 2
 
 **[Live Demo](https://certcc.github.io/cveClient/)** | **[CERT/CC Demo](https://democert.org/cveClient)**
 
-![Login Screen](docs/images/login-screen.png)
 
 ## Table of Contents
 
 - [Features](#features)
 - [Quick Start](#quick-start)
-- [Screenshots](#screenshots)
 - [Architecture](#architecture)
 - [Using cveClientlib in Node.js](#using-cveclientlib-in-nodejs)
 - [Running Tests](#running-tests)
@@ -52,20 +50,6 @@ php -S localhost:8080
 Then open `http://localhost:8080` in your browser. Enter your CNA short name, username, and API key to log in.
 
 You can also use the public demo at [https://certcc.github.io/cveClient/](https://certcc.github.io/cveClient/) — it connects directly to CVE Services and does not store any data.
-
-## Screenshots
-
-### CVE Record Editor
-
-The CVE editor provides multiple views for creating and editing CVE records:
-
-- **CVE Chatbot** — Guided step-by-step wizard for creating CVE records
-- **Minimal** — Form with only the required fields (description, affected products, versions, references)
-- **All Fields** — Complete form generated dynamically from the CVE JSON 5.x schema
-- **JSON** — Direct JSON editing with the Ace editor
-- **ADP** — ADP (Authorized Data Publisher) container management
-
-![CVE Editor](docs/images/cve-editor.png)
 
 ## Architecture
 
