@@ -1,5 +1,5 @@
 /* Encryption API using JavaScript native crypto.js and indexeDB for storing private keys */
-const encrypt_storage_version = "1.1.14";
+const encrypt_storage_version = "1.1.15";
 async function encryptMessage(message,publicKey) {
     let encoded = new TextEncoder().encode(message);
     let ciphertext = await window.crypto.subtle.encrypt(
