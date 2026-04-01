@@ -497,6 +497,7 @@ function schemaToForm(schemaUrl, elementId) {
 	const dElement = document.getElementById(elementId);
 	if (schema && dElement) {
 	    main.dElement = dElement;
+	    main.schemaVersion = schema.title || schema["$id"] || "unknown";
             createFormFromSchema(schema, dElement);
 	} else {
             document.getElementById(elementId).textContent = 'Failed to load schema.';

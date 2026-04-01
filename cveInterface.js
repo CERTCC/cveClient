@@ -19,7 +19,7 @@ function askchatGPT(CVE_JSON) {
     if(!CVE_JSON)
 	CVE_JSON = ace.edit('mjsoneditor').getValue();
     if(check_json(JSON.parse(CVE_JSON))) {
-	const prompt = "I have this CVE record and want help improve it especially the \"affected\" block.\nPlease check it against the CVE JSON 5.0 schema guidance (https://github.com/CVEProject/cve-schema/blob/main/schema/docs/versions.md).\nHere is the full CVE Record:\n\n " + CVE_JSON;
+	const prompt = "I have this CVE record and want help improve it especially the \"affected\" block.\nPlease check it against the CVE JSON schema guidance (https://github.com/CVEProject/cve-schema/blob/main/schema/docs/versions.md).\nHere is the full CVE Record:\n\n " + CVE_JSON;
 	const url = "https://chat.openai.com/?prompt=" + encodeURIComponent(prompt);
 	window.open(url, "_blank");
     } else {
@@ -1979,7 +1979,7 @@ function queryParser(query) {
     return urlParams
 }
 function allFields(newTab,oldTab) {
-    top_alert("warning","All Fields is experimental and useful in seeing the full CVE5.0 JSON schema representation!",8000);
+    top_alert("warning","All Fields is experimental and useful in seeing the full CVE JSON schema representation!",8000);
     let cveData = {};
     const href = oldTab.getAttribute('href');
     if(href == "#nice") {
