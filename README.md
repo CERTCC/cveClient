@@ -1,171 +1,76 @@
 # cveClient
 
-A browser-based CVE management client and JavaScript library for [CVE Services 2.x](https://github.com/CVEProject/cve-services) API. Provides CVE JSON 5.x vulnerability management for CVE Numbering Authorities (CNAs) and Roots.
+A browser-based CVE management client for [CVE Services 2.x](https://github.com/CVEProject/cve-services) API, built for CVE Numbering Authorities (CNAs) and Roots. Manage CVE records using CVE JSON 5.x directly from your browser — no software to install, no data collected, no backend required.
 
 **[Live Demo](https://certcc.github.io/cveClient/)** | **[CERT/CC Demo](https://democert.org/cveClient)**
 
+> **Privacy:** This application runs entirely in your browser. It does not store any data on a server, does not track usage, and does not phone home. Your API key is encrypted locally using RSA-OAEP 4096-bit encryption before being stored in browser storage.
 
-## Table of Contents
+## Compatibility
 
-- [Features](#features)
-- [Quick Start](#quick-start)
-- [Architecture](#architecture)
-- [Using cveClientlib in Node.js](#using-cveclientlib-in-nodejs)
-- [Running Tests](#running-tests)
-- [Installation on Your Own Server](#installation-on-your-own-server)
-- [API Key Security](#api-key-security)
-- [Dependencies](#dependencies)
-- [Changelog](#changelog)
-- [License](#license)
+|                      | Version                                                                                         |
+| -------------------- | ----------------------------------------------------------------------------------------------- |
+| **CVE Services API** | 2.x ([API docs](https://cveawg.mitre.org/api-docs/))                                            |
+| **CVE JSON Schema**  | 5.x ([schema docs](https://github.com/CVEProject/cve-schema/blob/main/schema/docs/versions.md)) |
+
+### Supported Environments
+
+| Environment | URL                                 | Use Case                    |
+| ----------- | ----------------------------------- | --------------------------- |
+| Production  | `https://cveawg.mitre.org/api`      | Live CVE record management  |
+| Test        | `https://cveawg-test.mitre.org/api` | Testing and training        |
+| Local       | `http://127.0.0.1:3000/api`         | Local CVE Services instance |
+
+Select your environment from the dropdown at login.
 
 ## Features
 
-- **CVE Record Management** — Create, update, reject, and reserve CVE IDs through CVE Services 2.x API
-- **CVE JSON 5.x Editor** — Form-based editor with tabs for Minimal, All Fields, JSON, and ADP views, dynamically generated from the CVE JSON schema
-- **Guided CVE Chatbot** — Step-by-step wizard that walks you through creating a CVE record field by field
-- **AI Review** — Review your CVE record with ChatGPT, Claude, or Gemini before publication (copies prompt to clipboard, opens your chosen provider)
-- **User Management** — Create, update, and list users within your CNA organization (admin role)
-- **Organization Info** — View org details and CVE ID quota
-- **Encrypted API Key Storage** — RSA-OAEP 4096-bit encryption for API keys in browser storage using Web Crypto API and IndexedDB
-- **No Backend Required** — Pure static web application, serve from any web server
-- **No Data Collection** — This application does not store any data or track usage
+- **CVE Record Management** — Create, update, reject, and reserve CVE IDs
+- **Form-Based Editor** — Tabs for Minimal (required fields only), All Fields (full schema), JSON (direct editing with Ace editor), and ADP views
+- **Guided CVE Chatbot** — Step-by-step wizard that walks you through building a CVE record field by field, with CWE autocomplete
+- **User Management** — Create, update, and list users within your CNA organization (admin role required)
+- **Organization Info** — View org details and remaining CVE ID quota
+- **Offline Mode** — Click "Skip" at login to create and edit mock CVE records without connecting to CVE Services, useful for drafting or training
+- **Encrypted Credentials** — API keys are encrypted with RSA-OAEP 4096-bit keys before storage. See [RISKS.md](./RISKS.md) for a full discussion of browser API key security.
 
-## Quick Start
+## Getting Started
 
-cveClient is a static web application with no build step. Serve the files from any web server:
+### Use the Public Demo
+
+Visit [https://certcc.github.io/cveClient/](https://certcc.github.io/cveClient/) and log in with your CNA short name, username, and API key. No installation required. The demo connects directly to CVE Services and does not store any data.
+
+### Run Your Own Instance
+
+cveClient is a static web application — just serve the files from any web server:
 
 ```bash
-# Clone the repository
 git clone https://github.com/CERTCC/cveClient.git
 cd cveClient
 
-# Serve with any local web server
+# Any of these will work:
 python3 -m http.server 8080
-# or
 npx serve .
-# or
 php -S localhost:8080
 ```
 
-Then open `http://localhost:8080` in your browser. Enter your CNA short name, username, and API key to log in.
-
-You can also use the public demo at [https://certcc.github.io/cveClient/](https://certcc.github.io/cveClient/) — it connects directly to CVE Services and does not store any data.
-
-## Architecture
-
-cveClient is a pure client-side JavaScript application with no backend, no build system, and no transpilation.
-
-### Core Files
-
-| File                                         | Description                                                                                                                                                                                        |
-| -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`cveClientlib.js`](./cveClientlib.js)       | Reusable API client library. Class `cveClient` wraps the CVE Services REST API with `rfetch()` (Fetch API wrapper that injects API key auth). Methods for CVE CRUD, user management, and org info. |
-| [`cveInterface.js`](./cveInterface.js)       | Main UI logic (~2000 lines). Handles login/logout, CVE operations, user management, AI review integration, and form-to-JSON conversion.                                                            |
-| [`schemaToForm.js`](./schemaToForm.js)       | Dynamically generates HTML forms from the CVE JSON 5.x schema. Bidirectional: `FormToObject()` extracts JSON from form fields, `ObjectToForm()` populates forms from JSON.                         |
-| [`autoCompleter.js`](./autoCompleter.js)     | Autocomplete/suggestion UI for input fields with dynamic URL fetching (used for CWE lookup).                                                                                                       |
-| [`encrypt-storage.js`](./encrypt-storage.js) | RSA-OAEP 4096-bit encryption for API keys in browser storage using Web Crypto API + IndexedDB for key persistence.                                                                                 |
-| [`index.html`](./index.html)                 | Single-page app with Bootstrap modals for all operations.                                                                                                                                          |
-
-### How It Works
-
-1. User logs in with CNA short name, username, and API key
-2. API key is encrypted and stored in browser storage (localStorage or sessionStorage)
-3. All API calls go directly from the browser to CVE Services — no proxy or middleware
-4. The CVE JSON 5.x schema is fetched at runtime from the [CVE Schema Project](https://github.com/CVEProject/cve-schema) to dynamically generate the "All Fields" form
-5. Form data is converted to/from CVE JSON using `data-field` attribute mappings
-
-## Using cveClientlib in Node.js
-
-The `cveClientlib.js` file includes conditional exports for Node.js environments. You can use it directly in Node.js scripts (`fetch` is available natively in Node 18+):
-
-```javascript
-const cveClient = require("./cveClientlib.js");
-
-const client = new cveClient(
-  "your_org_short_name",
-  "your_username",
-  "your_api_key",
-  "https://cveawg.mitre.org/api",
-);
-
-// Get CVE details
-client.getcvedetail("CVE-2024-1234").then(function (cve) {
-  console.log(JSON.stringify(cve, null, 2));
-});
-
-// Reserve a CVE ID
-client.reservecve(1).then(function (result) {
-  console.log("Reserved:", result);
-});
-
-// Get org quota
-client.getquota().then(function (quota) {
-  console.log("Quota:", quota);
-});
-```
-
-For older Node.js versions without native `fetch`, use [node-fetch](https://github.com/node-fetch/node-fetch):
-
-```javascript
-const fetch = require("node-fetch");
-globalThis.fetch = fetch;
-const cveClient = require("./cveClientlib.js");
-```
-
-## Running Tests
-
-Tests use [Vitest](https://vitest.dev/) with jsdom. Requires Node.js 22+.
-
-```bash
-npm ci
-npm test
-```
-
-Test suites:
-
-- **Pure function tests** (24 tests) — `get_deep`, `set_deep`, `simpleCopy`, `checkurl`, `check_json`, `queryParser`
-- **Security regression tests** (13 tests) — prototype pollution protection, XSS prevention via `safeHTML` and `cleanHTML`
-- **API client tests** (14 tests) — URL construction, auth headers, CVE/ADP operations
-
-## Installation on Your Own Server
-
-See [INSTALL.md](./INSTALL.md) for detailed instructions on deploying cveClient to your own web server (Apache, Nginx, IIS, or any static file server).
-
-The short version:
-
-```bash
-git clone https://github.com/CERTCC/cveClient.git /var/www/html/cveClient
-```
-
-Then visit `/cveClient/` on your web server. If you use Content-Security-Policy headers, see INSTALL.md for the recommended CSP configuration.
+Open `http://localhost:8080` and log in. For production deployment with Content-Security-Policy headers, Apache/Nginx configuration examples, and more, see [INSTALL.md](./INSTALL.md).
 
 ## API Key Security
 
-Using API keys in a browser carries inherent risks. See [RISKS.md](./RISKS.md) for a detailed discussion of:
+Using API keys in a browser carries inherent risks. See [RISKS.md](./RISKS.md) for:
 
-- Why browser-based API key usage is a known risk
-- Precautions CNAs should take (browser security, user audits, key rotation)
-- How cveClient mitigates risk with RSA-OAEP encryption of stored keys
-- Content-Security-Policy recommendations
-
-## Dependencies
-
-All dependencies are for the HTML UI only. The `cveClientlib.js` library has zero dependencies.
-
-| Library                                         | Version | Source | Integrity   |
-| ----------------------------------------------- | ------- | ------ | ----------- |
-| [jQuery](https://jquery.com/)                   | 3.5.1   | CDN    | SHA-384 SRI |
-| [Bootstrap](https://getbootstrap.com/)          | 4.3.1   | CDN    | SHA-384 SRI |
-| [Popper.js](https://popper.js.org/)             | 1.14.7  | CDN    | SHA-384 SRI |
-| [Bootstrap-Table](https://bootstrap-table.com/) | 1.19.1  | CDN    | SHA-384 SRI |
-| [SweetAlert2](https://sweetalert2.github.io/)   | 11.x    | Local  | —           |
-| [Ace Editor](https://ace.c9.io/)                | 1.2.4   | Local  | —           |
-
-CDN dependencies use [Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) (SRI) checks. SweetAlert2 and Ace Editor are served from local copies due to build issues with their CDN versions — please review their respective license agreements.
+- Why browser-based API key usage is a known risk for CNAs
+- Precautions your organization should take (browser hardening, user audits, key rotation)
+- How cveClient mitigates risk with RSA-OAEP encryption
+- Content-Security-Policy recommendations for self-hosted deployments
 
 ## Changelog
 
 See [CHANGELOG.md](./CHANGELOG.md) for the full version history.
+
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for architecture details, local development setup, Node.js library usage, running tests, and dependency information.
 
 ## License
 
