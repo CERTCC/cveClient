@@ -12,16 +12,6 @@ class cveClient {
 	let opts = {method: "PUT"};
 	return this.putjson(path,opts,null,adp);
     }
-    getadp(cve) {
-	return this.getjson("/cve/" + cve + "/adp");
-    }
-    deleteadp(cve) {
-	let path = "/cve/" + cve + "/adp";
-	let opts = {method: "DELETE"};
-	return this.rfetch(path, opts).then(function(r) {
-	    return r.json();
-	});
-    }
     publishcve(cve,cnajson,update,rejected) {
 	/* Create or Update a CVE */
 	let opts = null;
