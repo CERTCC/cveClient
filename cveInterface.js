@@ -854,7 +854,7 @@ function deepdive(_, _, row, el) {
 	}
 	$('#updaterecord').html("Update User");
     } else if(("cve_id" in row) && ("state" in row)) {
-	$('#cveUpdateModal .mtitle').html("("+row.cve_id+")");	
+	$('#cveUpdateModal .mtitle').text("("+row.cve_id+")");	
 	if (row.state == "RESERVED") {
 	    $('#updaterecord').html("Edit & Publish CVE").show();
 	    $('#cveUpdateModal .cveupdate').html("Publish CVE");
