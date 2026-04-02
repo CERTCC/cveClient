@@ -1,86 +1,87 @@
 # cveClient
-A web-based client interface and a client library to cve-services 2.x to provide CVE JSON (5.x) vulnerability management for CVE Numbering Authorities (CNAs) and Roots.
 
+A browser-based CVE management client for [CVE Services 2.x](https://github.com/CVEProject/cve-services) API, built for CVE Numbering Authorities (CNAs) and Roots. Manage CVE records using CVE JSON 5.x directly from your browser — no software to install, no data collected, no backend required.
 
-# Introduction
-A JavaScript library and simple HTML interface for CVE services that is like RedHat's [cvelib](https://github.com/RedHatProductSecurity/cvelib) and [Vulnogram](https://github.com/Vulnogram/Vulnogram).  Provides capabilities to interface with [cve-services](https://github.com/CVEProject/cve-services) with a JavaScript client and simple HTML UI. You can just serve the index.html file from any static content area of your webserver (Apache2, NGINX, thttpd, lighttpd, Caddy).
+**[Live Demo](https://certcc.github.io/cveClient/)** | **[CERT/CC Demo](https://democert.org/cveClient)**
 
-A JavaScript encryption toolkit is also served from [encrypt-storage.js](./encrypt-storage.js) file. This is a simple asymmetric encryption to protect your API Key while in `localStorage` (if <u>*Keep me logged in*</u> checkbox is enabled) or `sessionStorage` with PKI stored in native `indexedDB`. This provides some limited protection of your API keys.  Currently cve-services expects API key for every transaction, there is no middleware providing session capability or related CSRF protection.
+> **Privacy:** This application runs entirely in your browser. It does not store any data on a server, does not track usage, and does not phone home. Your API key is encrypted locally using RSA-OAEP 4096-bit encryption before being stored in browser storage.
 
-Demo of the UI and client library can be accessed at [https://certcc.github.io/cveClient/](https://certcc.github.io/cveClient/) or CERT's [demo site](https://democert.org/cveClient). Currently the allowed servers (cve-services servers) are limited with Content Security Policy headers to cve-services 2.x  production site, testing site and a localhost instance.
+## Compatibility
 
-Dependency libraries for HTML UI only.
-* [jQuery - 3.5.1](https://jquery.com/)
-* [Bootstrap - 4.3.1](https://getbootstrap.com/)
-* [Popper - 1.14.7](https://popper.js.org/)
-* [SweetAlert2 - 2.11](https://sweetalert2.github.io/)
-* [Bootstrap-Table - 1.19.1](https://bootstrap-table.com/)
-* [Ace Editor - 1.2.4](https://ace.c9.io/)
+|                      | Version                                                                                                                    |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **CVE Services API** | 2.x ([API docs](https://cveawg.mitre.org/api-docs/), [local OpenAPI spec](./api-docs/openapi.json))                        |
+| **CVE JSON Schema**  | 5.x ([schema docs](https://github.com/CVEProject/cve-schema/blob/main/schema/docs/versions.md), [local schema](./schema/)) |
 
-Except for Ace Editor and SweetAlert2 library all the dependencies are served from CDN sources with sha-284 [Subsource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) checks. There is some issue with the nightly builds, so these two libraries are served from local.  Please ensure you understand their license agreements as well.
+### Supported Environments
 
-# Roll out your own using cveClientlib
-If you plan to rollour your own UI, this JavaScript library is helpful.  Also note that there is another client library with similar capabilities built with ECMAScrip6 requirement at [https://github.com/xdrr/cve.js](https://github.com/xdrr/cve.js).
+| Environment | URL                                 | Use Case                    |
+| ----------- | ----------------------------------- | --------------------------- |
+| Production  | `https://cveawg.mitre.org/api`      | Live CVE record management  |
+| Test        | `https://cveawg-test.mitre.org/api` | Testing and training        |
+| Local       | `http://127.0.0.1:3000/api`         | Local CVE Services instance |
 
-You can use the [cveClientlib.js](./cveClientlib.js) to do all the tasks being performed by the current UI. The file is called cveClientlib.js as Safari browsers have trouble with filename and a Class name being the same.
+Select your environment from the dropdown at login.
 
-# Using cveClientlib in Node.js
+## Features
 
-The `cveClientlib.js` file includes conditional exports for Node.js environments. You can use it directly in Node.js scripts (note: `fetch` is available natively in Node 18+):
+- **CVE Record Management** — Create, update, reject, and reserve CVE IDs
+- **Form-Based Editor** — Tabs for Minimal (required fields only), All Fields (full schema), JSON (direct editing with Ace editor), and ADP views
+- **Guided CVE Chatbot** — Step-by-step wizard that walks you through building a CVE record field by field, with CWE autocomplete
+- **AI Review** — Review your CVE record with ChatGPT, Claude, or Gemini before publication. Shows the full prompt for transparency, then copies to clipboard and opens your chosen provider.
+- **User Management** — Create, update, and list users within your CNA organization (admin role required)
+- **Organization Info** — View org details and remaining CVE ID quota
+- **Offline Mode** — Click "Skip" at login to create and edit mock CVE records without connecting to CVE Services, useful for drafting or training
+- **Encrypted Credentials** — API keys are encrypted with RSA-OAEP 4096-bit keys before storage. See [RISKS.md](./RISKS.md) for a full discussion of browser API key security.
 
-```javascript
-const cveClient = require("./cveClientlib.js");
+## Getting Started
 
-const client = new cveClient(
-    "your_org_short_name",
-    "your_username",
-    "your_api_key",
-    "https://cveawg.mitre.org/api"
-);
+### Use the Public Demo
 
-// Get CVE details
-client.getcvedetail("CVE-2024-1234").then(function(cve) {
-    console.log(JSON.stringify(cve, null, 2));
-});
+Visit [https://certcc.github.io/cveClient/](https://certcc.github.io/cveClient/) and log in with your CNA short name, username, and API key. No installation required. The demo connects directly to CVE Services and does not store any data.
 
-// Reserve a CVE ID
-client.reservecve(1).then(function(result) {
-    console.log("Reserved:", result);
-});
+### Run Your Own Instance
 
-// Get org quota
-client.getquota().then(function(quota) {
-    console.log("Quota:", quota);
-});
-```
-
-For older Node.js versions without native `fetch`, you can use [node-fetch](https://github.com/node-fetch/node-fetch):
-
-```javascript
-const fetch = require("node-fetch");
-globalThis.fetch = fetch;
-const cveClient = require("./cveClientlib.js");
-```
-
-# Running Tests
-
-Tests use [Vitest](https://vitest.dev/) with jsdom and cover pure functions, security regressions, and API client behavior.
+cveClient is a static web application — just serve the files from any web server:
 
 ```bash
-npm ci
-npm test
+git clone https://github.com/CERTCC/cveClient.git
+cd cveClient
+
+# Any of these will work:
+python3 -m http.server 8080
+npx serve .
+php -S localhost:8080
 ```
 
-Test suites:
-- **Pure function tests** (24 tests) — `get_deep`, `set_deep`, `simpleCopy`, `checkurl`, `check_json`, `queryParser`
-- **Security regression tests** (13 tests) — prototype pollution protection, XSS prevention via `safeHTML` and `cleanHTML`
-- **API client tests** (14 tests) — URL construction, auth headers, CVE/ADP operations
+Open `http://localhost:8080` and log in. For production deployment with Content-Security-Policy headers, Apache/Nginx configuration examples, and more, see [INSTALL.md](./INSTALL.md).
 
-# Risks of using API keys in browser for CVE-Services
+## API Key Security
 
-See the [RISKS.md](./RISKS.md) that captures some of the inherent risks of using API keys to access an API service. If you decide to use these web base clients to access `cve-services`, please be aware of these risks.
+Using API keys in a browser carries inherent risks. See [RISKS.md](./RISKS.md) for:
 
+- Why browser-based API key usage is a known risk for CNAs
+- Precautions your organization should take (browser hardening, user audits, key rotation)
+- How cveClient mitigates risk with RSA-OAEP encryption
+- Content-Security-Policy recommendations for self-hosted deployments
 
-# Installation on your own webserver
+## Changelog
 
-See the [INSTALL.md](./INSTALL.md), if you would like to run a private version of the cveClient in your own webserver.
+See [CHANGELOG.md](./CHANGELOG.md) for the full version history.
+
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for architecture details, local development setup, Node.js library usage, running tests, and dependency information.
+
+## License
+
+See [LICENSE](./LICENSE) for license information.
+
+---
+
+<p align="center">
+<img src="https://img.shields.io/github/license/CERTCC/cveClient" alt="License" />
+<img src="https://img.shields.io/github/v/release/CERTCC/cveClient" alt="Release" />
+<img src="https://img.shields.io/github/issues/CERTCC/cveClient" alt="Issues" />
+<img src="https://img.shields.io/github/last-commit/CERTCC/cveClient" alt="Last Commit" />
+</p>

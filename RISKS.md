@@ -1,30 +1,27 @@
-# Risk of using API keys in browser for CVE-Services
+# Risk of Using API Keys in Browser for CVE Services
 
+The [CVE Services](https://github.com/CVEProject/cve-services) API interface is protected by an API key to perform CNA functions to manage CVE records. An API key assigned to a user with the Admin role is also able to manage users under their organization.
 
-The [cve-services](https://github.com/CVEProject/cve-services)' API interface is protected by an API key to perform CNA functions to manage CVE records.  An API-key assigned to a user with Admin role (administrator) is also able manage users under their organization.  
+Any browser-based client to CVE Services requires unencrypted access to the API key to perform each transaction with the CVE Services endpoints. Browser-based clients such as Vulnogram and cveClient depend on the browser to protect these API keys. API keys, unlike passwords, are rarely changed and could be stolen from the browser where the API key was entered. This is a known risk in using browser-based clients when accessing CVE program capabilities as a CNA. Although there are several technologies such as [Service Workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers) and [Storage APIs](https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html#storage-apis), the browser needs to repeatedly retrieve and use the API keys making this data available in its raw form to support CNA activities.
 
-Any browser-based client to cve-services requires unencrypted access to the API key to perform each transaction with the cve-services endpoints.  The browser-based clients such as Vulnogram and cveClient depend on the browser to protect these API keys. API key, unlike passwords, are rarely changed and could be stolen from the browser where the API key was entered.  This is a known risk in using browser-based clients when accessing CVE program capabilities as a CNA.  Although there are several technologies such as [ServiceWorkers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers) and [Storage APIs](https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html#storage-apis), the browser needs to repeatedly retrieve and use the API keys making this data available in its raw form to support CAN activities. 
+If a CNA decides to use these clients, they should be aware of the risks that the API key could be stolen from the browser. The CNA should take necessary precautions as appropriate for their organization to protect the API keys.
 
-If a CNA decides to use these clients, they should be aware of the risks that the API key could be stolen from the browser. The CNA should take necessary precautions as appropriate for their organization to protect the API keys.  
+## Precautions
 
-If a CNA chooses to use this or other web based interfaces to access the cve-services, here are some precautionary measures the CNA may adapt to reduce risk of abuse of their cve-services credentials. 
-* Secure the browser. 
-Ensure the organization’s computer and browser software are well-managed and kept up to date with security updates. Limit the browser plugins to ensure secure and audited plugins are installed on the browser. Use automatic updates and timely restart of the browser to reduce long-running unpatched software.
-* Audit and manage users.  
-Organization audits and verifies the users who belong to their organization and timely disables the users who have left the organization or have no longer need the role to manage CVE records for the organization. 
-* Regenerate your API keys periodically. 
-The cve-program allows for regeneration of the API keys for users in an organization. This is recommended to match the organization password and API credentials lifecycle management policy.  This can also allow for timely auditing and detection of rogue users and stray accounts that are part of your organization
-* Protect web server, if you run your own.
-The software Vulnogram can be accessed at [https://vulnogram.github.io](https://vulnogram.github.io) for a client only solution from GitHub site. Similarly cveClient is also accessible from [https://certcc.github.io/cveClient/](https://certcc.github.io/cveClient/).  These are static websites hosted at GitHub and do not collect any information from your browser but only serve static web content. However, if you wish to run a cloned or forked version of Vulnogram or cveClient software from GitHub, ensure your publishing web server is protected from Cross-Site Scripting (XSS) attacks using something like [Content-Security-Policy headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy).
+If a CNA chooses to use this or other web-based interfaces to access CVE Services, here are some precautionary measures the CNA may adopt to reduce risk of abuse of their CVE Services credentials:
 
+- **Secure the browser.**
+  Ensure the organization's computer and browser software are well-managed and kept up to date with security updates. Limit browser plugins to ensure only secure and audited plugins are installed. Use automatic updates and timely restart of the browser to reduce long-running unpatched software.
 
+- **Audit and manage users.**
+  Audit and verify the users who belong to your organization. Timely disable users who have left the organization or no longer need the role to manage CVE records.
 
+- **Regenerate your API keys periodically.**
+  The CVE program allows for regeneration of API keys for users in an organization. This is recommended to match the organization's password and API credentials lifecycle management policy. This also allows for timely auditing and detection of rogue users and stray accounts.
 
+- **Protect your web server, if you run your own.**
+  The software can be accessed at [https://certcc.github.io/cveClient/](https://certcc.github.io/cveClient/) — a static website hosted on GitHub that does not collect any information from your browser. However, if you wish to run a cloned or forked version from GitHub, ensure your publishing web server is protected from Cross-Site Scripting (XSS) attacks using [Content-Security-Policy headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy). See [INSTALL.md](./INSTALL.md) for recommended CSP configuration.
 
+## How cveClient Mitigates Risk
 
-
-
-
-
-
-
+cveClient includes an encryption layer ([`encrypt-storage.js`](./encrypt-storage.js)) that provides RSA-OAEP 4096-bit asymmetric encryption of API keys before storing them in `localStorage` or `sessionStorage`. The encryption keys are persisted in the browser's native `indexedDB`. While this does not eliminate all risk (the key must be decrypted for each API call), it provides protection against casual inspection of browser storage.
