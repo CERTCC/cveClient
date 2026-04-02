@@ -141,7 +141,7 @@ class cveClient {
 	    this.error = err;
 	    return;
 	}
-	url.pathname = url.pathname + path;
+	url.pathname = url.pathname.replace(/\/$/, "") + path;
 	if(!opts) {
 	    opts = {method:'GET'};
 	}
@@ -176,4 +176,11 @@ class cveClient {
 	    client.error = err;
 	});
     }
+}
+
+/* Node.js / test environment exports */
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = cveClient;
+} else if (typeof globalThis !== "undefined") {
+    globalThis.cveClient = cveClient;
 }

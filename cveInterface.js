@@ -831,7 +831,7 @@ function objwalk(h,d,r,s) {
 			    .append($("<td>").html(safeHTML(r[d]))))).html();
     }
 }
-function deepdive(_, _, row, el) {
+function deepdive(_a, _b, row, el) {
     try {
 	var tinfo = el.closest('tr').attr('data-uniqueid');
 	if(tinfo)
@@ -2038,4 +2038,9 @@ function add_new(opt) {
 		opt.parentElement.selectedIndex = opt.parentElement.selectedIndex - 1;
 	});
     }
+}
+
+/* Node.js / test environment exports */
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = { get_deep, set_deep, simpleCopy, checkurl, check_json, queryParser, safeHTML };
 }

@@ -153,3 +153,8 @@ function autoCompleter(inputElement, suggestionsArray, suggestionUrl, selector, 
 }
 
 
+
+/* Node.js / test environment exports */
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = autoCompleter;
+}

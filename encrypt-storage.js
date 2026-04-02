@@ -134,3 +134,10 @@ async function check_create_key(user) {
 	return key;
     });
 }
+
+/* Node.js / test environment exports */
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = { encryptMessage, decryptMessage, arrayBuffertoURI,
+	URItoarrayBuffer, sha256sum, dbManager, save_key, import_key,
+	check_create_key };
+}
