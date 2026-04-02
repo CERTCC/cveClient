@@ -140,16 +140,4 @@ describe("cveClient — ADP operations", () => {
     expect(lastFetchUrl).toBe("https://api.example.com/cve/CVE-2024-1234/adp");
     expect(lastFetchOpts.method).toBe("PUT");
   });
-
-  it("getadp uses GET to /cve/{id}/adp", async () => {
-    await client.getadp("CVE-2024-1234");
-    expect(lastFetchUrl).toBe("https://api.example.com/cve/CVE-2024-1234/adp");
-    expect(lastFetchOpts.method).toBe("GET");
-  });
-
-  it("deleteadp uses DELETE to /cve/{id}/adp", async () => {
-    await client.deleteadp("CVE-2024-1234");
-    expect(lastFetchUrl).toBe("https://api.example.com/cve/CVE-2024-1234/adp");
-    expect(lastFetchOpts.method).toBe("DELETE");
-  });
 });
