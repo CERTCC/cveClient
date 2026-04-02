@@ -1623,8 +1623,8 @@ async function publish_adp() {
 	}
 	let d = await client.publishadp(cve_id,adp) 
 	if("error" in d) {
-            swal_error("Failed to publish CVE, Error : "+d.error);
-            //console.log(d);
+            swal_error("Failed to publish ADP, Error : "+d.error);
+            console.log(d);
             return;
 	}
 	if(("created" in d) || ("updated" in d)) {
@@ -1636,7 +1636,7 @@ async function publish_adp() {
             });
 	    $('#cveUpdateModal').modal('hide');	    
 	} else {
-            //console.log(d);
+            console.log(d);
             swal_error("Unknown error CVE could not be updated. See console "+
                        " log for details!");
 	}
@@ -1644,33 +1644,6 @@ async function publish_adp() {
         console.log(err);
         swal_error("Could not publish this ADP data. Fix the errors please!");
     }
-}
-async function delete_adp() {
-    let mr = JSON.parse($("#deepDive").attr("data-crecord"));
-    let cve_id = mr.cve_id;
-    Swal.fire({
-	title: "Delete ADP data for " + cve_id + "?",
-	text: "This will remove your ADP container from this CVE.",
-	icon: "warning",
-	showDenyButton: true,
-	confirmButtonText: "Delete",
-	denyButtonText: "Cancel"
-    }).then(async function(result) {
-	if(result.isConfirmed) {
-	    let d = await client.deleteadp(cve_id);
-	    if("error" in d) {
-		swal_error("Failed to delete ADP data: " + d.error);
-		return;
-	    }
-	    Swal.fire({
-		title: "ADP data deleted!",
-		text: d.message || "ADP container removed.",
-		icon: "success",
-		timer: 1800
-	    });
-	    $("#cveUpdateModal").modal("hide");
-	}
-    });
 }
 function add_validators(pubcve) {
     let validStatus = {"affected": true, "unknown": true };
