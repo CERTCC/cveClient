@@ -8,10 +8,10 @@ A browser-based CVE management client for [CVE Services 2.x](https://github.com/
 
 ## Compatibility
 
-|                      | Version                                                                                         |
-| -------------------- | ----------------------------------------------------------------------------------------------- |
-| **CVE Services API** | 2.x ([API docs](https://cveawg.mitre.org/api-docs/))                                            |
-| **CVE JSON Schema**  | 5.x ([schema docs](https://github.com/CVEProject/cve-schema/blob/main/schema/docs/versions.md)) |
+|                      | Version                                                                                                                    |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **CVE Services API** | 2.x ([API docs](https://cveawg.mitre.org/api-docs/), [local OpenAPI spec](./api-docs/openapi.json))                        |
+| **CVE JSON Schema**  | 5.x ([schema docs](https://github.com/CVEProject/cve-schema/blob/main/schema/docs/versions.md), [local schema](./schema/)) |
 
 ### Supported Environments
 
@@ -28,6 +28,7 @@ Select your environment from the dropdown at login.
 - **CVE Record Management** — Create, update, reject, and reserve CVE IDs
 - **Form-Based Editor** — Tabs for Minimal (required fields only), All Fields (full schema), JSON (direct editing with Ace editor), and ADP views
 - **Guided CVE Chatbot** — Step-by-step wizard that walks you through building a CVE record field by field, with CWE autocomplete
+- **AI Review** — Review your CVE record with ChatGPT, Claude, or Gemini before publication. Shows the full prompt for transparency, then copies to clipboard and opens your chosen provider.
 - **User Management** — Create, update, and list users within your CNA organization (admin role required)
 - **Organization Info** — View org details and remaining CVE ID quota
 - **Offline Mode** — Click "Skip" at login to create and edit mock CVE records without connecting to CVE Services, useful for drafting or training
