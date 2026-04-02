@@ -639,10 +639,7 @@ async function download_json() {
       orgId: "00000000-0000-0000-0000-000000000000",
       shortName: "none",
     };
-    if (get_deep(client, "constructor.name") && client._version)
-      returnJSON["x_generator"] = {
-        engine: client.constructor.name + "/" + client._version,
-      };
+    returnJSON["x_generator"] = { engine: "cveClient/" + _version };
     $("#cveUpdateModal .cveupdate").attr("download", cve + ".json");
     let cson = encodeURIComponent(JSON.stringify(returnJSON));
     $("#cveUpdateModal .cveupdate").attr(
@@ -1817,10 +1814,7 @@ async function publish_cve() {
         orgId: client.userobj.org_UUID,
         shortName: client.org,
       };
-    if (get_deep(client, "constructor.name") && client._version)
-      pubcve["x_generator"] = {
-        engine: client.constructor.name + "/" + client._version,
-      };
+    pubcve["x_generator"] = { engine: "cveClient/" + _version };
     let cve = mr.cve_id;
     let ispublic = mr.state != "RESERVED";
     let rejected = false;
@@ -2079,10 +2073,7 @@ async function reject_cve(confirm) {
         orgId: client.userobj.org_UUID,
         shortName: client.org,
       };
-    if (get_deep(client, "constructor.name") && client._version)
-      rejcve["x_generator"] = {
-        engine: client.constructor.name + "/" + client._version,
-      };
+    rejcve["x_generator"] = { engine: "cveClient/" + _version };
     let cve = mr.cve_id;
     let ispublic = mr.state != "RESERVED";
     let rejected = true;
