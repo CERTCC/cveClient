@@ -1,0 +1,257 @@
+{
+  "$schema": "https://cyclonedx.org/schema/bom-1.6.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:b7961d19-7e70-4555-b335-e4d008d1c812",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-04-03T22:41:44.717Z",
+    "tools": [
+      {
+        "name": "cveClient-sbom-generator",
+        "version": "1.0.25"
+      }
+    ],
+    "component": {
+      "type": "application",
+      "name": "cveclient",
+      "version": "1.0.25",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "application",
+      "name": "cveInterface",
+      "version": "1.0.25",
+      "purl": "pkg:npm/cveInterface@1.0.25",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "name": "cveClientlib",
+      "version": "1.0.25",
+      "purl": "pkg:npm/cveClientlib@1.0.25",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "name": "schemaToForm",
+      "version": "1.0.10",
+      "purl": "pkg:npm/schemaToForm@1.0.10",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "name": "autoCompleter",
+      "version": "1.0.12",
+      "purl": "pkg:npm/autoCompleter@1.0.12",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "name": "encrypt-storage",
+      "version": "1.1.15",
+      "purl": "pkg:npm/encrypt-storage@1.1.15",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "cveInterface",
+      "version": "2.0.12",
+      "purl": "pkg:npm/cveInterface@2.0.12",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "jquery",
+      "version": "3.5.1",
+      "purl": "pkg:npm/jquery@3.5.1",
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://code.jquery.com/jquery-3.5.1.min.js",
+          "hashes": [
+            {
+              "alg": "SHA-384",
+              "content": "ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "popper.js",
+      "version": "1.14.7",
+      "purl": "pkg:npm/popper.js@1.14.7",
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js",
+          "hashes": [
+            {
+              "alg": "SHA-384",
+              "content": "UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "bootstrap",
+      "version": "4.3.1",
+      "purl": "pkg:npm/bootstrap@4.3.1",
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js",
+          "hashes": [
+            {
+              "alg": "SHA-384",
+              "content": "JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "bootstrap-table",
+      "version": "1.19.1",
+      "purl": "pkg:npm/bootstrap-table@1.19.1",
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js",
+          "hashes": [
+            {
+              "alg": "SHA-384",
+              "content": "c6BpBD7+QRK09NF7WgSPQpBF4z1UdPVJEFAvOnQoNyqtMMuJW/hF+iw3pHlKvmxF"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "bootstrap",
+      "version": "4.3.1",
+      "purl": "pkg:npm/bootstrap@4.3.1",
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css",
+          "hashes": [
+            {
+              "alg": "SHA-384",
+              "content": "ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "bootstrap-table",
+      "version": "1.19.1",
+      "purl": "pkg:npm/bootstrap-table@1.19.1",
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css",
+          "hashes": [
+            {
+              "alg": "SHA-384",
+              "content": "ppHVqi8cSvs9rS2kDYZoGLiwz7RqQSf8Cw/u7yvuBCHnP8LftQKtbJKS6pXF9OXg"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "sweetalert2",
+      "version": "11.26.24",
+      "purl": "pkg:npm/sweetalert2@11.26.24",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "type": "data",
+      "name": "CVE_Record_Format_bundled.json"
+    },
+    {
+      "type": "data",
+      "name": "CVE_Record_Format_bundled_adpContainer.json"
+    },
+    {
+      "type": "data",
+      "name": "CVE_Record_Format_bundled_cnaPublishedContainer.json"
+    },
+    {
+      "type": "data",
+      "name": "CVE_Record_Format_bundled_cnaRejectedContainer.json"
+    },
+    {
+      "type": "data",
+      "name": "adp-tags.json"
+    },
+    {
+      "type": "data",
+      "name": "cna-tags.json"
+    },
+    {
+      "type": "data",
+      "name": "reference-tags.json"
+    }
+  ]
+}

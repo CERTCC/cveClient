@@ -1,0 +1,307 @@
+{
+  "spdxVersion": "SPDX-2.3",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "cveclient-runtime-sbom",
+  "documentNamespace": "https://github.com/CERTCC/cveClient/spdx/runtime/fd7b8476-bdf7-462e-8eba-cf46fab5364c",
+  "creationInfo": {
+    "created": "2026-04-03T22:41:44.718Z",
+    "creators": [
+      "Tool: cveClient-sbom-generator-1.0.25",
+      "Organization: CERT/CC"
+    ]
+  },
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-root",
+      "name": "cveclient",
+      "versionInfo": "1.0.25",
+      "downloadLocation": "https://github.com/CERTCC/cveClient",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "Organization: CERT/CC",
+      "primaryPackagePurpose": "APPLICATION"
+    },
+    {
+      "SPDXID": "SPDXRef-cveInterface",
+      "name": "cveInterface",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "1.0.25"
+    },
+    {
+      "SPDXID": "SPDXRef-cveClientlib",
+      "name": "cveClientlib",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "1.0.25"
+    },
+    {
+      "SPDXID": "SPDXRef-schemaToForm",
+      "name": "schemaToForm",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "1.0.10"
+    },
+    {
+      "SPDXID": "SPDXRef-autoCompleter",
+      "name": "autoCompleter",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "1.0.12"
+    },
+    {
+      "SPDXID": "SPDXRef-encrypt-storage",
+      "name": "encrypt-storage",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "1.1.15"
+    },
+    {
+      "SPDXID": "SPDXRef-cveInterface",
+      "name": "cveInterface",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "2.0.12"
+    },
+    {
+      "SPDXID": "SPDXRef-jquery",
+      "name": "jquery",
+      "downloadLocation": "https://code.jquery.com/jquery-3.5.1.min.js",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "3.5.1"
+    },
+    {
+      "SPDXID": "SPDXRef-popper.js",
+      "name": "popper.js",
+      "downloadLocation": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "1.14.7"
+    },
+    {
+      "SPDXID": "SPDXRef-bootstrap",
+      "name": "bootstrap",
+      "downloadLocation": "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.3.1"
+    },
+    {
+      "SPDXID": "SPDXRef-bootstrap-table",
+      "name": "bootstrap-table",
+      "downloadLocation": "https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "1.19.1"
+    },
+    {
+      "SPDXID": "SPDXRef-bootstrap",
+      "name": "bootstrap",
+      "downloadLocation": "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.3.1"
+    },
+    {
+      "SPDXID": "SPDXRef-bootstrap-table",
+      "name": "bootstrap-table",
+      "downloadLocation": "https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "1.19.1"
+    },
+    {
+      "SPDXID": "SPDXRef-sweetalert2",
+      "name": "sweetalert2",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "11.26.24"
+    },
+    {
+      "SPDXID": "SPDXRef-CVE-Record-Format-bundled.json",
+      "name": "CVE_Record_Format_bundled.json",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-CVE-Record-Format-bundled-adpContainer.json",
+      "name": "CVE_Record_Format_bundled_adpContainer.json",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-CVE-Record-Format-bundled-cnaPublishedContainer.json",
+      "name": "CVE_Record_Format_bundled_cnaPublishedContainer.json",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-CVE-Record-Format-bundled-cnaRejectedContainer.json",
+      "name": "CVE_Record_Format_bundled_cnaRejectedContainer.json",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-adp-tags.json",
+      "name": "adp-tags.json",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-cna-tags.json",
+      "name": "cna-tags.json",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-reference-tags.json",
+      "name": "reference-tags.json",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relatedSpdxElement": "SPDXRef-root",
+      "relationshipType": "DESCRIBES"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-cveInterface",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-cveClientlib",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-schemaToForm",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-autoCompleter",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-encrypt-storage",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-cveInterface",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-jquery",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-popper.js",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-bootstrap",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-bootstrap-table",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-bootstrap",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-bootstrap-table",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-sweetalert2",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-CVE-Record-Format-bundled.json",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-CVE-Record-Format-bundled-adpContainer.json",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-CVE-Record-Format-bundled-cnaPublishedContainer.json",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-CVE-Record-Format-bundled-cnaRejectedContainer.json",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-adp-tags.json",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-cna-tags.json",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-reference-tags.json",
+      "relationshipType": "DEPENDS_ON"
+    }
+  ]
+}
