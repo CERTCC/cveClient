@@ -77,7 +77,7 @@ describe("cveClient — CVE operations", () => {
     expect(lastFetchOpts.method).toBe("POST");
     const body = JSON.parse(lastFetchOpts.body);
     expect(body.cnaContainer.description).toBe("test");
-    expect(body.cnaContainer.x_generator.engine).toMatch(/^cveClientlib\//);
+    expect(body.cnaContainer.x_generator.engine).toMatch(/^cveClient\//);
   });
 
   it("publishcve uses PUT for update", async () => {
@@ -138,7 +138,7 @@ describe("cveClient — x_generator", () => {
     const cnajson = { descriptions: [{ lang: "en", value: "test" }] };
     await client.publishcve("CVE-2024-1234", cnajson, true);
     expect(cnajson["x_generator"]).toEqual({
-      engine: "cveClientlib/" + client._version,
+      engine: "cveClient/" + client._version,
     });
   });
 

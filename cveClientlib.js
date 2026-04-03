@@ -5,7 +5,7 @@ class cveClient {
 	this.key = key;
 	this.url = url;
 	this.user_path = "/org/" + this.org + "/user/" + this.user;
-	this._version = "1.0.15";
+	this._version = "1.0.25";
     }
     /* PUT /cve/{id}/adp — the only ADP endpoint per CVE Services API spec
        See https://cveawg.mitre.org/api-docs/ */
@@ -23,7 +23,7 @@ class cveClient {
 	if(rejected)
 	    path = "/cve/" + cve + "/reject";
 	if(!cnajson["x_generator"])
-	    cnajson["x_generator"] = {engine: "cveClientlib/" + this._version};
+	    cnajson["x_generator"] = {engine: "cveClient/" + this._version};
 	return this.putjson(path,opts,null,{cnaContainer:cnajson});
     }
     reservecve(amount,cve_year,batch_type) {
