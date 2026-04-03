@@ -75,9 +75,9 @@ describe("cveClient — CVE operations", () => {
     await client.publishcve("CVE-2024-1234", { description: "test" });
     expect(lastFetchUrl).toBe("https://api.example.com/cve/CVE-2024-1234/cna");
     expect(lastFetchOpts.method).toBe("POST");
-    expect(JSON.parse(lastFetchOpts.body)).toEqual({
-      cnaContainer: { description: "test" },
-    });
+    const body = JSON.parse(lastFetchOpts.body);
+    expect(body.cnaContainer.description).toBe("test");
+    expect(body.cnaContainer.x_generator.engine).toMatch(/^cveClientlib\//);
   });
 
   it("publishcve uses PUT for update", async () => {
@@ -119,6 +119,38 @@ describe("cveClient — CVE operations", () => {
     await client.reservecve(3, 2024, "nonsequential");
     const url = new URL(lastFetchUrl);
     expect(url.searchParams.get("batch_type")).toBe("nonsequential");
+  });
+});
+
+describe("cveClient — x_generator", () => {
+  let client;
+
+  beforeEach(() => {
+    client = new CveClient(
+      "test-org",
+      "test-user",
+      "key",
+      "https://api.example.com",
+    );
+  });
+
+  it("injects default x_generator with cveClientlib version when not set", async () => {
+    const cnajson = { descriptions: [{ lang: "en", value: "test" }] };
+    await client.publishcve("CVE-2024-1234", cnajson, true);
+    expect(cnajson["x_generator"]).toEqual({
+      engine: "cveClientlib/" + client._version,
+    });
+  });
+
+  it("preserves caller-provided x_generator (UI path)", async () => {
+    const cnajson = {
+      descriptions: [{ lang: "en", value: "test" }],
+      x_generator: { engine: "cveClient/1.0.25" },
+    };
+    await client.publishcve("CVE-2024-1234", cnajson, true);
+    expect(cnajson["x_generator"]).toEqual({
+      engine: "cveClient/1.0.25",
+    });
   });
 });
 

@@ -22,6 +22,8 @@ class cveClient {
 	let path = "/cve/" + cve + "/cna";
 	if(rejected)
 	    path = "/cve/" + cve + "/reject";
+	if(!cnajson["x_generator"])
+	    cnajson["x_generator"] = {engine: "cveClientlib/" + this._version};
 	return this.putjson(path,opts,null,{cnaContainer:cnajson});
     }
     reservecve(amount,cve_year,batch_type) {
