@@ -2,10 +2,10 @@ SPDXVersion: SPDX-2.3
 DataLicense: CC0-1.0
 SPDXID: SPDXRef-DOCUMENT
 DocumentName: cveclient-runtime-sbom
-DocumentNamespace: https://github.com/CERTCC/cveClient/spdx/runtime/0a305e91-1a14-48ee-b4b6-0689dd6cbbac
+DocumentNamespace: https://github.com/CERTCC/cveClient/spdx/runtime/98ccc3df-a148-41c8-bff4-dd8f2672cc65
 Creator: Tool: cveClient-sbom-generator-1.0.25
 Creator: Organization: CERT/CC
-Created: 2026-04-03T22:41:44.718Z
+Created: 2026-04-03T22:43:03.259Z
 
 PackageName: cveclient
 SPDXID: SPDXRef-root
@@ -121,6 +121,14 @@ PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
 PackageCopyrightText: NOASSERTION
 
+PackageName: ace-editor
+SPDXID: SPDXRef-ace-editor
+PackageVersion: 1.4.12
+PackageDownloadLocation: NOASSERTION
+PackageLicenseConcluded: Apache-2.0
+PackageLicenseDeclared: Apache-2.0
+PackageCopyrightText: NOASSERTION
+
 PackageName: CVE_Record_Format_bundled.json
 SPDXID: SPDXRef-CVE-Record-Format-bundled.json
 PackageDownloadLocation: NOASSERTION
@@ -184,6 +192,7 @@ Relationship: SPDXRef-root DEPENDS_ON SPDXRef-bootstrap-table
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef-bootstrap
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef-bootstrap-table
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef-sweetalert2
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-ace-editor
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef-CVE-Record-Format-bundled.json
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef-CVE-Record-Format-bundled-adpContainer.json
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef-CVE-Record-Format-bundled-cnaPublishedContainer.json

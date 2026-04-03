@@ -2,10 +2,10 @@
   "$schema": "https://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:b7961d19-7e70-4555-b335-e4d008d1c812",
+  "serialNumber": "urn:uuid:9dcbad95-a14b-4d34-8d21-ae1d6263d076",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-04-03T22:41:44.717Z",
+    "timestamp": "2026-04-03T22:43:03.258Z",
     "tools": [
       {
         "name": "cveClient-sbom-generator",
@@ -221,6 +221,19 @@
         {
           "license": {
             "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "ace-editor",
+      "version": "1.4.12",
+      "purl": "pkg:npm/ace-editor@1.4.12",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
           }
         }
       ]

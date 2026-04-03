@@ -139,7 +139,7 @@ export const extractVendoredVersion = {
       "src-min-noconflict",
       "ace.js",
     );
-    const aceContent = readFileSync(acePath, "utf8").slice(0, 50000);
+    const aceContent = readFileSync(acePath, "utf8").slice(0, 60000);
     const ace = this.parseAce(aceContent);
     if (ace) results.push({ ...ace, type: "library" });
 

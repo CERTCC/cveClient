@@ -3,9 +3,9 @@
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
   "name": "cveclient-dev-sbom",
-  "documentNamespace": "https://github.com/CERTCC/cveClient/spdx/dev/5b45e877-a935-47e8-a882-31608e104709",
+  "documentNamespace": "https://github.com/CERTCC/cveClient/spdx/dev/bb6913a5-9ec7-440a-a0b0-d3596722e2e1",
   "creationInfo": {
-    "created": "2026-04-03T22:41:44.718Z",
+    "created": "2026-04-03T22:43:03.259Z",
     "creators": [
       "Tool: cveClient-sbom-generator-1.0.25",
       "Organization: CERT/CC"
@@ -1263,6 +1263,24 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "copyrightText": "NOASSERTION",
+      "versionInfo": "v4"
+    },
+    {
+      "SPDXID": "SPDXRef-actions-setup-node",
+      "name": "actions/setup-node",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "v4"
+    },
+    {
+      "SPDXID": "SPDXRef-actions-checkout",
+      "name": "actions/checkout",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
       "versionInfo": "v6"
     },
     {
@@ -1964,6 +1982,16 @@
     {
       "spdxElementId": "SPDXRef-root",
       "relatedSpdxElement": "SPDXRef-xmlchars",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-actions-checkout",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-actions-setup-node",
       "relationshipType": "DEPENDS_ON"
     },
     {

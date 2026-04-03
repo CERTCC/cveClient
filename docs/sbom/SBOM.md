@@ -31,6 +31,7 @@
 | Component | Version | License |
 |-----------|---------|---------|
 | sweetalert2 | 11.26.24 | MIT |
+| ace-editor | 1.4.12 | Apache-2.0 |
 
 ### Schema/Data Files
 
@@ -199,6 +200,8 @@
 
 | Action | Version |
 |--------|---------|
+| actions/checkout | v4 |
+| actions/setup-node | v4 |
 | actions/checkout | v6 |
 | actions/setup-node | v6 |
 

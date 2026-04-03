@@ -2,10 +2,10 @@ SPDXVersion: SPDX-2.3
 DataLicense: CC0-1.0
 SPDXID: SPDXRef-DOCUMENT
 DocumentName: cveclient-dev-sbom
-DocumentNamespace: https://github.com/CERTCC/cveClient/spdx/dev/b276e7eb-b8ca-4249-b438-f9dca0307fef
+DocumentNamespace: https://github.com/CERTCC/cveClient/spdx/dev/6cf760ae-3554-4101-a295-4ceb5cf83b31
 Creator: Tool: cveClient-sbom-generator-1.0.25
 Creator: Organization: CERT/CC
-Created: 2026-04-03T22:41:44.718Z
+Created: 2026-04-03T22:43:03.259Z
 
 PackageName: cveclient
 SPDXID: SPDXRef-root
@@ -1115,6 +1115,22 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: actions/checkout
 SPDXID: SPDXRef-actions-checkout
+PackageVersion: v4
+PackageDownloadLocation: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+
+PackageName: actions/setup-node
+SPDXID: SPDXRef-actions-setup-node
+PackageVersion: v4
+PackageDownloadLocation: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+
+PackageName: actions/checkout
+SPDXID: SPDXRef-actions-checkout
 PackageVersion: v6
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: NOASSERTION
@@ -1267,5 +1283,7 @@ Relationship: SPDXRef-root DEPENDS_ON SPDXRef-why-is-node-running
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef-ws
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef-xml-name-validator
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef-xmlchars
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-actions-checkout
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-actions-setup-node
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef-actions-checkout
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef-actions-setup-node
