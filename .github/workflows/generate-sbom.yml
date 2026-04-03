@@ -1,0 +1,84 @@
+name: Generate SBOM
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "package.json"
+      - "package-lock.json"
+      - "*.js"
+      - "*.css"
+      - "ace-builds/**"
+      - "sweetalert2/**"
+      - "schema/**"
+      - "scripts/generate-sbom.mjs"
+      - "scripts/sbom/**"
+      - ".github/workflows/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  generate-sbom:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Generate SBOMs
+        run: node scripts/generate-sbom.mjs
+
+      - name: Check for changes
+        id: diff
+        run: |
+          git diff --name-only docs/sbom/ > /tmp/changed_files.txt || true
+          git ls-files --others --exclude-standard docs/sbom/ > /tmp/new_files.txt || true
+          if [ -s /tmp/changed_files.txt ] || [ -s /tmp/new_files.txt ]; then
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create PR
+        if: steps.diff.outputs.has_changes == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE=$(date +%Y-%m-%d)
+          BRANCH="sbom/update-${DATE}"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git checkout -b "$BRANCH"
+          git add docs/sbom/
+          git commit -m "chore: update SBOM inventory (${DATE})"
+          git push origin "$BRANCH"
+
+          gh pr create \
+            --title "chore: update SBOM inventory (${DATE})" \
+            --body "## SBOM Update
+
+          Automated SBOM regeneration triggered by changes to dependency-relevant files.
+
+          ### Generated Files
+          - \`docs/sbom/SBOM.md\` — Human-readable summary
+          - \`docs/sbom/cyclonedx-runtime.json\` — CycloneDX 1.6 runtime
+          - \`docs/sbom/cyclonedx-dev.json\` — CycloneDX 1.6 dev
+          - \`docs/sbom/spdx-runtime.json\` — SPDX 2.3 JSON runtime
+          - \`docs/sbom/spdx-dev.json\` — SPDX 2.3 JSON dev
+          - \`docs/sbom/spdx-runtime.spdx\` — SPDX 2.3 tag-value runtime
+          - \`docs/sbom/spdx-dev.spdx\` — SPDX 2.3 tag-value dev"
+
+      - name: Skip - no changes
+        if: steps.diff.outputs.has_changes != 'true'
+        run: echo "No SBOM changes detected - skipping PR."
