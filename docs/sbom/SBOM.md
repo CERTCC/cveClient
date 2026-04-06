@@ -1,6 +1,6 @@
 # Software Bill of Materials - cveclient
 
-**Version:** 1.0.25 | **License:** MIT | **Generated:** 2026-04-03
+**Version:** 1.0.25 | **License:** MIT | **Generated:** 2026-04-06
 
 ## Runtime Components
 
