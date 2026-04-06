@@ -1,0 +1,202 @@
+SPDXVersion: SPDX-2.3
+DataLicense: CC0-1.0
+SPDXID: SPDXRef-DOCUMENT
+DocumentName: cveclient-runtime-sbom
+DocumentNamespace: https://github.com/CERTCC/cveClient/spdx/runtime/98ccc3df-a148-41c8-bff4-dd8f2672cc65
+Creator: Tool: cveClient-sbom-generator-1.0.25
+Creator: Organization: CERT/CC
+Created: 2026-04-03T22:43:03.259Z
+
+PackageName: cveclient
+SPDXID: SPDXRef-root
+PackageVersion: 1.0.25
+PackageDownloadLocation: https://github.com/CERTCC/cveClient
+PackageLicenseConcluded: MIT
+PackageLicenseDeclared: MIT
+PackageCopyrightText: NOASSERTION
+PackageSupplier: Organization: CERT/CC
+PrimaryPackagePurpose: APPLICATION
+
+PackageName: cveInterface
+SPDXID: SPDXRef-cveInterface
+PackageVersion: 1.0.25
+PackageDownloadLocation: NOASSERTION
+PackageLicenseConcluded: MIT
+PackageLicenseDeclared: MIT
+PackageCopyrightText: NOASSERTION
+
+PackageName: cveClientlib
+SPDXID: SPDXRef-cveClientlib
+PackageVersion: 1.0.25
+PackageDownloadLocation: NOASSERTION
+PackageLicenseConcluded: MIT
+PackageLicenseDeclared: MIT
+PackageCopyrightText: NOASSERTION
+
+PackageName: schemaToForm
+SPDXID: SPDXRef-schemaToForm
+PackageVersion: 1.0.10
+PackageDownloadLocation: NOASSERTION
+PackageLicenseConcluded: MIT
+PackageLicenseDeclared: MIT
+PackageCopyrightText: NOASSERTION
+
+PackageName: autoCompleter
+SPDXID: SPDXRef-autoCompleter
+PackageVersion: 1.0.12
+PackageDownloadLocation: NOASSERTION
+PackageLicenseConcluded: MIT
+PackageLicenseDeclared: MIT
+PackageCopyrightText: NOASSERTION
+
+PackageName: encrypt-storage
+SPDXID: SPDXRef-encrypt-storage
+PackageVersion: 1.1.15
+PackageDownloadLocation: NOASSERTION
+PackageLicenseConcluded: MIT
+PackageLicenseDeclared: MIT
+PackageCopyrightText: NOASSERTION
+
+PackageName: cveInterface
+SPDXID: SPDXRef-cveInterface
+PackageVersion: 2.0.12
+PackageDownloadLocation: NOASSERTION
+PackageLicenseConcluded: MIT
+PackageLicenseDeclared: MIT
+PackageCopyrightText: NOASSERTION
+
+PackageName: jquery
+SPDXID: SPDXRef-jquery
+PackageVersion: 3.5.1
+PackageDownloadLocation: https://code.jquery.com/jquery-3.5.1.min.js
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+
+PackageName: popper.js
+SPDXID: SPDXRef-popper.js
+PackageVersion: 1.14.7
+PackageDownloadLocation: https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+
+PackageName: bootstrap
+SPDXID: SPDXRef-bootstrap
+PackageVersion: 4.3.1
+PackageDownloadLocation: https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+
+PackageName: bootstrap-table
+SPDXID: SPDXRef-bootstrap-table
+PackageVersion: 1.19.1
+PackageDownloadLocation: https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+
+PackageName: bootstrap
+SPDXID: SPDXRef-bootstrap
+PackageVersion: 4.3.1
+PackageDownloadLocation: https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+
+PackageName: bootstrap-table
+SPDXID: SPDXRef-bootstrap-table
+PackageVersion: 1.19.1
+PackageDownloadLocation: https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+
+PackageName: sweetalert2
+SPDXID: SPDXRef-sweetalert2
+PackageVersion: 11.26.24
+PackageDownloadLocation: NOASSERTION
+PackageLicenseConcluded: MIT
+PackageLicenseDeclared: MIT
+PackageCopyrightText: NOASSERTION
+
+PackageName: ace-editor
+SPDXID: SPDXRef-ace-editor
+PackageVersion: 1.4.12
+PackageDownloadLocation: NOASSERTION
+PackageLicenseConcluded: Apache-2.0
+PackageLicenseDeclared: Apache-2.0
+PackageCopyrightText: NOASSERTION
+
+PackageName: CVE_Record_Format_bundled.json
+SPDXID: SPDXRef-CVE-Record-Format-bundled.json
+PackageDownloadLocation: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+
+PackageName: CVE_Record_Format_bundled_adpContainer.json
+SPDXID: SPDXRef-CVE-Record-Format-bundled-adpContainer.json
+PackageDownloadLocation: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+
+PackageName: CVE_Record_Format_bundled_cnaPublishedContainer.json
+SPDXID: SPDXRef-CVE-Record-Format-bundled-cnaPublishedContainer.json
+PackageDownloadLocation: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+
+PackageName: CVE_Record_Format_bundled_cnaRejectedContainer.json
+SPDXID: SPDXRef-CVE-Record-Format-bundled-cnaRejectedContainer.json
+PackageDownloadLocation: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+
+PackageName: adp-tags.json
+SPDXID: SPDXRef-adp-tags.json
+PackageDownloadLocation: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+
+PackageName: cna-tags.json
+SPDXID: SPDXRef-cna-tags.json
+PackageDownloadLocation: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+
+PackageName: reference-tags.json
+SPDXID: SPDXRef-reference-tags.json
+PackageDownloadLocation: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+
+Relationship: SPDXRef-DOCUMENT DESCRIBES SPDXRef-root
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-cveInterface
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-cveClientlib
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-schemaToForm
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-autoCompleter
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-encrypt-storage
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-cveInterface
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-jquery
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-popper.js
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-bootstrap
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-bootstrap-table
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-bootstrap
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-bootstrap-table
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-sweetalert2
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-ace-editor
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-CVE-Record-Format-bundled.json
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-CVE-Record-Format-bundled-adpContainer.json
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-CVE-Record-Format-bundled-cnaPublishedContainer.json
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-CVE-Record-Format-bundled-cnaRejectedContainer.json
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-adp-tags.json
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-cna-tags.json
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef-reference-tags.json

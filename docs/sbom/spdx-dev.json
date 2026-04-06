@@ -1,0 +1,2008 @@
+{
+  "spdxVersion": "SPDX-2.3",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "cveclient-dev-sbom",
+  "documentNamespace": "https://github.com/CERTCC/cveClient/spdx/dev/bb6913a5-9ec7-440a-a0b0-d3596722e2e1",
+  "creationInfo": {
+    "created": "2026-04-03T22:43:03.259Z",
+    "creators": [
+      "Tool: cveClient-sbom-generator-1.0.25",
+      "Organization: CERT/CC"
+    ]
+  },
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-root",
+      "name": "cveclient",
+      "versionInfo": "1.0.25",
+      "downloadLocation": "https://github.com/CERTCC/cveClient",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "Organization: CERT/CC",
+      "primaryPackagePurpose": "APPLICATION"
+    },
+    {
+      "SPDXID": "SPDXRef-jsdom",
+      "name": "jsdom",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "26.1.0"
+    },
+    {
+      "SPDXID": "SPDXRef-vitest",
+      "name": "vitest",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "3.2.4"
+    },
+    {
+      "SPDXID": "SPDXRef--asamuzakjp-css-color",
+      "name": "@asamuzakjp/css-color",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "3.2.0"
+    },
+    {
+      "SPDXID": "SPDXRef--csstools-color-helpers",
+      "name": "@csstools/color-helpers",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT-0",
+      "licenseDeclared": "MIT-0",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "5.1.0"
+    },
+    {
+      "SPDXID": "SPDXRef--csstools-css-calc",
+      "name": "@csstools/css-calc",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "2.1.4"
+    },
+    {
+      "SPDXID": "SPDXRef--csstools-css-color-parser",
+      "name": "@csstools/css-color-parser",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "3.1.0"
+    },
+    {
+      "SPDXID": "SPDXRef--csstools-css-parser-algorithms",
+      "name": "@csstools/css-parser-algorithms",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "3.0.5"
+    },
+    {
+      "SPDXID": "SPDXRef--csstools-css-tokenizer",
+      "name": "@csstools/css-tokenizer",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "3.0.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-aix-ppc64",
+      "name": "@esbuild/aix-ppc64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-android-arm",
+      "name": "@esbuild/android-arm",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-android-arm64",
+      "name": "@esbuild/android-arm64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-android-x64",
+      "name": "@esbuild/android-x64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-darwin-arm64",
+      "name": "@esbuild/darwin-arm64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-darwin-x64",
+      "name": "@esbuild/darwin-x64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-freebsd-arm64",
+      "name": "@esbuild/freebsd-arm64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-freebsd-x64",
+      "name": "@esbuild/freebsd-x64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-linux-arm",
+      "name": "@esbuild/linux-arm",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-linux-arm64",
+      "name": "@esbuild/linux-arm64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-linux-ia32",
+      "name": "@esbuild/linux-ia32",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-linux-loong64",
+      "name": "@esbuild/linux-loong64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-linux-mips64el",
+      "name": "@esbuild/linux-mips64el",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-linux-ppc64",
+      "name": "@esbuild/linux-ppc64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-linux-riscv64",
+      "name": "@esbuild/linux-riscv64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-linux-s390x",
+      "name": "@esbuild/linux-s390x",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-linux-x64",
+      "name": "@esbuild/linux-x64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-netbsd-arm64",
+      "name": "@esbuild/netbsd-arm64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-netbsd-x64",
+      "name": "@esbuild/netbsd-x64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-openbsd-arm64",
+      "name": "@esbuild/openbsd-arm64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-openbsd-x64",
+      "name": "@esbuild/openbsd-x64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-openharmony-arm64",
+      "name": "@esbuild/openharmony-arm64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-sunos-x64",
+      "name": "@esbuild/sunos-x64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-win32-arm64",
+      "name": "@esbuild/win32-arm64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-win32-ia32",
+      "name": "@esbuild/win32-ia32",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--esbuild-win32-x64",
+      "name": "@esbuild/win32-x64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef--jridgewell-sourcemap-codec",
+      "name": "@jridgewell/sourcemap-codec",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "1.5.5"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-android-arm-eabi",
+      "name": "@rollup/rollup-android-arm-eabi",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-android-arm64",
+      "name": "@rollup/rollup-android-arm64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-darwin-arm64",
+      "name": "@rollup/rollup-darwin-arm64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-darwin-x64",
+      "name": "@rollup/rollup-darwin-x64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-freebsd-arm64",
+      "name": "@rollup/rollup-freebsd-arm64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-freebsd-x64",
+      "name": "@rollup/rollup-freebsd-x64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-linux-arm-gnueabihf",
+      "name": "@rollup/rollup-linux-arm-gnueabihf",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-linux-arm-musleabihf",
+      "name": "@rollup/rollup-linux-arm-musleabihf",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-linux-arm64-gnu",
+      "name": "@rollup/rollup-linux-arm64-gnu",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-linux-arm64-musl",
+      "name": "@rollup/rollup-linux-arm64-musl",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-linux-loong64-gnu",
+      "name": "@rollup/rollup-linux-loong64-gnu",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-linux-loong64-musl",
+      "name": "@rollup/rollup-linux-loong64-musl",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-linux-ppc64-gnu",
+      "name": "@rollup/rollup-linux-ppc64-gnu",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-linux-ppc64-musl",
+      "name": "@rollup/rollup-linux-ppc64-musl",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-linux-riscv64-gnu",
+      "name": "@rollup/rollup-linux-riscv64-gnu",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-linux-riscv64-musl",
+      "name": "@rollup/rollup-linux-riscv64-musl",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-linux-s390x-gnu",
+      "name": "@rollup/rollup-linux-s390x-gnu",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-linux-x64-gnu",
+      "name": "@rollup/rollup-linux-x64-gnu",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-linux-x64-musl",
+      "name": "@rollup/rollup-linux-x64-musl",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-openbsd-x64",
+      "name": "@rollup/rollup-openbsd-x64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-openharmony-arm64",
+      "name": "@rollup/rollup-openharmony-arm64",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-win32-arm64-msvc",
+      "name": "@rollup/rollup-win32-arm64-msvc",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-win32-ia32-msvc",
+      "name": "@rollup/rollup-win32-ia32-msvc",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-win32-x64-gnu",
+      "name": "@rollup/rollup-win32-x64-gnu",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--rollup-rollup-win32-x64-msvc",
+      "name": "@rollup/rollup-win32-x64-msvc",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef--types-chai",
+      "name": "@types/chai",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "5.2.3"
+    },
+    {
+      "SPDXID": "SPDXRef--types-deep-eql",
+      "name": "@types/deep-eql",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.0.2"
+    },
+    {
+      "SPDXID": "SPDXRef--types-estree",
+      "name": "@types/estree",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "1.0.8"
+    },
+    {
+      "SPDXID": "SPDXRef--vitest-expect",
+      "name": "@vitest/expect",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "3.2.4"
+    },
+    {
+      "SPDXID": "SPDXRef--vitest-mocker",
+      "name": "@vitest/mocker",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "3.2.4"
+    },
+    {
+      "SPDXID": "SPDXRef--vitest-pretty-format",
+      "name": "@vitest/pretty-format",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "3.2.4"
+    },
+    {
+      "SPDXID": "SPDXRef--vitest-runner",
+      "name": "@vitest/runner",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "3.2.4"
+    },
+    {
+      "SPDXID": "SPDXRef--vitest-snapshot",
+      "name": "@vitest/snapshot",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "3.2.4"
+    },
+    {
+      "SPDXID": "SPDXRef--vitest-spy",
+      "name": "@vitest/spy",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "3.2.4"
+    },
+    {
+      "SPDXID": "SPDXRef--vitest-utils",
+      "name": "@vitest/utils",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "3.2.4"
+    },
+    {
+      "SPDXID": "SPDXRef-agent-base",
+      "name": "agent-base",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "7.1.4"
+    },
+    {
+      "SPDXID": "SPDXRef-assertion-error",
+      "name": "assertion-error",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "2.0.1"
+    },
+    {
+      "SPDXID": "SPDXRef-cac",
+      "name": "cac",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "6.7.14"
+    },
+    {
+      "SPDXID": "SPDXRef-chai",
+      "name": "chai",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "5.3.3"
+    },
+    {
+      "SPDXID": "SPDXRef-check-error",
+      "name": "check-error",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "2.1.3"
+    },
+    {
+      "SPDXID": "SPDXRef-cssstyle",
+      "name": "cssstyle",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.6.0"
+    },
+    {
+      "SPDXID": "SPDXRef-data-urls",
+      "name": "data-urls",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "5.0.0"
+    },
+    {
+      "SPDXID": "SPDXRef-debug",
+      "name": "debug",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.4.3"
+    },
+    {
+      "SPDXID": "SPDXRef-decimal.js",
+      "name": "decimal.js",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "10.6.0"
+    },
+    {
+      "SPDXID": "SPDXRef-deep-eql",
+      "name": "deep-eql",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "5.0.2"
+    },
+    {
+      "SPDXID": "SPDXRef-entities",
+      "name": "entities",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "BSD-2-Clause",
+      "licenseDeclared": "BSD-2-Clause",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "6.0.1"
+    },
+    {
+      "SPDXID": "SPDXRef-es-module-lexer",
+      "name": "es-module-lexer",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "1.7.0"
+    },
+    {
+      "SPDXID": "SPDXRef-esbuild",
+      "name": "esbuild",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.27.4"
+    },
+    {
+      "SPDXID": "SPDXRef-estree-walker",
+      "name": "estree-walker",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "3.0.3"
+    },
+    {
+      "SPDXID": "SPDXRef-expect-type",
+      "name": "expect-type",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "1.3.0"
+    },
+    {
+      "SPDXID": "SPDXRef-fdir",
+      "name": "fdir",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "6.5.0"
+    },
+    {
+      "SPDXID": "SPDXRef-fsevents",
+      "name": "fsevents",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "2.3.3"
+    },
+    {
+      "SPDXID": "SPDXRef-html-encoding-sniffer",
+      "name": "html-encoding-sniffer",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.0.0"
+    },
+    {
+      "SPDXID": "SPDXRef-http-proxy-agent",
+      "name": "http-proxy-agent",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "7.0.2"
+    },
+    {
+      "SPDXID": "SPDXRef-https-proxy-agent",
+      "name": "https-proxy-agent",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "7.0.6"
+    },
+    {
+      "SPDXID": "SPDXRef-iconv-lite",
+      "name": "iconv-lite",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.6.3"
+    },
+    {
+      "SPDXID": "SPDXRef-is-potential-custom-element-name",
+      "name": "is-potential-custom-element-name",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "1.0.1"
+    },
+    {
+      "SPDXID": "SPDXRef-js-tokens",
+      "name": "js-tokens",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "9.0.1"
+    },
+    {
+      "SPDXID": "SPDXRef-loupe",
+      "name": "loupe",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "3.2.1"
+    },
+    {
+      "SPDXID": "SPDXRef-lru-cache",
+      "name": "lru-cache",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "ISC",
+      "licenseDeclared": "ISC",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "10.4.3"
+    },
+    {
+      "SPDXID": "SPDXRef-magic-string",
+      "name": "magic-string",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.30.21"
+    },
+    {
+      "SPDXID": "SPDXRef-ms",
+      "name": "ms",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "2.1.3"
+    },
+    {
+      "SPDXID": "SPDXRef-nanoid",
+      "name": "nanoid",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "3.3.11"
+    },
+    {
+      "SPDXID": "SPDXRef-nwsapi",
+      "name": "nwsapi",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "2.2.23"
+    },
+    {
+      "SPDXID": "SPDXRef-parse5",
+      "name": "parse5",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "7.3.0"
+    },
+    {
+      "SPDXID": "SPDXRef-pathe",
+      "name": "pathe",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "2.0.3"
+    },
+    {
+      "SPDXID": "SPDXRef-pathval",
+      "name": "pathval",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "2.0.1"
+    },
+    {
+      "SPDXID": "SPDXRef-picocolors",
+      "name": "picocolors",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "ISC",
+      "licenseDeclared": "ISC",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "1.1.1"
+    },
+    {
+      "SPDXID": "SPDXRef-picomatch",
+      "name": "picomatch",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.0.4"
+    },
+    {
+      "SPDXID": "SPDXRef-postcss",
+      "name": "postcss",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "8.5.8"
+    },
+    {
+      "SPDXID": "SPDXRef-punycode",
+      "name": "punycode",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "2.3.1"
+    },
+    {
+      "SPDXID": "SPDXRef-rollup",
+      "name": "rollup",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.60.1"
+    },
+    {
+      "SPDXID": "SPDXRef-rrweb-cssom",
+      "name": "rrweb-cssom",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.8.0"
+    },
+    {
+      "SPDXID": "SPDXRef-safer-buffer",
+      "name": "safer-buffer",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "2.1.2"
+    },
+    {
+      "SPDXID": "SPDXRef-saxes",
+      "name": "saxes",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "ISC",
+      "licenseDeclared": "ISC",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "6.0.0"
+    },
+    {
+      "SPDXID": "SPDXRef-siginfo",
+      "name": "siginfo",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "ISC",
+      "licenseDeclared": "ISC",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "2.0.0"
+    },
+    {
+      "SPDXID": "SPDXRef-source-map-js",
+      "name": "source-map-js",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "1.2.1"
+    },
+    {
+      "SPDXID": "SPDXRef-stackback",
+      "name": "stackback",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.0.2"
+    },
+    {
+      "SPDXID": "SPDXRef-std-env",
+      "name": "std-env",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "3.10.0"
+    },
+    {
+      "SPDXID": "SPDXRef-strip-literal",
+      "name": "strip-literal",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "3.1.0"
+    },
+    {
+      "SPDXID": "SPDXRef-symbol-tree",
+      "name": "symbol-tree",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "3.2.4"
+    },
+    {
+      "SPDXID": "SPDXRef-tinybench",
+      "name": "tinybench",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "2.9.0"
+    },
+    {
+      "SPDXID": "SPDXRef-tinyexec",
+      "name": "tinyexec",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.3.2"
+    },
+    {
+      "SPDXID": "SPDXRef-tinyglobby",
+      "name": "tinyglobby",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "0.2.15"
+    },
+    {
+      "SPDXID": "SPDXRef-tinypool",
+      "name": "tinypool",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "1.1.1"
+    },
+    {
+      "SPDXID": "SPDXRef-tinyrainbow",
+      "name": "tinyrainbow",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "2.0.0"
+    },
+    {
+      "SPDXID": "SPDXRef-tinyspy",
+      "name": "tinyspy",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.0.4"
+    },
+    {
+      "SPDXID": "SPDXRef-tldts",
+      "name": "tldts",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "6.1.86"
+    },
+    {
+      "SPDXID": "SPDXRef-tldts-core",
+      "name": "tldts-core",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "6.1.86"
+    },
+    {
+      "SPDXID": "SPDXRef-tough-cookie",
+      "name": "tough-cookie",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "5.1.2"
+    },
+    {
+      "SPDXID": "SPDXRef-tr46",
+      "name": "tr46",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "5.1.1"
+    },
+    {
+      "SPDXID": "SPDXRef-vite",
+      "name": "vite",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "7.3.1"
+    },
+    {
+      "SPDXID": "SPDXRef-vite-node",
+      "name": "vite-node",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "3.2.4"
+    },
+    {
+      "SPDXID": "SPDXRef-w3c-xmlserializer",
+      "name": "w3c-xmlserializer",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "5.0.0"
+    },
+    {
+      "SPDXID": "SPDXRef-webidl-conversions",
+      "name": "webidl-conversions",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "BSD-2-Clause",
+      "licenseDeclared": "BSD-2-Clause",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "7.0.0"
+    },
+    {
+      "SPDXID": "SPDXRef-whatwg-encoding",
+      "name": "whatwg-encoding",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "3.1.1"
+    },
+    {
+      "SPDXID": "SPDXRef-whatwg-mimetype",
+      "name": "whatwg-mimetype",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "4.0.0"
+    },
+    {
+      "SPDXID": "SPDXRef-whatwg-url",
+      "name": "whatwg-url",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "14.2.0"
+    },
+    {
+      "SPDXID": "SPDXRef-why-is-node-running",
+      "name": "why-is-node-running",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "2.3.0"
+    },
+    {
+      "SPDXID": "SPDXRef-ws",
+      "name": "ws",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "8.20.0"
+    },
+    {
+      "SPDXID": "SPDXRef-xml-name-validator",
+      "name": "xml-name-validator",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "5.0.0"
+    },
+    {
+      "SPDXID": "SPDXRef-xmlchars",
+      "name": "xmlchars",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "2.2.0"
+    },
+    {
+      "SPDXID": "SPDXRef-actions-checkout",
+      "name": "actions/checkout",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "v4"
+    },
+    {
+      "SPDXID": "SPDXRef-actions-setup-node",
+      "name": "actions/setup-node",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "v4"
+    },
+    {
+      "SPDXID": "SPDXRef-actions-checkout",
+      "name": "actions/checkout",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "v6"
+    },
+    {
+      "SPDXID": "SPDXRef-actions-setup-node",
+      "name": "actions/setup-node",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "versionInfo": "v6"
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relatedSpdxElement": "SPDXRef-root",
+      "relationshipType": "DESCRIBES"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-jsdom",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-vitest",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--asamuzakjp-css-color",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--csstools-color-helpers",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--csstools-css-calc",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--csstools-css-color-parser",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--csstools-css-parser-algorithms",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--csstools-css-tokenizer",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-aix-ppc64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-android-arm",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-android-arm64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-android-x64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-darwin-arm64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-darwin-x64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-freebsd-arm64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-freebsd-x64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-linux-arm",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-linux-arm64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-linux-ia32",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-linux-loong64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-linux-mips64el",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-linux-ppc64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-linux-riscv64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-linux-s390x",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-linux-x64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-netbsd-arm64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-netbsd-x64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-openbsd-arm64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-openbsd-x64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-openharmony-arm64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-sunos-x64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-win32-arm64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-win32-ia32",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--esbuild-win32-x64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--jridgewell-sourcemap-codec",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-android-arm-eabi",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-android-arm64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-darwin-arm64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-darwin-x64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-freebsd-arm64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-freebsd-x64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-linux-arm-gnueabihf",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-linux-arm-musleabihf",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-linux-arm64-gnu",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-linux-arm64-musl",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-linux-loong64-gnu",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-linux-loong64-musl",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-linux-ppc64-gnu",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-linux-ppc64-musl",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-linux-riscv64-gnu",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-linux-riscv64-musl",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-linux-s390x-gnu",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-linux-x64-gnu",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-linux-x64-musl",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-openbsd-x64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-openharmony-arm64",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-win32-arm64-msvc",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-win32-ia32-msvc",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-win32-x64-gnu",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--rollup-rollup-win32-x64-msvc",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--types-chai",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--types-deep-eql",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--types-estree",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--vitest-expect",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--vitest-mocker",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--vitest-pretty-format",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--vitest-runner",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--vitest-snapshot",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--vitest-spy",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef--vitest-utils",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-agent-base",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-assertion-error",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-cac",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-chai",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-check-error",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-cssstyle",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-data-urls",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-debug",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-decimal.js",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-deep-eql",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-entities",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-es-module-lexer",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-esbuild",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-estree-walker",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-expect-type",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-fdir",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-fsevents",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-html-encoding-sniffer",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-http-proxy-agent",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-https-proxy-agent",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-iconv-lite",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-is-potential-custom-element-name",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-js-tokens",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-loupe",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-lru-cache",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-magic-string",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-ms",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-nanoid",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-nwsapi",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-parse5",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-pathe",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-pathval",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-picocolors",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-picomatch",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-postcss",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-punycode",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-rollup",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-rrweb-cssom",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-safer-buffer",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-saxes",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-siginfo",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-source-map-js",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-stackback",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-std-env",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-strip-literal",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-symbol-tree",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-tinybench",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-tinyexec",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-tinyglobby",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-tinypool",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-tinyrainbow",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-tinyspy",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-tldts",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-tldts-core",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-tough-cookie",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-tr46",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-vite",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-vite-node",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-w3c-xmlserializer",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-webidl-conversions",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-whatwg-encoding",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-whatwg-mimetype",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-whatwg-url",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-why-is-node-running",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-ws",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-xml-name-validator",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-xmlchars",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-actions-checkout",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-actions-setup-node",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-actions-checkout",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-root",
+      "relatedSpdxElement": "SPDXRef-actions-setup-node",
+      "relationshipType": "DEPENDS_ON"
+    }
+  ]
+}
