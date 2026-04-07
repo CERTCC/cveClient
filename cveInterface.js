@@ -1228,14 +1228,14 @@ function safeHTML(uinput) {
 }
 function gname(name, row) {
   var append = "";
-  if (row.secret) append = " &#128273 ";
-  if (!name && row.username) return safeHTML(row.username);
+  if (row.secret) append = " &#128273; ";
+  if (!name && row.username) return safeHTML(row.username) + append;
   if (!name.first) {
-    if (!name.last) return safeHTML(row.username + append);
-    else return safeHTML(name.last + append);
+    if (!name.last) return safeHTML(row.username) + append;
+    else return safeHTML(name.last) + append;
   }
-  if (!name.last) return safeHTML(name.first + append);
-  return safeHTML(name.first + " " + name.last + append);
+  if (!name.last) return safeHTML(name.first) + append;
+  return safeHTML(name.first + " " + name.last) + append;
 }
 function gsort(name1, name2, row1, row2) {
   let nameA = gname(name1, row1).toUpperCase();
@@ -1536,7 +1536,7 @@ async function update_user_status(w) {
       "User (" +
         safeHTML(username) +
         ") Active status has been " +
-        "updated to >[" +
+        "updated to [" +
         String(f.active) +
         "]",
       4000,
