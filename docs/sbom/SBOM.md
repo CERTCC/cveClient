@@ -1,6 +1,6 @@
 # Software Bill of Materials - cveclient
 
-**Version:** 1.0.25 | **License:** MIT | **Generated:** 2026-04-03
+**Version:** 1.0.25 | **License:** MIT | **Generated:** 2026-04-07
 
 ## Runtime Components
 
@@ -182,7 +182,7 @@
 | tldts-core | 6.1.86 | MIT |
 | tough-cookie | 5.1.2 | BSD-3-Clause |
 | tr46 | 5.1.1 | MIT |
-| vite | 7.3.1 | MIT |
+| vite | 7.3.2 | MIT |
 | vite-node | 3.2.4 | MIT |
 | w3c-xmlserializer | 5.0.0 | MIT |
 | webidl-conversions | 7.0.0 | BSD-2-Clause |
