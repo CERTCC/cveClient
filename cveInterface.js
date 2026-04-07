@@ -483,14 +483,14 @@ function urlprompt(w) {
 function check_admin() {
   /* Either secretrait or CNA Admin can do reset 
        API keys and Add Users */
-  if (
+    if ( Array.isArray(get_deep(client,"orgobj.authority.active_roles")) &&
     client.orgobj.authority.active_roles.findIndex(function (n) {
       return n == "SECRETARIAT";
     }) > -1
   ) {
     $(".admin").show();
     return 1;
-  } else if (
+  } else if ( Array.isArray(get_deep(client,"userobj.authority.active_roles")) &&
     client.userobj.authority.active_roles.findIndex(function (n) {
       return n == "ADMIN";
     }) > -1
@@ -1536,9 +1536,9 @@ async function update_user_status(w) {
       "User (" +
         safeHTML(username) +
         ") Active status has been " +
-        "updated to <b>[" +
+        "updated to >[" +
         String(f.active) +
-        "]</b>",
+        "]",
       4000,
     );
     setTimeout(function () {
