@@ -483,14 +483,14 @@ function urlprompt(w) {
 function check_admin() {
   /* Either secretrait or CNA Admin can do reset 
        API keys and Add Users */
-  if (
+    if ( Array.isArray(get_deep(client,"orgobj.authority.active_roles")) &&
     client.orgobj.authority.active_roles.findIndex(function (n) {
       return n == "SECRETARIAT";
     }) > -1
   ) {
     $(".admin").show();
     return 1;
-  } else if (
+  } else if ( Array.isArray(get_deep(client,"userobj.authority.active_roles")) &&
     client.userobj.authority.active_roles.findIndex(function (n) {
       return n == "ADMIN";
     }) > -1
@@ -1228,14 +1228,14 @@ function safeHTML(uinput) {
 }
 function gname(name, row) {
   var append = "";
-  if (row.secret) append = " &#128273 ";
-  if (!name && row.username) return safeHTML(row.username);
+  if (row.secret) append = " &#128273; ";
+  if (!name && row.username) return safeHTML(row.username) + append;
   if (!name.first) {
-    if (!name.last) return safeHTML(row.username + append);
-    else return safeHTML(name.last + append);
+    if (!name.last) return safeHTML(row.username) + append;
+    else return safeHTML(name.last) + append;
   }
-  if (!name.last) return safeHTML(name.first + append);
-  return safeHTML(name.first + " " + name.last + append);
+  if (!name.last) return safeHTML(name.first) + append;
+  return safeHTML(name.first + " " + name.last) + append;
 }
 function gsort(name1, name2, row1, row2) {
   let nameA = gname(name1, row1).toUpperCase();
@@ -1536,9 +1536,9 @@ async function update_user_status(w) {
       "User (" +
         safeHTML(username) +
         ") Active status has been " +
-        "updated to <b>[" +
+        "updated to [" +
         String(f.active) +
-        "]</b>",
+        "]",
       4000,
     );
     setTimeout(function () {
