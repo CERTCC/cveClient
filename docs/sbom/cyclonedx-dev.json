@@ -2,10 +2,10 @@
   "$schema": "https://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:7756160e-113e-428c-a894-15c8a0e73c07",
+  "serialNumber": "urn:uuid:a23d603e-636a-4aa4-b50e-cdc1a5c2f6a8",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-04-03T22:43:03.258Z",
+    "timestamp": "2026-04-08T18:09:12.093Z",
     "tools": [
       {
         "name": "cveClient-sbom-generator",
@@ -1667,8 +1667,8 @@
     {
       "type": "library",
       "name": "vite",
-      "version": "7.3.1",
-      "purl": "pkg:npm/vite@7.3.1",
+      "version": "7.3.2",
+      "purl": "pkg:npm/vite@7.3.2",
       "licenses": [
         {
           "license": {

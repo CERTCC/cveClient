@@ -2,10 +2,10 @@
   "$schema": "https://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:9dcbad95-a14b-4d34-8d21-ae1d6263d076",
+  "serialNumber": "urn:uuid:5469169b-cf3e-43d8-b539-60d61d90eaa1",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-04-03T22:43:03.258Z",
+    "timestamp": "2026-04-08T18:09:12.092Z",
     "tools": [
       {
         "name": "cveClient-sbom-generator",
