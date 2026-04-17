@@ -1,8 +1,8 @@
 # cveClient Changelog
 
 ## Version 1.0.25 — 2026-03-28
-- Bug: Bug fix in `cveClientLib.js` where query params such {active: false} will not work due to weak coercion
-- Updated `cveClientLib.js` to version 1.0.26, should support npm usage as well.
+- Bug: Bug fix in `cveClientlib.js` where query params such {active: false} will not work due to weak coercion
+- Updated `cveClientlib.js` to version 1.0.26, should support npm usage as well.
 
 ## Version 1.0.24 — 2026-03-28
 
