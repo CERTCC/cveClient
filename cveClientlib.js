@@ -5,7 +5,30 @@ class cveClient {
 	this.key = key;
 	this.url = url;
 	this.user_path = "/org/" + this.org + "/user/" + this.user;
-	this._version = "1.0.25";
+	this._version = "1.0.26";
+    }
+    /* Safely build query string */
+    _buildQuery(qvars) {
+	if (!qvars) return "";
+
+	const params = new URLSearchParams();
+
+	Object.entries(qvars).forEach(([key, val]) => {
+            /* Skip only null/undefined */
+            if (val == null) return;
+            /* Handle arrays (common in APIs) */
+            if (Array.isArray(val)) {
+		val.forEach(v => {
+                    if (v != null) params.append(key, String(v));
+		});
+		return;
+            }
+
+            /* Normalize everything else */
+            params.append(key, String(val));
+	});
+
+	return params.toString();
     }
     /* PUT /cve/{id}/adp — the only ADP endpoint per CVE Services API spec
        See https://cveawg.mitre.org/api-docs/ */
@@ -139,21 +162,13 @@ class cveClient {
 	if(!opts) {
 	    opts = {method:'GET'};
 	}
-	if(qvars) { 
-	    var qstr = new URLSearchParams();
-	    Object.keys(qvars).forEach(function(x) {
-		/* Remove empty values in query_string 
-		   strange issue #11 when changing user's information
-		   see https://github.com/CERTCC/cveClient/issues/11
-		 */
-		if(qvars[x] != "") 
-		    qstr.append(x,qvars[x]);
-	    });
-	    url.search = qstr.toString();
+	const qs = this._buildQuery(qvars);
+	if (qs) {
+            url.search = qs;
 	}
 	if(!('headers' in opts))
 	    opts.headers = {};	
-	opts.headers = Object.assign({},opts.headers,
+	opts.headers = Object.assign({}, opts.headers || {},
 				     {'CVE-API-KEY': this.key,
 				      'CVE-API-ORG': this.org,
 				      'CVE-API-USER': this.user });

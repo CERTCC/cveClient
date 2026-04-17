@@ -1,10 +1,14 @@
 # cveClient Changelog
 
+## Version 1.0.25 — 2026-03-28
+- Bug: Bug fix in `cveClientLib.js` where query params such {active: false} will not work due to weak coercion
+- Updated `cveClientLib.js` to version 1.0.26, should support npm usage as well.
+
 ## Version 1.0.24 — 2026-03-28
 
-- Security: Fixed XSS vulnerability — use `.text()` instead of `.html()` for CVE ID in modal title
-- Security: Prevent plaintext API key storage and harden encryption key handling
-- Security: Added prototype pollution protection to `queryParser` and removed sensitive logging
+- Security: Fixed XSS vulnerability — use `.text()` instead of `.html()` for CVE ID in modal title CVE-2026-35466
+- Security: Prevent plaintext API key storage and harden encryption key handling CVE-2026-35467
+- Security: Added prototype pollution protection to `queryParser` and removed sensitive logging CVE-2026-35466
 - Updated SweetAlert2 from 11.4.9 to 11.26.24
 - Made schema references version-agnostic with automatic schema version detection
 - Added ADP (Authorized Data Publisher) read and delete support
