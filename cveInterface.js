@@ -69,6 +69,11 @@ function copyAndOpenAI() {
   var prompt = document.getElementById("aiReviewPrompt").value;
   var provider = document.getElementById("aiProvider").value;
   var url = _ai_providers[provider] || _ai_providers.chatgpt;
+  if (provider == "chatgpt") {
+    const prompt_url = new URL(url);
+    prompt_url.search = new URLSearchParams({prompt: prompt});
+    url = prompt_url.toString();
+  }
   navigator.clipboard
     .writeText(prompt)
     .then(function () {
