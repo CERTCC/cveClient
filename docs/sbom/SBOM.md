@@ -1,6 +1,6 @@
 # Software Bill of Materials - cveclient
 
-**Version:** 1.0.25 | **License:** MIT | **Generated:** 2026-04-03
+**Version:** 1.0.25 | **License:** MIT | **Generated:** 2026-06-02
 
 ## Runtime Components
 
@@ -9,7 +9,7 @@
 | Component | File | Version | License |
 |-----------|------|---------|---------|
 | cveInterface | cveInterface.js | 1.0.25 | MIT |
-| cveClientlib | cveClientlib.js | 1.0.25 | MIT |
+| cveClientlib | cveClientlib.js | 1.0.26 | MIT |
 | schemaToForm | schemaToForm.js | 1.0.10 | MIT |
 | autoCompleter | autoCompleter.js | 1.0.12 | MIT |
 | encrypt-storage | encrypt-storage.js | 1.1.15 | MIT |
@@ -52,9 +52,9 @@
 | Package | Version | License |
 |---------|---------|---------|
 | jsdom | 26.1.0 | MIT |
-| vitest | 3.2.4 | MIT |
+| vitest | 4.1.0 | MIT |
 
-<details><summary>Transitive npm dependencies (135)</summary>
+<details><summary>Transitive npm dependencies (112)</summary>
 
 | Package | Version | License |
 |---------|---------|---------|
@@ -64,81 +64,51 @@
 | @csstools/css-color-parser | 3.1.0 | MIT |
 | @csstools/css-parser-algorithms | 3.0.5 | MIT |
 | @csstools/css-tokenizer | 3.0.4 | MIT |
-| @esbuild/aix-ppc64 | 0.27.4 | MIT |
-| @esbuild/android-arm | 0.27.4 | MIT |
-| @esbuild/android-arm64 | 0.27.4 | MIT |
-| @esbuild/android-x64 | 0.27.4 | MIT |
-| @esbuild/darwin-arm64 | 0.27.4 | MIT |
-| @esbuild/darwin-x64 | 0.27.4 | MIT |
-| @esbuild/freebsd-arm64 | 0.27.4 | MIT |
-| @esbuild/freebsd-x64 | 0.27.4 | MIT |
-| @esbuild/linux-arm | 0.27.4 | MIT |
-| @esbuild/linux-arm64 | 0.27.4 | MIT |
-| @esbuild/linux-ia32 | 0.27.4 | MIT |
-| @esbuild/linux-loong64 | 0.27.4 | MIT |
-| @esbuild/linux-mips64el | 0.27.4 | MIT |
-| @esbuild/linux-ppc64 | 0.27.4 | MIT |
-| @esbuild/linux-riscv64 | 0.27.4 | MIT |
-| @esbuild/linux-s390x | 0.27.4 | MIT |
-| @esbuild/linux-x64 | 0.27.4 | MIT |
-| @esbuild/netbsd-arm64 | 0.27.4 | MIT |
-| @esbuild/netbsd-x64 | 0.27.4 | MIT |
-| @esbuild/openbsd-arm64 | 0.27.4 | MIT |
-| @esbuild/openbsd-x64 | 0.27.4 | MIT |
-| @esbuild/openharmony-arm64 | 0.27.4 | MIT |
-| @esbuild/sunos-x64 | 0.27.4 | MIT |
-| @esbuild/win32-arm64 | 0.27.4 | MIT |
-| @esbuild/win32-ia32 | 0.27.4 | MIT |
-| @esbuild/win32-x64 | 0.27.4 | MIT |
+| @emnapi/core | 1.10.0 | MIT |
+| @emnapi/runtime | 1.10.0 | MIT |
+| @emnapi/wasi-threads | 1.2.1 | MIT |
 | @jridgewell/sourcemap-codec | 1.5.5 | MIT |
-| @rollup/rollup-android-arm-eabi | 4.60.1 | MIT |
-| @rollup/rollup-android-arm64 | 4.60.1 | MIT |
-| @rollup/rollup-darwin-arm64 | 4.60.1 | MIT |
-| @rollup/rollup-darwin-x64 | 4.60.1 | MIT |
-| @rollup/rollup-freebsd-arm64 | 4.60.1 | MIT |
-| @rollup/rollup-freebsd-x64 | 4.60.1 | MIT |
-| @rollup/rollup-linux-arm-gnueabihf | 4.60.1 | MIT |
-| @rollup/rollup-linux-arm-musleabihf | 4.60.1 | MIT |
-| @rollup/rollup-linux-arm64-gnu | 4.60.1 | MIT |
-| @rollup/rollup-linux-arm64-musl | 4.60.1 | MIT |
-| @rollup/rollup-linux-loong64-gnu | 4.60.1 | MIT |
-| @rollup/rollup-linux-loong64-musl | 4.60.1 | MIT |
-| @rollup/rollup-linux-ppc64-gnu | 4.60.1 | MIT |
-| @rollup/rollup-linux-ppc64-musl | 4.60.1 | MIT |
-| @rollup/rollup-linux-riscv64-gnu | 4.60.1 | MIT |
-| @rollup/rollup-linux-riscv64-musl | 4.60.1 | MIT |
-| @rollup/rollup-linux-s390x-gnu | 4.60.1 | MIT |
-| @rollup/rollup-linux-x64-gnu | 4.60.1 | MIT |
-| @rollup/rollup-linux-x64-musl | 4.60.1 | MIT |
-| @rollup/rollup-openbsd-x64 | 4.60.1 | MIT |
-| @rollup/rollup-openharmony-arm64 | 4.60.1 | MIT |
-| @rollup/rollup-win32-arm64-msvc | 4.60.1 | MIT |
-| @rollup/rollup-win32-ia32-msvc | 4.60.1 | MIT |
-| @rollup/rollup-win32-x64-gnu | 4.60.1 | MIT |
-| @rollup/rollup-win32-x64-msvc | 4.60.1 | MIT |
+| @napi-rs/wasm-runtime | 1.1.4 | MIT |
+| @oxc-project/types | 0.133.0 | MIT |
+| @rolldown/binding-android-arm64 | 1.0.3 | MIT |
+| @rolldown/binding-darwin-arm64 | 1.0.3 | MIT |
+| @rolldown/binding-darwin-x64 | 1.0.3 | MIT |
+| @rolldown/binding-freebsd-x64 | 1.0.3 | MIT |
+| @rolldown/binding-linux-arm-gnueabihf | 1.0.3 | MIT |
+| @rolldown/binding-linux-arm64-gnu | 1.0.3 | MIT |
+| @rolldown/binding-linux-arm64-musl | 1.0.3 | MIT |
+| @rolldown/binding-linux-ppc64-gnu | 1.0.3 | MIT |
+| @rolldown/binding-linux-s390x-gnu | 1.0.3 | MIT |
+| @rolldown/binding-linux-x64-gnu | 1.0.3 | MIT |
+| @rolldown/binding-linux-x64-musl | 1.0.3 | MIT |
+| @rolldown/binding-openharmony-arm64 | 1.0.3 | MIT |
+| @rolldown/binding-wasm32-wasi | 1.0.3 | MIT |
+| @rolldown/binding-win32-arm64-msvc | 1.0.3 | MIT |
+| @rolldown/binding-win32-x64-msvc | 1.0.3 | MIT |
+| @rolldown/pluginutils | 1.0.1 | MIT |
+| @standard-schema/spec | 1.1.0 | MIT |
+| @tybys/wasm-util | 0.10.2 | MIT |
 | @types/chai | 5.2.3 | MIT |
 | @types/deep-eql | 4.0.2 | MIT |
-| @types/estree | 1.0.8 | MIT |
-| @vitest/expect | 3.2.4 | MIT |
-| @vitest/mocker | 3.2.4 | MIT |
-| @vitest/pretty-format | 3.2.4 | MIT |
-| @vitest/runner | 3.2.4 | MIT |
-| @vitest/snapshot | 3.2.4 | MIT |
-| @vitest/spy | 3.2.4 | MIT |
-| @vitest/utils | 3.2.4 | MIT |
+| @types/estree | 1.0.9 | MIT |
+| @vitest/expect | 4.1.0 | MIT |
+| @vitest/mocker | 4.1.0 | MIT |
+| @vitest/pretty-format | 4.1.0 | MIT |
+| @vitest/runner | 4.1.0 | MIT |
+| @vitest/snapshot | 4.1.0 | MIT |
+| @vitest/spy | 4.1.0 | MIT |
+| @vitest/utils | 4.1.0 | MIT |
 | agent-base | 7.1.4 | MIT |
 | assertion-error | 2.0.1 | MIT |
-| cac | 6.7.14 | MIT |
-| chai | 5.3.3 | MIT |
-| check-error | 2.1.3 | MIT |
+| chai | 6.2.2 | MIT |
+| convert-source-map | 2.0.0 | MIT |
 | cssstyle | 4.6.0 | MIT |
 | data-urls | 5.0.0 | MIT |
 | debug | 4.4.3 | MIT |
 | decimal.js | 10.6.0 | MIT |
-| deep-eql | 5.0.2 | MIT |
+| detect-libc | 2.1.2 | Apache-2.0 |
 | entities | 6.0.1 | BSD-2-Clause |
-| es-module-lexer | 1.7.0 | MIT |
-| esbuild | 0.27.4 | MIT |
+| es-module-lexer | 2.1.0 | MIT |
 | estree-walker | 3.0.3 | MIT |
 | expect-type | 1.3.0 | Apache-2.0 |
 | fdir | 6.5.0 | MIT |
@@ -148,42 +118,49 @@
 | https-proxy-agent | 7.0.6 | MIT |
 | iconv-lite | 0.6.3 | MIT |
 | is-potential-custom-element-name | 1.0.1 | MIT |
-| js-tokens | 9.0.1 | MIT |
-| loupe | 3.2.1 | MIT |
+| lightningcss | 1.32.0 | MPL-2.0 |
+| lightningcss-android-arm64 | 1.32.0 | MPL-2.0 |
+| lightningcss-darwin-arm64 | 1.32.0 | MPL-2.0 |
+| lightningcss-darwin-x64 | 1.32.0 | MPL-2.0 |
+| lightningcss-freebsd-x64 | 1.32.0 | MPL-2.0 |
+| lightningcss-linux-arm-gnueabihf | 1.32.0 | MPL-2.0 |
+| lightningcss-linux-arm64-gnu | 1.32.0 | MPL-2.0 |
+| lightningcss-linux-arm64-musl | 1.32.0 | MPL-2.0 |
+| lightningcss-linux-x64-gnu | 1.32.0 | MPL-2.0 |
+| lightningcss-linux-x64-musl | 1.32.0 | MPL-2.0 |
+| lightningcss-win32-arm64-msvc | 1.32.0 | MPL-2.0 |
+| lightningcss-win32-x64-msvc | 1.32.0 | MPL-2.0 |
 | lru-cache | 10.4.3 | ISC |
 | magic-string | 0.30.21 | MIT |
 | ms | 2.1.3 | MIT |
-| nanoid | 3.3.11 | MIT |
+| nanoid | 3.3.12 | MIT |
 | nwsapi | 2.2.23 | MIT |
+| obug | 2.1.1 | MIT |
 | parse5 | 7.3.0 | MIT |
 | pathe | 2.0.3 | MIT |
-| pathval | 2.0.1 | MIT |
 | picocolors | 1.1.1 | ISC |
 | picomatch | 4.0.4 | MIT |
-| postcss | 8.5.8 | MIT |
+| postcss | 8.5.15 | MIT |
 | punycode | 2.3.1 | MIT |
-| rollup | 4.60.1 | MIT |
+| rolldown | 1.0.3 | MIT |
 | rrweb-cssom | 0.8.0 | MIT |
 | safer-buffer | 2.1.2 | MIT |
 | saxes | 6.0.0 | ISC |
 | siginfo | 2.0.0 | ISC |
 | source-map-js | 1.2.1 | BSD-3-Clause |
 | stackback | 0.0.2 | MIT |
-| std-env | 3.10.0 | MIT |
-| strip-literal | 3.1.0 | MIT |
+| std-env | 4.1.0 | MIT |
 | symbol-tree | 3.2.4 | MIT |
 | tinybench | 2.9.0 | MIT |
-| tinyexec | 0.3.2 | MIT |
-| tinyglobby | 0.2.15 | MIT |
-| tinypool | 1.1.1 | MIT |
-| tinyrainbow | 2.0.0 | MIT |
-| tinyspy | 4.0.4 | MIT |
+| tinyexec | 1.2.4 | MIT |
+| tinyglobby | 0.2.17 | MIT |
+| tinyrainbow | 3.1.0 | MIT |
 | tldts | 6.1.86 | MIT |
 | tldts-core | 6.1.86 | MIT |
 | tough-cookie | 5.1.2 | BSD-3-Clause |
 | tr46 | 5.1.1 | MIT |
-| vite | 7.3.1 | MIT |
-| vite-node | 3.2.4 | MIT |
+| tslib | 2.8.1 | 0BSD |
+| vite | 8.0.16 | MIT |
 | w3c-xmlserializer | 5.0.0 | MIT |
 | webidl-conversions | 7.0.0 | BSD-2-Clause |
 | whatwg-encoding | 3.1.1 | MIT |
