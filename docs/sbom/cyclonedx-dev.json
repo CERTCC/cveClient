@@ -2,10 +2,10 @@
   "$schema": "https://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:7756160e-113e-428c-a894-15c8a0e73c07",
+  "serialNumber": "urn:uuid:5564c035-1ee0-44f5-8886-1b6aa6fa84cc",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-04-03T22:43:03.258Z",
+    "timestamp": "2026-06-02T21:01:24.759Z",
     "tools": [
       {
         "name": "cveClient-sbom-generator",
@@ -42,8 +42,8 @@
     {
       "type": "library",
       "name": "vitest",
-      "version": "3.2.4",
-      "purl": "pkg:npm/vitest@3.2.4",
+      "version": "4.1.0",
+      "purl": "pkg:npm/vitest@4.1.0",
       "licenses": [
         {
           "license": {
@@ -132,9 +132,9 @@
     },
     {
       "type": "library",
-      "name": "@esbuild/aix-ppc64",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/aix-ppc64@0.27.4",
+      "name": "@emnapi/core",
+      "version": "1.10.0",
+      "purl": "pkg:npm/@emnapi/core@1.10.0",
       "licenses": [
         {
           "license": {
@@ -145,9 +145,9 @@
     },
     {
       "type": "library",
-      "name": "@esbuild/android-arm",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/android-arm@0.27.4",
+      "name": "@emnapi/runtime",
+      "version": "1.10.0",
+      "purl": "pkg:npm/@emnapi/runtime@1.10.0",
       "licenses": [
         {
           "license": {
@@ -158,308 +158,9 @@
     },
     {
       "type": "library",
-      "name": "@esbuild/android-arm64",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/android-arm64@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/android-x64",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/android-x64@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/darwin-arm64",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/darwin-arm64@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/darwin-x64",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/darwin-x64@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/freebsd-arm64",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/freebsd-arm64@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/freebsd-x64",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/freebsd-x64@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/linux-arm",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/linux-arm@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/linux-arm64",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/linux-arm64@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/linux-ia32",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/linux-ia32@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/linux-loong64",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/linux-loong64@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/linux-mips64el",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/linux-mips64el@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/linux-ppc64",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/linux-ppc64@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/linux-riscv64",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/linux-riscv64@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/linux-s390x",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/linux-s390x@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/linux-x64",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/linux-x64@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/netbsd-arm64",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/netbsd-arm64@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/netbsd-x64",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/netbsd-x64@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/openbsd-arm64",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/openbsd-arm64@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/openbsd-x64",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/openbsd-x64@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/openharmony-arm64",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/openharmony-arm64@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/sunos-x64",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/sunos-x64@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/win32-arm64",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/win32-arm64@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/win32-ia32",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/win32-ia32@0.27.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@esbuild/win32-x64",
-      "version": "0.27.4",
-      "purl": "pkg:npm/@esbuild/win32-x64@0.27.4",
+      "name": "@emnapi/wasi-threads",
+      "version": "1.2.1",
+      "purl": "pkg:npm/@emnapi/wasi-threads@1.2.1",
       "licenses": [
         {
           "license": {
@@ -483,9 +184,9 @@
     },
     {
       "type": "library",
-      "name": "@rollup/rollup-android-arm-eabi",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-android-arm-eabi@4.60.1",
+      "name": "@napi-rs/wasm-runtime",
+      "version": "1.1.4",
+      "purl": "pkg:npm/@napi-rs/wasm-runtime@1.1.4",
       "licenses": [
         {
           "license": {
@@ -496,9 +197,9 @@
     },
     {
       "type": "library",
-      "name": "@rollup/rollup-android-arm64",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-android-arm64@4.60.1",
+      "name": "@oxc-project/types",
+      "version": "0.133.0",
+      "purl": "pkg:npm/@oxc-project/types@0.133.0",
       "licenses": [
         {
           "license": {
@@ -509,9 +210,9 @@
     },
     {
       "type": "library",
-      "name": "@rollup/rollup-darwin-arm64",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-darwin-arm64@4.60.1",
+      "name": "@rolldown/binding-android-arm64",
+      "version": "1.0.3",
+      "purl": "pkg:npm/@rolldown/binding-android-arm64@1.0.3",
       "licenses": [
         {
           "license": {
@@ -522,9 +223,9 @@
     },
     {
       "type": "library",
-      "name": "@rollup/rollup-darwin-x64",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-darwin-x64@4.60.1",
+      "name": "@rolldown/binding-darwin-arm64",
+      "version": "1.0.3",
+      "purl": "pkg:npm/@rolldown/binding-darwin-arm64@1.0.3",
       "licenses": [
         {
           "license": {
@@ -535,9 +236,9 @@
     },
     {
       "type": "library",
-      "name": "@rollup/rollup-freebsd-arm64",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-freebsd-arm64@4.60.1",
+      "name": "@rolldown/binding-darwin-x64",
+      "version": "1.0.3",
+      "purl": "pkg:npm/@rolldown/binding-darwin-x64@1.0.3",
       "licenses": [
         {
           "license": {
@@ -548,9 +249,9 @@
     },
     {
       "type": "library",
-      "name": "@rollup/rollup-freebsd-x64",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-freebsd-x64@4.60.1",
+      "name": "@rolldown/binding-freebsd-x64",
+      "version": "1.0.3",
+      "purl": "pkg:npm/@rolldown/binding-freebsd-x64@1.0.3",
       "licenses": [
         {
           "license": {
@@ -561,9 +262,9 @@
     },
     {
       "type": "library",
-      "name": "@rollup/rollup-linux-arm-gnueabihf",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-linux-arm-gnueabihf@4.60.1",
+      "name": "@rolldown/binding-linux-arm-gnueabihf",
+      "version": "1.0.3",
+      "purl": "pkg:npm/@rolldown/binding-linux-arm-gnueabihf@1.0.3",
       "licenses": [
         {
           "license": {
@@ -574,9 +275,9 @@
     },
     {
       "type": "library",
-      "name": "@rollup/rollup-linux-arm-musleabihf",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-linux-arm-musleabihf@4.60.1",
+      "name": "@rolldown/binding-linux-arm64-gnu",
+      "version": "1.0.3",
+      "purl": "pkg:npm/@rolldown/binding-linux-arm64-gnu@1.0.3",
       "licenses": [
         {
           "license": {
@@ -587,9 +288,9 @@
     },
     {
       "type": "library",
-      "name": "@rollup/rollup-linux-arm64-gnu",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-linux-arm64-gnu@4.60.1",
+      "name": "@rolldown/binding-linux-arm64-musl",
+      "version": "1.0.3",
+      "purl": "pkg:npm/@rolldown/binding-linux-arm64-musl@1.0.3",
       "licenses": [
         {
           "license": {
@@ -600,9 +301,9 @@
     },
     {
       "type": "library",
-      "name": "@rollup/rollup-linux-arm64-musl",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-linux-arm64-musl@4.60.1",
+      "name": "@rolldown/binding-linux-ppc64-gnu",
+      "version": "1.0.3",
+      "purl": "pkg:npm/@rolldown/binding-linux-ppc64-gnu@1.0.3",
       "licenses": [
         {
           "license": {
@@ -613,9 +314,9 @@
     },
     {
       "type": "library",
-      "name": "@rollup/rollup-linux-loong64-gnu",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-linux-loong64-gnu@4.60.1",
+      "name": "@rolldown/binding-linux-s390x-gnu",
+      "version": "1.0.3",
+      "purl": "pkg:npm/@rolldown/binding-linux-s390x-gnu@1.0.3",
       "licenses": [
         {
           "license": {
@@ -626,9 +327,9 @@
     },
     {
       "type": "library",
-      "name": "@rollup/rollup-linux-loong64-musl",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-linux-loong64-musl@4.60.1",
+      "name": "@rolldown/binding-linux-x64-gnu",
+      "version": "1.0.3",
+      "purl": "pkg:npm/@rolldown/binding-linux-x64-gnu@1.0.3",
       "licenses": [
         {
           "license": {
@@ -639,9 +340,9 @@
     },
     {
       "type": "library",
-      "name": "@rollup/rollup-linux-ppc64-gnu",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-linux-ppc64-gnu@4.60.1",
+      "name": "@rolldown/binding-linux-x64-musl",
+      "version": "1.0.3",
+      "purl": "pkg:npm/@rolldown/binding-linux-x64-musl@1.0.3",
       "licenses": [
         {
           "license": {
@@ -652,9 +353,9 @@
     },
     {
       "type": "library",
-      "name": "@rollup/rollup-linux-ppc64-musl",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-linux-ppc64-musl@4.60.1",
+      "name": "@rolldown/binding-openharmony-arm64",
+      "version": "1.0.3",
+      "purl": "pkg:npm/@rolldown/binding-openharmony-arm64@1.0.3",
       "licenses": [
         {
           "license": {
@@ -665,9 +366,9 @@
     },
     {
       "type": "library",
-      "name": "@rollup/rollup-linux-riscv64-gnu",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-linux-riscv64-gnu@4.60.1",
+      "name": "@rolldown/binding-wasm32-wasi",
+      "version": "1.0.3",
+      "purl": "pkg:npm/@rolldown/binding-wasm32-wasi@1.0.3",
       "licenses": [
         {
           "license": {
@@ -678,9 +379,9 @@
     },
     {
       "type": "library",
-      "name": "@rollup/rollup-linux-riscv64-musl",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-linux-riscv64-musl@4.60.1",
+      "name": "@rolldown/binding-win32-arm64-msvc",
+      "version": "1.0.3",
+      "purl": "pkg:npm/@rolldown/binding-win32-arm64-msvc@1.0.3",
       "licenses": [
         {
           "license": {
@@ -691,9 +392,9 @@
     },
     {
       "type": "library",
-      "name": "@rollup/rollup-linux-s390x-gnu",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-linux-s390x-gnu@4.60.1",
+      "name": "@rolldown/binding-win32-x64-msvc",
+      "version": "1.0.3",
+      "purl": "pkg:npm/@rolldown/binding-win32-x64-msvc@1.0.3",
       "licenses": [
         {
           "license": {
@@ -704,9 +405,9 @@
     },
     {
       "type": "library",
-      "name": "@rollup/rollup-linux-x64-gnu",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-linux-x64-gnu@4.60.1",
+      "name": "@rolldown/pluginutils",
+      "version": "1.0.1",
+      "purl": "pkg:npm/@rolldown/pluginutils@1.0.1",
       "licenses": [
         {
           "license": {
@@ -717,9 +418,9 @@
     },
     {
       "type": "library",
-      "name": "@rollup/rollup-linux-x64-musl",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-linux-x64-musl@4.60.1",
+      "name": "@standard-schema/spec",
+      "version": "1.1.0",
+      "purl": "pkg:npm/@standard-schema/spec@1.1.0",
       "licenses": [
         {
           "license": {
@@ -730,74 +431,9 @@
     },
     {
       "type": "library",
-      "name": "@rollup/rollup-openbsd-x64",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-openbsd-x64@4.60.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@rollup/rollup-openharmony-arm64",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-openharmony-arm64@4.60.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@rollup/rollup-win32-arm64-msvc",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-win32-arm64-msvc@4.60.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@rollup/rollup-win32-ia32-msvc",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-win32-ia32-msvc@4.60.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@rollup/rollup-win32-x64-gnu",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-win32-x64-gnu@4.60.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "@rollup/rollup-win32-x64-msvc",
-      "version": "4.60.1",
-      "purl": "pkg:npm/@rollup/rollup-win32-x64-msvc@4.60.1",
+      "name": "@tybys/wasm-util",
+      "version": "0.10.2",
+      "purl": "pkg:npm/@tybys/wasm-util@0.10.2",
       "licenses": [
         {
           "license": {
@@ -835,8 +471,8 @@
     {
       "type": "library",
       "name": "@types/estree",
-      "version": "1.0.8",
-      "purl": "pkg:npm/@types/estree@1.0.8",
+      "version": "1.0.9",
+      "purl": "pkg:npm/@types/estree@1.0.9",
       "licenses": [
         {
           "license": {
@@ -848,8 +484,8 @@
     {
       "type": "library",
       "name": "@vitest/expect",
-      "version": "3.2.4",
-      "purl": "pkg:npm/@vitest/expect@3.2.4",
+      "version": "4.1.0",
+      "purl": "pkg:npm/@vitest/expect@4.1.0",
       "licenses": [
         {
           "license": {
@@ -861,8 +497,8 @@
     {
       "type": "library",
       "name": "@vitest/mocker",
-      "version": "3.2.4",
-      "purl": "pkg:npm/@vitest/mocker@3.2.4",
+      "version": "4.1.0",
+      "purl": "pkg:npm/@vitest/mocker@4.1.0",
       "licenses": [
         {
           "license": {
@@ -874,8 +510,8 @@
     {
       "type": "library",
       "name": "@vitest/pretty-format",
-      "version": "3.2.4",
-      "purl": "pkg:npm/@vitest/pretty-format@3.2.4",
+      "version": "4.1.0",
+      "purl": "pkg:npm/@vitest/pretty-format@4.1.0",
       "licenses": [
         {
           "license": {
@@ -887,8 +523,8 @@
     {
       "type": "library",
       "name": "@vitest/runner",
-      "version": "3.2.4",
-      "purl": "pkg:npm/@vitest/runner@3.2.4",
+      "version": "4.1.0",
+      "purl": "pkg:npm/@vitest/runner@4.1.0",
       "licenses": [
         {
           "license": {
@@ -900,8 +536,8 @@
     {
       "type": "library",
       "name": "@vitest/snapshot",
-      "version": "3.2.4",
-      "purl": "pkg:npm/@vitest/snapshot@3.2.4",
+      "version": "4.1.0",
+      "purl": "pkg:npm/@vitest/snapshot@4.1.0",
       "licenses": [
         {
           "license": {
@@ -913,8 +549,8 @@
     {
       "type": "library",
       "name": "@vitest/spy",
-      "version": "3.2.4",
-      "purl": "pkg:npm/@vitest/spy@3.2.4",
+      "version": "4.1.0",
+      "purl": "pkg:npm/@vitest/spy@4.1.0",
       "licenses": [
         {
           "license": {
@@ -926,8 +562,8 @@
     {
       "type": "library",
       "name": "@vitest/utils",
-      "version": "3.2.4",
-      "purl": "pkg:npm/@vitest/utils@3.2.4",
+      "version": "4.1.0",
+      "purl": "pkg:npm/@vitest/utils@4.1.0",
       "licenses": [
         {
           "license": {
@@ -964,22 +600,9 @@
     },
     {
       "type": "library",
-      "name": "cac",
-      "version": "6.7.14",
-      "purl": "pkg:npm/cac@6.7.14",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "chai",
-      "version": "5.3.3",
-      "purl": "pkg:npm/chai@5.3.3",
+      "version": "6.2.2",
+      "purl": "pkg:npm/chai@6.2.2",
       "licenses": [
         {
           "license": {
@@ -990,9 +613,9 @@
     },
     {
       "type": "library",
-      "name": "check-error",
-      "version": "2.1.3",
-      "purl": "pkg:npm/check-error@2.1.3",
+      "name": "convert-source-map",
+      "version": "2.0.0",
+      "purl": "pkg:npm/convert-source-map@2.0.0",
       "licenses": [
         {
           "license": {
@@ -1055,13 +678,13 @@
     },
     {
       "type": "library",
-      "name": "deep-eql",
-      "version": "5.0.2",
-      "purl": "pkg:npm/deep-eql@5.0.2",
+      "name": "detect-libc",
+      "version": "2.1.2",
+      "purl": "pkg:npm/detect-libc@2.1.2",
       "licenses": [
         {
           "license": {
-            "id": "MIT"
+            "id": "Apache-2.0"
           }
         }
       ]
@@ -1082,21 +705,8 @@
     {
       "type": "library",
       "name": "es-module-lexer",
-      "version": "1.7.0",
-      "purl": "pkg:npm/es-module-lexer@1.7.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "esbuild",
-      "version": "0.27.4",
-      "purl": "pkg:npm/esbuild@0.27.4",
+      "version": "2.1.0",
+      "purl": "pkg:npm/es-module-lexer@2.1.0",
       "licenses": [
         {
           "license": {
@@ -1224,26 +834,156 @@
     },
     {
       "type": "library",
-      "name": "js-tokens",
-      "version": "9.0.1",
-      "purl": "pkg:npm/js-tokens@9.0.1",
+      "name": "lightningcss",
+      "version": "1.32.0",
+      "purl": "pkg:npm/lightningcss@1.32.0",
       "licenses": [
         {
           "license": {
-            "id": "MIT"
+            "id": "MPL-2.0"
           }
         }
       ]
     },
     {
       "type": "library",
-      "name": "loupe",
-      "version": "3.2.1",
-      "purl": "pkg:npm/loupe@3.2.1",
+      "name": "lightningcss-android-arm64",
+      "version": "1.32.0",
+      "purl": "pkg:npm/lightningcss-android-arm64@1.32.0",
       "licenses": [
         {
           "license": {
-            "id": "MIT"
+            "id": "MPL-2.0"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "lightningcss-darwin-arm64",
+      "version": "1.32.0",
+      "purl": "pkg:npm/lightningcss-darwin-arm64@1.32.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MPL-2.0"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "lightningcss-darwin-x64",
+      "version": "1.32.0",
+      "purl": "pkg:npm/lightningcss-darwin-x64@1.32.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MPL-2.0"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "lightningcss-freebsd-x64",
+      "version": "1.32.0",
+      "purl": "pkg:npm/lightningcss-freebsd-x64@1.32.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MPL-2.0"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "lightningcss-linux-arm-gnueabihf",
+      "version": "1.32.0",
+      "purl": "pkg:npm/lightningcss-linux-arm-gnueabihf@1.32.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MPL-2.0"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "lightningcss-linux-arm64-gnu",
+      "version": "1.32.0",
+      "purl": "pkg:npm/lightningcss-linux-arm64-gnu@1.32.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MPL-2.0"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "lightningcss-linux-arm64-musl",
+      "version": "1.32.0",
+      "purl": "pkg:npm/lightningcss-linux-arm64-musl@1.32.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MPL-2.0"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "lightningcss-linux-x64-gnu",
+      "version": "1.32.0",
+      "purl": "pkg:npm/lightningcss-linux-x64-gnu@1.32.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MPL-2.0"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "lightningcss-linux-x64-musl",
+      "version": "1.32.0",
+      "purl": "pkg:npm/lightningcss-linux-x64-musl@1.32.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MPL-2.0"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "lightningcss-win32-arm64-msvc",
+      "version": "1.32.0",
+      "purl": "pkg:npm/lightningcss-win32-arm64-msvc@1.32.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MPL-2.0"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "lightningcss-win32-x64-msvc",
+      "version": "1.32.0",
+      "purl": "pkg:npm/lightningcss-win32-x64-msvc@1.32.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MPL-2.0"
           }
         }
       ]
@@ -1290,8 +1030,8 @@
     {
       "type": "library",
       "name": "nanoid",
-      "version": "3.3.11",
-      "purl": "pkg:npm/nanoid@3.3.11",
+      "version": "3.3.12",
+      "purl": "pkg:npm/nanoid@3.3.12",
       "licenses": [
         {
           "license": {
@@ -1305,6 +1045,19 @@
       "name": "nwsapi",
       "version": "2.2.23",
       "purl": "pkg:npm/nwsapi@2.2.23",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "obug",
+      "version": "2.1.1",
+      "purl": "pkg:npm/obug@2.1.1",
       "licenses": [
         {
           "license": {
@@ -1331,19 +1084,6 @@
       "name": "pathe",
       "version": "2.0.3",
       "purl": "pkg:npm/pathe@2.0.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "pathval",
-      "version": "2.0.1",
-      "purl": "pkg:npm/pathval@2.0.1",
       "licenses": [
         {
           "license": {
@@ -1381,8 +1121,8 @@
     {
       "type": "library",
       "name": "postcss",
-      "version": "8.5.8",
-      "purl": "pkg:npm/postcss@8.5.8",
+      "version": "8.5.15",
+      "purl": "pkg:npm/postcss@8.5.15",
       "licenses": [
         {
           "license": {
@@ -1406,9 +1146,9 @@
     },
     {
       "type": "library",
-      "name": "rollup",
-      "version": "4.60.1",
-      "purl": "pkg:npm/rollup@4.60.1",
+      "name": "rolldown",
+      "version": "1.0.3",
+      "purl": "pkg:npm/rolldown@1.0.3",
       "licenses": [
         {
           "license": {
@@ -1498,21 +1238,8 @@
     {
       "type": "library",
       "name": "std-env",
-      "version": "3.10.0",
-      "purl": "pkg:npm/std-env@3.10.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "strip-literal",
-      "version": "3.1.0",
-      "purl": "pkg:npm/strip-literal@3.1.0",
+      "version": "4.1.0",
+      "purl": "pkg:npm/std-env@4.1.0",
       "licenses": [
         {
           "license": {
@@ -1550,8 +1277,8 @@
     {
       "type": "library",
       "name": "tinyexec",
-      "version": "0.3.2",
-      "purl": "pkg:npm/tinyexec@0.3.2",
+      "version": "1.2.4",
+      "purl": "pkg:npm/tinyexec@1.2.4",
       "licenses": [
         {
           "license": {
@@ -1563,21 +1290,8 @@
     {
       "type": "library",
       "name": "tinyglobby",
-      "version": "0.2.15",
-      "purl": "pkg:npm/tinyglobby@0.2.15",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "tinypool",
-      "version": "1.1.1",
-      "purl": "pkg:npm/tinypool@1.1.1",
+      "version": "0.2.17",
+      "purl": "pkg:npm/tinyglobby@0.2.17",
       "licenses": [
         {
           "license": {
@@ -1589,21 +1303,8 @@
     {
       "type": "library",
       "name": "tinyrainbow",
-      "version": "2.0.0",
-      "purl": "pkg:npm/tinyrainbow@2.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "tinyspy",
-      "version": "4.0.4",
-      "purl": "pkg:npm/tinyspy@4.0.4",
+      "version": "3.1.0",
+      "purl": "pkg:npm/tinyrainbow@3.1.0",
       "licenses": [
         {
           "license": {
@@ -1666,22 +1367,22 @@
     },
     {
       "type": "library",
-      "name": "vite",
-      "version": "7.3.1",
-      "purl": "pkg:npm/vite@7.3.1",
+      "name": "tslib",
+      "version": "2.8.1",
+      "purl": "pkg:npm/tslib@2.8.1",
       "licenses": [
         {
           "license": {
-            "id": "MIT"
+            "id": "0BSD"
           }
         }
       ]
     },
     {
       "type": "library",
-      "name": "vite-node",
-      "version": "3.2.4",
-      "purl": "pkg:npm/vite-node@3.2.4",
+      "name": "vite",
+      "version": "8.0.16",
+      "purl": "pkg:npm/vite@8.0.16",
       "licenses": [
         {
           "license": {
