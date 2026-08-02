@@ -64,7 +64,7 @@ jobs:
           git checkout -b "$BRANCH"
           git add docs/sbom/
           git commit -m "chore: update SBOM inventory (${DATE})"
-          git push --force origin "$BRANCH"
+          git push --force-with-lease origin "$BRANCH"
 
           gh pr view "$BRANCH" > /dev/null 2>&1 || gh pr create \
             --title "chore: update SBOM inventory (${DATE})" \
