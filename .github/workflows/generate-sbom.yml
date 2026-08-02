@@ -26,6 +26,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - uses: actions/setup-node@v4
         with:
@@ -62,9 +64,9 @@ jobs:
           git checkout -b "$BRANCH"
           git add docs/sbom/
           git commit -m "chore: update SBOM inventory (${DATE})"
-          git push origin "$BRANCH"
+          git push --force origin "$BRANCH"
 
-          gh pr create \
+          gh pr view "$BRANCH" > /dev/null 2>&1 || gh pr create \
             --title "chore: update SBOM inventory (${DATE})" \
             --body "## SBOM Update
 
