@@ -2,10 +2,10 @@ SPDXVersion: SPDX-2.3
 DataLicense: CC0-1.0
 SPDXID: SPDXRef-DOCUMENT
 DocumentName: cveclient-dev-sbom
-DocumentNamespace: https://github.com/CERTCC/cveClient/spdx/dev/9e4e4812-256c-4588-873a-e36c4c72f407
+DocumentNamespace: https://github.com/CERTCC/cveClient/spdx/dev/037763c5-df8d-4d46-8e49-190c9ab66827
 Creator: Tool: cveClient-sbom-generator-1.0.25
 Creator: Organization: CERT/CC
-Created: 2026-06-02T21:01:24.760Z
+Created: 2026-08-02T20:58:07.696Z
 
 PackageName: cveclient
 SPDXID: SPDXRef-root
@@ -635,7 +635,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: nanoid
 SPDXID: SPDXRef-nanoid
-PackageVersion: 3.3.12
+PackageVersion: 3.3.16
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -691,7 +691,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: postcss
 SPDXID: SPDXRef-postcss
-PackageVersion: 8.5.15
+PackageVersion: 8.5.25
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT

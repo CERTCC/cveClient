@@ -3,9 +3,9 @@
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
   "name": "cveclient-dev-sbom",
-  "documentNamespace": "https://github.com/CERTCC/cveClient/spdx/dev/24dc6585-5eb7-46b8-96d1-17dfbb894e53",
+  "documentNamespace": "https://github.com/CERTCC/cveClient/spdx/dev/ba65aa3d-8f54-4534-ac1c-389f1bf26f96",
   "creationInfo": {
-    "created": "2026-06-02T21:01:24.759Z",
+    "created": "2026-08-02T20:58:07.695Z",
     "creators": [
       "Tool: cveClient-sbom-generator-1.0.25",
       "Organization: CERT/CC"
@@ -723,7 +723,7 @@
       "licenseConcluded": "MIT",
       "licenseDeclared": "MIT",
       "copyrightText": "NOASSERTION",
-      "versionInfo": "3.3.12"
+      "versionInfo": "3.3.16"
     },
     {
       "SPDXID": "SPDXRef-nwsapi",
@@ -786,7 +786,7 @@
       "licenseConcluded": "MIT",
       "licenseDeclared": "MIT",
       "copyrightText": "NOASSERTION",
-      "versionInfo": "8.5.15"
+      "versionInfo": "8.5.25"
     },
     {
       "SPDXID": "SPDXRef-punycode",

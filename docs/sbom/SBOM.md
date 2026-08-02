@@ -1,6 +1,6 @@
 # Software Bill of Materials - cveclient
 
-**Version:** 1.0.25 | **License:** MIT | **Generated:** 2026-06-02
+**Version:** 1.0.25 | **License:** MIT | **Generated:** 2026-08-02
 
 ## Runtime Components
 
@@ -133,14 +133,14 @@
 | lru-cache | 10.4.3 | ISC |
 | magic-string | 0.30.21 | MIT |
 | ms | 2.1.3 | MIT |
-| nanoid | 3.3.12 | MIT |
+| nanoid | 3.3.16 | MIT |
 | nwsapi | 2.2.23 | MIT |
 | obug | 2.1.1 | MIT |
 | parse5 | 7.3.0 | MIT |
 | pathe | 2.0.3 | MIT |
 | picocolors | 1.1.1 | ISC |
 | picomatch | 4.0.4 | MIT |
-| postcss | 8.5.15 | MIT |
+| postcss | 8.5.25 | MIT |
 | punycode | 2.3.1 | MIT |
 | rolldown | 1.0.3 | MIT |
 | rrweb-cssom | 0.8.0 | MIT |
