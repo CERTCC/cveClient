@@ -2,10 +2,10 @@
   "$schema": "https://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:5564c035-1ee0-44f5-8886-1b6aa6fa84cc",
+  "serialNumber": "urn:uuid:a43a2241-e0cd-4ac9-9329-beb556f7bd71",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-06-02T21:01:24.759Z",
+    "timestamp": "2026-08-02T21:50:44.777Z",
     "tools": [
       {
         "name": "cveClient-sbom-generator",
@@ -1030,8 +1030,8 @@
     {
       "type": "library",
       "name": "nanoid",
-      "version": "3.3.12",
-      "purl": "pkg:npm/nanoid@3.3.12",
+      "version": "3.3.16",
+      "purl": "pkg:npm/nanoid@3.3.16",
       "licenses": [
         {
           "license": {
@@ -1121,8 +1121,8 @@
     {
       "type": "library",
       "name": "postcss",
-      "version": "8.5.15",
-      "purl": "pkg:npm/postcss@8.5.15",
+      "version": "8.5.25",
+      "purl": "pkg:npm/postcss@8.5.25",
       "licenses": [
         {
           "license": {
@@ -1472,8 +1472,8 @@
     {
       "type": "library",
       "name": "ws",
-      "version": "8.20.0",
-      "purl": "pkg:npm/ws@8.20.0",
+      "version": "8.21.1",
+      "purl": "pkg:npm/ws@8.21.1",
       "licenses": [
         {
           "license": {
