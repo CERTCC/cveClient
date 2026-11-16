@@ -2,10 +2,10 @@ SPDXVersion: SPDX-2.3
 DataLicense: CC0-1.0
 SPDXID: SPDXRef-DOCUMENT
 DocumentName: cveclient-dev-sbom
-DocumentNamespace: https://github.com/CERTCC/cveClient/spdx/dev/6b335a09-0155-4823-9810-ed3fe9d967f0
+DocumentNamespace: https://github.com/CERTCC/cveClient/spdx/dev/cc8a4624-c31f-47f3-8ba6-7eabf6e0ad78
 Creator: Tool: cveClient-sbom-generator-1.0.25
 Creator: Organization: CERT/CC
-Created: 2026-08-02T21:50:44.778Z
+Created: 2026-11-16T15:52:14.766Z
 
 PackageName: cveclient
 SPDXID: SPDXRef-root
@@ -27,7 +27,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: vitest
 SPDXID: SPDXRef-vitest
-PackageVersion: 4.1.0
+PackageVersion: 4.1.12
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -81,41 +81,9 @@ PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
 PackageCopyrightText: NOASSERTION
 
-PackageName: @emnapi/core
-SPDXID: SPDXRef--emnapi-core
-PackageVersion: 1.10.0
-PackageDownloadLocation: NOASSERTION
-PackageLicenseConcluded: MIT
-PackageLicenseDeclared: MIT
-PackageCopyrightText: NOASSERTION
-
-PackageName: @emnapi/runtime
-SPDXID: SPDXRef--emnapi-runtime
-PackageVersion: 1.10.0
-PackageDownloadLocation: NOASSERTION
-PackageLicenseConcluded: MIT
-PackageLicenseDeclared: MIT
-PackageCopyrightText: NOASSERTION
-
-PackageName: @emnapi/wasi-threads
-SPDXID: SPDXRef--emnapi-wasi-threads
-PackageVersion: 1.2.1
-PackageDownloadLocation: NOASSERTION
-PackageLicenseConcluded: MIT
-PackageLicenseDeclared: MIT
-PackageCopyrightText: NOASSERTION
-
 PackageName: @jridgewell/sourcemap-codec
 SPDXID: SPDXRef--jridgewell-sourcemap-codec
-PackageVersion: 1.5.5
-PackageDownloadLocation: NOASSERTION
-PackageLicenseConcluded: MIT
-PackageLicenseDeclared: MIT
-PackageCopyrightText: NOASSERTION
-
-PackageName: @napi-rs/wasm-runtime
-SPDXID: SPDXRef--napi-rs-wasm-runtime
-PackageVersion: 1.1.4
+PackageVersion: 1.6.0
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -123,7 +91,15 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: @oxc-project/types
 SPDXID: SPDXRef--oxc-project-types
-PackageVersion: 0.133.0
+PackageVersion: 0.155.0
+PackageDownloadLocation: NOASSERTION
+PackageLicenseConcluded: MIT
+PackageLicenseDeclared: MIT
+PackageCopyrightText: NOASSERTION
+
+PackageName: @rolldown/binding-android-arm-eabi
+SPDXID: SPDXRef--rolldown-binding-android-arm-eabi
+PackageVersion: 1.2.15
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -131,7 +107,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: @rolldown/binding-android-arm64
 SPDXID: SPDXRef--rolldown-binding-android-arm64
-PackageVersion: 1.0.3
+PackageVersion: 1.2.15
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -139,7 +115,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: @rolldown/binding-darwin-arm64
 SPDXID: SPDXRef--rolldown-binding-darwin-arm64
-PackageVersion: 1.0.3
+PackageVersion: 1.2.15
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -147,7 +123,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: @rolldown/binding-darwin-x64
 SPDXID: SPDXRef--rolldown-binding-darwin-x64
-PackageVersion: 1.0.3
+PackageVersion: 1.2.15
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -155,7 +131,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: @rolldown/binding-freebsd-x64
 SPDXID: SPDXRef--rolldown-binding-freebsd-x64
-PackageVersion: 1.0.3
+PackageVersion: 1.2.15
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -163,7 +139,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: @rolldown/binding-linux-arm-gnueabihf
 SPDXID: SPDXRef--rolldown-binding-linux-arm-gnueabihf
-PackageVersion: 1.0.3
+PackageVersion: 1.2.15
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -171,7 +147,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: @rolldown/binding-linux-arm64-gnu
 SPDXID: SPDXRef--rolldown-binding-linux-arm64-gnu
-PackageVersion: 1.0.3
+PackageVersion: 1.2.15
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -179,7 +155,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: @rolldown/binding-linux-arm64-musl
 SPDXID: SPDXRef--rolldown-binding-linux-arm64-musl
-PackageVersion: 1.0.3
+PackageVersion: 1.2.15
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -187,7 +163,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: @rolldown/binding-linux-ppc64-gnu
 SPDXID: SPDXRef--rolldown-binding-linux-ppc64-gnu
-PackageVersion: 1.0.3
+PackageVersion: 1.2.15
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -195,7 +171,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: @rolldown/binding-linux-s390x-gnu
 SPDXID: SPDXRef--rolldown-binding-linux-s390x-gnu
-PackageVersion: 1.0.3
+PackageVersion: 1.2.15
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -203,7 +179,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: @rolldown/binding-linux-x64-gnu
 SPDXID: SPDXRef--rolldown-binding-linux-x64-gnu
-PackageVersion: 1.0.3
+PackageVersion: 1.2.15
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -211,7 +187,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: @rolldown/binding-linux-x64-musl
 SPDXID: SPDXRef--rolldown-binding-linux-x64-musl
-PackageVersion: 1.0.3
+PackageVersion: 1.2.15
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -219,15 +195,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: @rolldown/binding-openharmony-arm64
 SPDXID: SPDXRef--rolldown-binding-openharmony-arm64
-PackageVersion: 1.0.3
-PackageDownloadLocation: NOASSERTION
-PackageLicenseConcluded: MIT
-PackageLicenseDeclared: MIT
-PackageCopyrightText: NOASSERTION
-
-PackageName: @rolldown/binding-wasm32-wasi
-SPDXID: SPDXRef--rolldown-binding-wasm32-wasi
-PackageVersion: 1.0.3
+PackageVersion: 1.2.15
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -235,7 +203,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: @rolldown/binding-win32-arm64-msvc
 SPDXID: SPDXRef--rolldown-binding-win32-arm64-msvc
-PackageVersion: 1.0.3
+PackageVersion: 1.2.15
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -243,7 +211,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: @rolldown/binding-win32-x64-msvc
 SPDXID: SPDXRef--rolldown-binding-win32-x64-msvc
-PackageVersion: 1.0.3
+PackageVersion: 1.2.15
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -260,14 +228,6 @@ PackageCopyrightText: NOASSERTION
 PackageName: @standard-schema/spec
 SPDXID: SPDXRef--standard-schema-spec
 PackageVersion: 1.1.0
-PackageDownloadLocation: NOASSERTION
-PackageLicenseConcluded: MIT
-PackageLicenseDeclared: MIT
-PackageCopyrightText: NOASSERTION
-
-PackageName: @tybys/wasm-util
-SPDXID: SPDXRef--tybys-wasm-util
-PackageVersion: 0.10.2
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -299,7 +259,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: @vitest/expect
 SPDXID: SPDXRef--vitest-expect
-PackageVersion: 4.1.0
+PackageVersion: 4.1.12
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -307,7 +267,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: @vitest/mocker
 SPDXID: SPDXRef--vitest-mocker
-PackageVersion: 4.1.0
+PackageVersion: 4.1.12
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -315,7 +275,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: @vitest/pretty-format
 SPDXID: SPDXRef--vitest-pretty-format
-PackageVersion: 4.1.0
+PackageVersion: 4.1.12
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -323,7 +283,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: @vitest/runner
 SPDXID: SPDXRef--vitest-runner
-PackageVersion: 4.1.0
+PackageVersion: 4.1.12
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -331,7 +291,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: @vitest/snapshot
 SPDXID: SPDXRef--vitest-snapshot
-PackageVersion: 4.1.0
+PackageVersion: 4.1.12
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -339,7 +299,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: @vitest/spy
 SPDXID: SPDXRef--vitest-spy
-PackageVersion: 4.1.0
+PackageVersion: 4.1.12
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -347,7 +307,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: @vitest/utils
 SPDXID: SPDXRef--vitest-utils
-PackageVersion: 4.1.0
+PackageVersion: 4.1.12
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -371,7 +331,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: chai
 SPDXID: SPDXRef-chai
-PackageVersion: 6.2.2
+PackageVersion: 6.3.0
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -515,7 +475,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: lightningcss
 SPDXID: SPDXRef-lightningcss
-PackageVersion: 1.32.0
+PackageVersion: 1.33.0
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MPL-2.0
 PackageLicenseDeclared: MPL-2.0
@@ -523,7 +483,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: lightningcss-android-arm64
 SPDXID: SPDXRef-lightningcss-android-arm64
-PackageVersion: 1.32.0
+PackageVersion: 1.33.0
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MPL-2.0
 PackageLicenseDeclared: MPL-2.0
@@ -531,7 +491,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: lightningcss-darwin-arm64
 SPDXID: SPDXRef-lightningcss-darwin-arm64
-PackageVersion: 1.32.0
+PackageVersion: 1.33.0
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MPL-2.0
 PackageLicenseDeclared: MPL-2.0
@@ -539,7 +499,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: lightningcss-darwin-x64
 SPDXID: SPDXRef-lightningcss-darwin-x64
-PackageVersion: 1.32.0
+PackageVersion: 1.33.0
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MPL-2.0
 PackageLicenseDeclared: MPL-2.0
@@ -547,7 +507,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: lightningcss-freebsd-x64
 SPDXID: SPDXRef-lightningcss-freebsd-x64
-PackageVersion: 1.32.0
+PackageVersion: 1.33.0
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MPL-2.0
 PackageLicenseDeclared: MPL-2.0
@@ -555,7 +515,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: lightningcss-linux-arm-gnueabihf
 SPDXID: SPDXRef-lightningcss-linux-arm-gnueabihf
-PackageVersion: 1.32.0
+PackageVersion: 1.33.0
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MPL-2.0
 PackageLicenseDeclared: MPL-2.0
@@ -563,7 +523,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: lightningcss-linux-arm64-gnu
 SPDXID: SPDXRef-lightningcss-linux-arm64-gnu
-PackageVersion: 1.32.0
+PackageVersion: 1.33.0
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MPL-2.0
 PackageLicenseDeclared: MPL-2.0
@@ -571,7 +531,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: lightningcss-linux-arm64-musl
 SPDXID: SPDXRef-lightningcss-linux-arm64-musl
-PackageVersion: 1.32.0
+PackageVersion: 1.33.0
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MPL-2.0
 PackageLicenseDeclared: MPL-2.0
@@ -579,7 +539,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: lightningcss-linux-x64-gnu
 SPDXID: SPDXRef-lightningcss-linux-x64-gnu
-PackageVersion: 1.32.0
+PackageVersion: 1.33.0
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MPL-2.0
 PackageLicenseDeclared: MPL-2.0
@@ -587,7 +547,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: lightningcss-linux-x64-musl
 SPDXID: SPDXRef-lightningcss-linux-x64-musl
-PackageVersion: 1.32.0
+PackageVersion: 1.33.0
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MPL-2.0
 PackageLicenseDeclared: MPL-2.0
@@ -595,7 +555,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: lightningcss-win32-arm64-msvc
 SPDXID: SPDXRef-lightningcss-win32-arm64-msvc
-PackageVersion: 1.32.0
+PackageVersion: 1.33.0
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MPL-2.0
 PackageLicenseDeclared: MPL-2.0
@@ -603,7 +563,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: lightningcss-win32-x64-msvc
 SPDXID: SPDXRef-lightningcss-win32-x64-msvc
-PackageVersion: 1.32.0
+PackageVersion: 1.33.0
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MPL-2.0
 PackageLicenseDeclared: MPL-2.0
@@ -635,7 +595,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: nanoid
 SPDXID: SPDXRef-nanoid
-PackageVersion: 3.3.16
+PackageVersion: 3.3.20
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -683,7 +643,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: picomatch
 SPDXID: SPDXRef-picomatch
-PackageVersion: 4.0.4
+PackageVersion: 4.0.7
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -691,7 +651,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: postcss
 SPDXID: SPDXRef-postcss
-PackageVersion: 8.5.25
+PackageVersion: 8.5.31
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -707,7 +667,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: rolldown
 SPDXID: SPDXRef-rolldown
-PackageVersion: 1.0.3
+PackageVersion: 1.2.15
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -747,7 +707,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: source-map-js
 SPDXID: SPDXRef-source-map-js
-PackageVersion: 1.2.1
+PackageVersion: 1.2.2
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: BSD-3-Clause
 PackageLicenseDeclared: BSD-3-Clause
@@ -803,7 +763,7 @@ PackageCopyrightText: NOASSERTION
 
 PackageName: tinyrainbow
 SPDXID: SPDXRef-tinyrainbow
-PackageVersion: 3.1.0
+PackageVersion: 3.2.0
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -841,17 +801,9 @@ PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
 PackageCopyrightText: NOASSERTION
 
-PackageName: tslib
-SPDXID: SPDXRef-tslib
-PackageVersion: 2.8.1
-PackageDownloadLocation: NOASSERTION
-PackageLicenseConcluded: 0BSD
-PackageLicenseDeclared: 0BSD
-PackageCopyrightText: NOASSERTION
-
 PackageName: vite
 SPDXID: SPDXRef-vite
-PackageVersion: 8.0.16
+PackageVersion: 8.3.5
 PackageDownloadLocation: NOASSERTION
 PackageLicenseConcluded: MIT
 PackageLicenseDeclared: MIT
@@ -970,12 +922,9 @@ Relationship: SPDXRef-root DEPENDS_ON SPDXRef--csstools-css-calc
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef--csstools-css-color-parser
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef--csstools-css-parser-algorithms
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef--csstools-css-tokenizer
-Relationship: SPDXRef-root DEPENDS_ON SPDXRef--emnapi-core
-Relationship: SPDXRef-root DEPENDS_ON SPDXRef--emnapi-runtime
-Relationship: SPDXRef-root DEPENDS_ON SPDXRef--emnapi-wasi-threads
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef--jridgewell-sourcemap-codec
-Relationship: SPDXRef-root DEPENDS_ON SPDXRef--napi-rs-wasm-runtime
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef--oxc-project-types
+Relationship: SPDXRef-root DEPENDS_ON SPDXRef--rolldown-binding-android-arm-eabi
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef--rolldown-binding-android-arm64
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef--rolldown-binding-darwin-arm64
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef--rolldown-binding-darwin-x64
@@ -988,12 +937,10 @@ Relationship: SPDXRef-root DEPENDS_ON SPDXRef--rolldown-binding-linux-s390x-gnu
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef--rolldown-binding-linux-x64-gnu
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef--rolldown-binding-linux-x64-musl
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef--rolldown-binding-openharmony-arm64
-Relationship: SPDXRef-root DEPENDS_ON SPDXRef--rolldown-binding-wasm32-wasi
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef--rolldown-binding-win32-arm64-msvc
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef--rolldown-binding-win32-x64-msvc
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef--rolldown-pluginutils
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef--standard-schema-spec
-Relationship: SPDXRef-root DEPENDS_ON SPDXRef--tybys-wasm-util
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef--types-chai
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef--types-deep-eql
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef--types-estree
@@ -1065,7 +1012,6 @@ Relationship: SPDXRef-root DEPENDS_ON SPDXRef-tldts
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef-tldts-core
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef-tough-cookie
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef-tr46
-Relationship: SPDXRef-root DEPENDS_ON SPDXRef-tslib
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef-vite
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef-w3c-xmlserializer
 Relationship: SPDXRef-root DEPENDS_ON SPDXRef-webidl-conversions
