@@ -165,7 +165,7 @@ async function check_create_key(user) {
 	    publicExponent: new Uint8Array([1, 0, 1]),
 	    hash: "SHA-256",
 	},
-	true,
+	false,
 	["encrypt", "decrypt"]
     ).then(function(key) {
 	save_key(user,key);
