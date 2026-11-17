@@ -167,8 +167,8 @@ async function check_create_key(user) {
 	},
 	false,
 	["encrypt", "decrypt"]
-    ).then(function(key) {
-	save_key(user,key);
+    ).then(async function(key) {
+	await save_key(user,key);
 	return key;
     });
 }

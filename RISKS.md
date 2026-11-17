@@ -25,3 +25,5 @@ If a CNA chooses to use this or other web-based interfaces to access CVE Service
 ## How cveClient Mitigates Risk
 
 cveClient includes an encryption layer ([`encrypt-storage.js`](./encrypt-storage.js)) that provides RSA-OAEP 4096-bit asymmetric encryption of API keys before storing them in `localStorage` or `sessionStorage`. The encryption keys are persisted in the browser's native `indexedDB`. While this does not eliminate all risk (the key must be decrypted for each API call), it provides protection against casual inspection of browser storage.
+
+New private keys are non-extractable, but same-origin JavaScript can still retrieve them from IndexedDB and use them to decrypt credentials. This does not protect against XSS, malicious browser extensions, compromised scripts, or CSS-based exfiltration of secrets exposed in markup. Older IndexedDB records may also contain extractable private key material. Follow the precautions above and use a restrictive server-side CSP.
