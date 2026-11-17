@@ -128,7 +128,12 @@ async function save_key(user,key) {
     /* With RSA generateKey(false), Web Crypto keeps the private key
        non-extractable while permitting export of the public key. */
     const fpb = await window.crypto.subtle.exportKey("jwk", key.publicKey);
-    const storedKey = {epr: key.privateKey, epb: key.publicKey};
+    const safePrivateKey = key.privateKey.extractable
+        ? await window.crypto.subtle.importKey(
+            "jwk", await window.crypto.subtle.exportKey("jwk", key.privateKey),
+            {name: "RSA-OAEP", hash: "SHA-256"}, false, ["decrypt"])
+        : key.privateKey;
+    const storedKey = {epr: safePrivateKey, epb: key.publicKey};
     const sum = {sha256: await sha256sum(fpb.n)};
     await dbManager(user, storedKey, sum);
     return storedKey;
