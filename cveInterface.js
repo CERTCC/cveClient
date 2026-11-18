@@ -2070,17 +2070,23 @@ function enable_encryption() {
       } catch (_) {
         /* Encrypt storage using RSA keys*/
         try {
-          check_create_key(client.user).then(function (newkey) {
-            encryptMessage(client.key, newkey.publicKey).then(
-              function (encBuffer) {
-                arrayBuffertoURI(encBuffer).then(function (encURL) {
-                  client.key = encURL;
-                  store.setItem(store_tag + "key", encURL);
-                  activate_encryption();
-                });
-              },
-            );
-          });
+          check_create_key(client.user)
+            .then(function (newkey) {
+              return encryptMessage(client.key, newkey.publicKey);
+            })
+            .then(arrayBuffertoURI)
+            .then(function (encURL) {
+              client.key = encURL;
+              store.setItem(store_tag + "key", encURL);
+              activate_encryption();
+            })
+            .catch(function (err) {
+              console.log(err);
+              top_alert(
+                "warning",
+                "Encrypting API key failed, see console log for errors",
+              );
+            });
         } catch (err) {
           console.log(err);
           top_alert(
