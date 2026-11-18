@@ -1,6 +1,6 @@
 # Software Bill of Materials - cveclient
 
-**Version:** 1.0.25 | **License:** MIT | **Generated:** 2026-08-02
+**Version:** 1.0.25 | **License:** MIT | **Generated:** 2026-11-18
 
 ## Runtime Components
 
@@ -51,10 +51,11 @@
 
 | Package | Version | License |
 |---------|---------|---------|
+| fake-indexeddb | 6.2.8 | Apache-2.0 |
 | jsdom | 26.1.0 | MIT |
-| vitest | 4.1.0 | MIT |
+| vitest | 4.1.12 | MIT |
 
-<details><summary>Transitive npm dependencies (112)</summary>
+<details><summary>Transitive npm dependencies (106)</summary>
 
 | Package | Version | License |
 |---------|---------|---------|
@@ -64,43 +65,38 @@
 | @csstools/css-color-parser | 3.1.0 | MIT |
 | @csstools/css-parser-algorithms | 3.0.5 | MIT |
 | @csstools/css-tokenizer | 3.0.4 | MIT |
-| @emnapi/core | 1.10.0 | MIT |
-| @emnapi/runtime | 1.10.0 | MIT |
-| @emnapi/wasi-threads | 1.2.1 | MIT |
-| @jridgewell/sourcemap-codec | 1.5.5 | MIT |
-| @napi-rs/wasm-runtime | 1.1.4 | MIT |
-| @oxc-project/types | 0.133.0 | MIT |
-| @rolldown/binding-android-arm64 | 1.0.3 | MIT |
-| @rolldown/binding-darwin-arm64 | 1.0.3 | MIT |
-| @rolldown/binding-darwin-x64 | 1.0.3 | MIT |
-| @rolldown/binding-freebsd-x64 | 1.0.3 | MIT |
-| @rolldown/binding-linux-arm-gnueabihf | 1.0.3 | MIT |
-| @rolldown/binding-linux-arm64-gnu | 1.0.3 | MIT |
-| @rolldown/binding-linux-arm64-musl | 1.0.3 | MIT |
-| @rolldown/binding-linux-ppc64-gnu | 1.0.3 | MIT |
-| @rolldown/binding-linux-s390x-gnu | 1.0.3 | MIT |
-| @rolldown/binding-linux-x64-gnu | 1.0.3 | MIT |
-| @rolldown/binding-linux-x64-musl | 1.0.3 | MIT |
-| @rolldown/binding-openharmony-arm64 | 1.0.3 | MIT |
-| @rolldown/binding-wasm32-wasi | 1.0.3 | MIT |
-| @rolldown/binding-win32-arm64-msvc | 1.0.3 | MIT |
-| @rolldown/binding-win32-x64-msvc | 1.0.3 | MIT |
+| @jridgewell/sourcemap-codec | 1.6.0 | MIT |
+| @oxc-project/types | 0.155.0 | MIT |
+| @rolldown/binding-android-arm-eabi | 1.2.15 | MIT |
+| @rolldown/binding-android-arm64 | 1.2.15 | MIT |
+| @rolldown/binding-darwin-arm64 | 1.2.15 | MIT |
+| @rolldown/binding-darwin-x64 | 1.2.15 | MIT |
+| @rolldown/binding-freebsd-x64 | 1.2.15 | MIT |
+| @rolldown/binding-linux-arm-gnueabihf | 1.2.15 | MIT |
+| @rolldown/binding-linux-arm64-gnu | 1.2.15 | MIT |
+| @rolldown/binding-linux-arm64-musl | 1.2.15 | MIT |
+| @rolldown/binding-linux-ppc64-gnu | 1.2.15 | MIT |
+| @rolldown/binding-linux-s390x-gnu | 1.2.15 | MIT |
+| @rolldown/binding-linux-x64-gnu | 1.2.15 | MIT |
+| @rolldown/binding-linux-x64-musl | 1.2.15 | MIT |
+| @rolldown/binding-openharmony-arm64 | 1.2.15 | MIT |
+| @rolldown/binding-win32-arm64-msvc | 1.2.15 | MIT |
+| @rolldown/binding-win32-x64-msvc | 1.2.15 | MIT |
 | @rolldown/pluginutils | 1.0.1 | MIT |
 | @standard-schema/spec | 1.1.0 | MIT |
-| @tybys/wasm-util | 0.10.2 | MIT |
 | @types/chai | 5.2.3 | MIT |
 | @types/deep-eql | 4.0.2 | MIT |
 | @types/estree | 1.0.9 | MIT |
-| @vitest/expect | 4.1.0 | MIT |
-| @vitest/mocker | 4.1.0 | MIT |
-| @vitest/pretty-format | 4.1.0 | MIT |
-| @vitest/runner | 4.1.0 | MIT |
-| @vitest/snapshot | 4.1.0 | MIT |
-| @vitest/spy | 4.1.0 | MIT |
-| @vitest/utils | 4.1.0 | MIT |
+| @vitest/expect | 4.1.12 | MIT |
+| @vitest/mocker | 4.1.12 | MIT |
+| @vitest/pretty-format | 4.1.12 | MIT |
+| @vitest/runner | 4.1.12 | MIT |
+| @vitest/snapshot | 4.1.12 | MIT |
+| @vitest/spy | 4.1.12 | MIT |
+| @vitest/utils | 4.1.12 | MIT |
 | agent-base | 7.1.4 | MIT |
 | assertion-error | 2.0.1 | MIT |
-| chai | 6.2.2 | MIT |
+| chai | 6.3.0 | MIT |
 | convert-source-map | 2.0.0 | MIT |
 | cssstyle | 4.6.0 | MIT |
 | data-urls | 5.0.0 | MIT |
@@ -118,49 +114,48 @@
 | https-proxy-agent | 7.0.6 | MIT |
 | iconv-lite | 0.6.3 | MIT |
 | is-potential-custom-element-name | 1.0.1 | MIT |
-| lightningcss | 1.32.0 | MPL-2.0 |
-| lightningcss-android-arm64 | 1.32.0 | MPL-2.0 |
-| lightningcss-darwin-arm64 | 1.32.0 | MPL-2.0 |
-| lightningcss-darwin-x64 | 1.32.0 | MPL-2.0 |
-| lightningcss-freebsd-x64 | 1.32.0 | MPL-2.0 |
-| lightningcss-linux-arm-gnueabihf | 1.32.0 | MPL-2.0 |
-| lightningcss-linux-arm64-gnu | 1.32.0 | MPL-2.0 |
-| lightningcss-linux-arm64-musl | 1.32.0 | MPL-2.0 |
-| lightningcss-linux-x64-gnu | 1.32.0 | MPL-2.0 |
-| lightningcss-linux-x64-musl | 1.32.0 | MPL-2.0 |
-| lightningcss-win32-arm64-msvc | 1.32.0 | MPL-2.0 |
-| lightningcss-win32-x64-msvc | 1.32.0 | MPL-2.0 |
+| lightningcss | 1.33.0 | MPL-2.0 |
+| lightningcss-android-arm64 | 1.33.0 | MPL-2.0 |
+| lightningcss-darwin-arm64 | 1.33.0 | MPL-2.0 |
+| lightningcss-darwin-x64 | 1.33.0 | MPL-2.0 |
+| lightningcss-freebsd-x64 | 1.33.0 | MPL-2.0 |
+| lightningcss-linux-arm-gnueabihf | 1.33.0 | MPL-2.0 |
+| lightningcss-linux-arm64-gnu | 1.33.0 | MPL-2.0 |
+| lightningcss-linux-arm64-musl | 1.33.0 | MPL-2.0 |
+| lightningcss-linux-x64-gnu | 1.33.0 | MPL-2.0 |
+| lightningcss-linux-x64-musl | 1.33.0 | MPL-2.0 |
+| lightningcss-win32-arm64-msvc | 1.33.0 | MPL-2.0 |
+| lightningcss-win32-x64-msvc | 1.33.0 | MPL-2.0 |
 | lru-cache | 10.4.3 | ISC |
 | magic-string | 0.30.21 | MIT |
 | ms | 2.1.3 | MIT |
-| nanoid | 3.3.16 | MIT |
+| nanoid | 3.3.20 | MIT |
 | nwsapi | 2.2.23 | MIT |
 | obug | 2.1.1 | MIT |
 | parse5 | 7.3.0 | MIT |
 | pathe | 2.0.3 | MIT |
 | picocolors | 1.1.1 | ISC |
-| picomatch | 4.0.4 | MIT |
-| postcss | 8.5.25 | MIT |
+| picomatch | 4.0.7 | MIT |
+| postcss | 8.5.31 | MIT |
 | punycode | 2.3.1 | MIT |
-| rolldown | 1.0.3 | MIT |
+| rolldown | 1.2.15 | MIT |
 | rrweb-cssom | 0.8.0 | MIT |
 | safer-buffer | 2.1.2 | MIT |
 | saxes | 6.0.0 | ISC |
 | siginfo | 2.0.0 | ISC |
-| source-map-js | 1.2.1 | BSD-3-Clause |
+| source-map-js | 1.2.2 | BSD-3-Clause |
 | stackback | 0.0.2 | MIT |
 | std-env | 4.1.0 | MIT |
 | symbol-tree | 3.2.4 | MIT |
 | tinybench | 2.9.0 | MIT |
 | tinyexec | 1.2.4 | MIT |
 | tinyglobby | 0.2.17 | MIT |
-| tinyrainbow | 3.1.0 | MIT |
+| tinyrainbow | 3.2.0 | MIT |
 | tldts | 6.1.86 | MIT |
 | tldts-core | 6.1.86 | MIT |
 | tough-cookie | 5.1.2 | BSD-3-Clause |
 | tr46 | 5.1.1 | MIT |
-| tslib | 2.8.1 | 0BSD |
-| vite | 8.0.16 | MIT |
+| vite | 8.3.5 | MIT |
 | w3c-xmlserializer | 5.0.0 | MIT |
 | webidl-conversions | 7.0.0 | BSD-2-Clause |
 | whatwg-encoding | 3.1.1 | MIT |
